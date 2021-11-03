@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+@import url("basic.css");
+
+body,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,form,textarea,fieldset,blockquote,img,iframe,pre,code,hr,legend {
+	padding:0;
+	margin:0;
+}
+body {
+	color:#333; 
+    min-width:1350px;
+    overflow:scroll;
+    overflow-x:auto;
+}
+table {
+	width:100%;
+	border:0px;
+}
+thead tr { 
+	height:28px; vertical-align:bottom; text-align:center; color:#666666; background:#f2e7ca; font-weight:bold; font-family:"Times New Roman";font-size:14px;
+}
+
+tbody tr { 
+	font:normal 13px/20px sans-serif;	/** color:#4e4e4e; **/
+}
+tfoot tr { 
+	height:25px; background:#FFFFF0; font-weight:bold; font-family:"Times New Roman"; font-size:13px; 
+}
+/**********功能切换行**********/
+.switch_tr{		
+	height:28px; background:#AAAAA; text-align:left;
+}
+/**********查询条件行**********/
+.query_tr { 
+	height:25px; background:#EEEEE0;		
+}
+/**********查询结果行**********/
+.content1_tr {    
+	height:25px; background:#EFFFFF;
+}
+.content2_tr{		
+	height:25px; background:#EEEEEE;
+}
+/**********本页合计行**********/
+.total_tr{		
+	height:25px; background:#DDDDDD; font-weight:bold;
+}
+
+a {
+	color:#0041D9; text-decoration:none; outline:none;
+}
+a:hover {
+	color:#f60000; text-decoration:none; 
+}
+
+
+#header {
+	width:99%;
+	margin:0 auto;
+	text-align:center;
+	font-size:0.8em; 
+	background: linear-gradient(to right, #F3F3F4,#3EB1E5);
+}
+#container {
+	width:99%;
+	margin:6px auto;
+	text-align:center;
+	postion:absolute;
+	top:200px; 
+	min-height:520px;
+}
+#footer {
+	width:99%;
+	margin:15px auto;
+	padding:5px 0 20px;
+	border-top:2px solid #e0e0e0;
+	text-align:center;
+	font:12px Arial,Helvetica,sans-serif,Simsun;
+}
+#menu { 
+	width:100%; height:42px; padding:18px 0 0 0 
+}
+#menu ul { 
+	float:right; list-style:none; margin:0px; 
+}
+#menu ul li { 
+	float:left; display:inline-block; line-height:30px; margin:0 9px;
+}
+#menu ul li a:link, #menu ul li a:visited { 
+	font-weight:bold; color:#666 
+}
+#menu ul li a:hover{ 
+	color:blue 
+}
+.menuDiv { 
+	width:1px; height:28px; background:#999 
+}
+.footer-link {
+	padding-bottom:8px;
+}
+.footer-link a {
+	color:#666; margin:0 10px 0 9px;
+}
+#footer p {
+	line-height:16px; color:#999;
+}
+#footer a.icp,#footer a.mailto {
+	color:#0041D9;
+}
+#footer a.icp:hover {
+	color:#e4393c; font-weight:bold;
+}
+#footer a.mailto:hover {
+	color:#e4393c; font-weight:bold;
+}

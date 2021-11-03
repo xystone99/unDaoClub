@@ -1,0 +1,25 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
+
+<script language="javascript">
+function checkExitSystem( ) {
+    if ( confirm( "确定退出系统吗？" ) ) {
+        window.location.href = "../processLogin.jsp?Action=ExitSystem";
+    }
+}
+</script>
+
+<table width="100%" border="0" cellspacing="1" cellpadding="0" align="center">
+	<tr class="switch_tr">
+    <td>
+		<b>账户设定:</b>&nbsp;
+		<a href="../SysConfigure/empSecurityList.jsp"><%=PAGE_TAG==CtrlConstants.PG_EMP_SECURITY?"<b>账户一览 </b>":"账户一览 "%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<b>系统配置:</b>&nbsp;
+        <a href="../SysConfigure/roleList.jsp"><%=PAGE_TAG==CtrlConstants.PG_ROLE_LIST?"<b>角色</b>":"角色"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <b>基础配置:</b>&nbsp;
+        <a href="../SysConfigure/addressList.jsp"><%=PAGE_TAG==CtrlConstants.PG_ADDRESS_LIST?"<b>收发货地址</b>":"收发货地址"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <a href="javascript:checkExitSystem()">退出系统</a>
+	</td>
+    </tr>
+</table>
+

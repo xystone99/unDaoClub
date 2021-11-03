@@ -1,0 +1,27 @@
+<%@ page contentType="text/html; charset=utf-8" %>
+<script language="javascript">
+	<%
+	if ( !info_tag.equals( "#" ) ) {
+		%>alert( "<%=info_tag%>" );<%
+	}
+	if ( is_back ) {
+		%>window.history.go( -1 );<%
+	}
+	if ( is_back_with_refresh ) {
+	    %>self.location=document.referrer;<%
+	}
+	if ( is_refresh_parent ) {
+		if ( is_modal_dialog ) {
+			%>window.returnValue = "Refresh";<%
+		} else {
+			%>if (!opener.closed) opener.document.location.reload( true );<%
+		}
+	}
+	if ( is_close_window ) {
+		%>window.close( );<%
+	}
+	if ( ! redirect_url.equals( "#" ) ) {
+		%>window.location.href = "<%=redirect_url%>";<%
+	}
+	%>
+</script>

@@ -1,0 +1,18 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
+<%@ page import="xms.*" %>
+<%@ page import="com.undao.control.*" %>
+
+<%
+	String curEmpID = AbstractDaemon.getLanderID( request );
+	String loginName = AbstractDaemon.getLoginName( request );
+	String landerRole = AbstractDaemon.getLanderRole( request );
+	String rWinMode = request.getParameter( CtrlConstants.QP_WINDOW_MODE );
+	int winMode = (rWinMode==null) ? CtrlConstants.WM_PARENT : Integer.parseInt(rWinMode);
+	
+	String securityResult = XmsUtils.securityCheck(request,acceptInnerUser,landerRole,needAstricts,winMode);
+	
+	if ( !securityResult.equals( CtrlConstants.RET_BLANK ) ) {
+		out.println( securityResult );
+		return;
+	}
+%>

@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+@import url("basic.css");
+
+body,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,form,textarea,fieldset,blockquote,img,iframe,pre,code,hr,legend {
+	padding:0;
+	margin:0;
+}
+body {
+	color:#333; 
+    overflow:scroll;
+    overflow-x:hidden;
+}
+table {
+	width:99%;
+	border:0px;
+	margin: 0 auto;
+}
+thead tr { 
+	height:28px; vertical-align:bottom; text-align:center; color:#666666; background:#f2e7ca; font-weight:bold; font-family:"Times New Roman";font-size:14px;
+}
+
+tbody tr { 
+	color:#4e4e4e; font:normal 13px/20px sans-serif; 
+}
+tfoot tr { 
+	height:25px; background:#FFFFF0; font-weight:bold; font-family:"Times New Roman"; font-size:13px; 
+}
+
+
+.head_tr {							/********** 行定义 **********/
+	height:28px;
+	background:#EEEEE0;
+}
+
+.content_tr {
+	height:28px;
+	background:#efffff;
+}
+
+.content_tr30 {
+	height:30px;
+	background:#efffff;
+}
+
+.empty_tr {							/********** 空白行(内容) **********/
+	height:12px;
+	background:#efffff;
+}
+.empty_tr_head {					/********** 空白行(头部) **********/
+	height:12px;
+	background:#FFFFFF;
+}
+.empty_tr_tail {					/********** 空白行(尾部) **********/
+	height:16px;
+	background:#FFFFFF;
+}
+.tail_tr {
+	height:28px;
+	background:#fffff0;
+}
+
+.dispt_waybill_list tr {			/********** 短驳车上货物列表(出入库) **********/
+	font-size:12px;
+}
+.dispt_waybill_list tr td input {
+	height:12px;
+	font-size:12px;
+}
+.dispt_waybill_header {
+	height:24px;
+	background:#C6F0F0;
+}
+
+.cost_tr td {						/********** 整车毛利详细页面 **********/
+	font-size:14px;
+	font-weight:bold;
+}

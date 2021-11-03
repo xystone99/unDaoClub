@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.input_btn { 							/********** Button定义 **********/
+	cursor:pointer;
+	width:76px;
+	height:23px;
+}
+.input_text {							/********** TextField定义 **********/
+	vertical-align: middle;
+}
+.input_check {							/********** CheckBox定义 **********/
+	vertical-align: middle;
+}
+.select {								/********** SELECT样式 **********/
+    height:22px;
+    vertical-align: middle;
+}
+.select_null {
+    width:75px;
+    height:22px;
+    vertical-align: middle;
+}
+
+.hand {									/********** 小手 **********/
+	cursor:pointer;
+}
+.hover {								/********** 单击选中表中一行 **********/
+	background:#FFFF66;
+	cursor:pointer;
+}
+.marked_header_cell {					/********** 突出显示表头行中的某个单元格  **********/
+	color:#F02C17;
+	font-weight:bold;
+}
+.division_line {						/********** 分隔线  **********/
+	border: 1px solid #CEE5E5;
+}
+
+#multi_selected_list span {				/********** 新建干线派车单 中转站列表********************/
+	cursor:pointer;
+	margin-right:10px;
+}

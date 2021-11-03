@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- -->
+    <bean id="stcVariables" class="yundeploy.cache.YunSystemicVariables"></bean>
+    <bean id="mstRole" class="yundeploy.cache.YunMasterRole"></bean>
+    <bean id="roleAstricts" class="com.undao.cache.RoleAstricts"></bean>
+    <!-- -->
+
+    <!--
+    <bean id="stcVariables" class="com.undao.cache.SystemicVariables"></bean>
+    <bean id="mstRole" class="com.undao.cache.MasterRole"></bean>
+    <bean id="roleAstricts" class="com.undao.cache.RoleAstricts"></bean>
+    -->
+
+
+    <bean id="xmsContainer" class="xms.XmsContainer">
+        <property name="systemicVariables" ref="stcVariables"></property>
+        <property name="masterRole" ref="mstRole"></property>
+        <property name="roleAstricts" ref="roleAstricts"></property>
+    </bean>
+
+</beans>

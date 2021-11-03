@@ -1,0 +1,11 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
+
+<table width="100%" border="0" cellspacing="1" cellpadding="0" align="center">
+	<tr class="switch_tr">
+    <td>
+		<b>运输计划:</b>&nbsp;
+        <a href="../CustomerService/transPlanList.jsp"><%=PAGE_TAG==CtrlConstants.PG_TRANS_PLAN_LIST?"<b>一览</b>":"一览"%></a>&nbsp;&nbsp;
+        <a href="../CustomerService/transPlanAlert.jsp"><%=PAGE_TAG==CtrlConstants.PG_TRANS_PLAN_ALERT?"<b>提送预警</b>":"提送预警"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+	</td>
+    </tr>
+</table>

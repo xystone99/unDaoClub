@@ -1,0 +1,27 @@
+<%@ page language="java" pageEncoding="utf-8" contentType="text/html; charset=utf-8"%>
+<%@ page import="com.undao.control.*" %>
+<%@ page import="com.undao.utils.*" %>
+
+<!--
+<div id="footer">
+	<p>
+		SERVICE CALL：<b>181-1725-9195</b>&nbsp;&nbsp;&nbsp;
+		QQ：<b>294115550</b>&nbsp;&nbsp;&nbsp;
+		Email：<a href="mailto:shike_xu@jiayu-wl.com" class="mailto" target="_blank">shike_xu@jiayu-wl.com</a>&nbsp;&nbsp;&nbsp;
+		<a href="javascript:void(0)" class="icp">沪ICP备2021015242号</a>
+    </p>
+	<p>
+		Copyright &copy; 2021-2022 xyzabc.com  All Rights Reserved
+    </p>
+</div>
+-->
+
+<div id="footer">
+	<p>
+    当前用户：<b><%=AbstractDaemon.getLanderName( request )%></b>&nbsp;&nbsp;&nbsp;
+    最近操作时间：<b><%=DateUtils.formatCurrentDateTime()%></b>
+    </p>
+	<p>
+
+    </p>
+</div>

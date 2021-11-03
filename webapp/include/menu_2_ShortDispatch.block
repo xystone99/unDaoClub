@@ -1,0 +1,14 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
+
+<table width="100%" border="0" cellspacing="1" cellpadding="0" align="center">
+	<tr class="switch_tr">
+    <td>
+		<b>待提待送:</b>&nbsp;
+        <a href="../ShortDispatch/waitDispatchList.jsp"><%=PAGE_TAG==CtrlConstants.PG_WAIT_DISPATCH_LIST?"<b>一览</b>":"一览"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        <b>派车计划:</b>&nbsp;
+        <a href="../ShortDispatch/dispatchHistory.jsp"><%=PAGE_TAG==CtrlConstants.PG_DISPATCH_HISTORY?"<b>一览</b>":"一览"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+	</td>
+    </tr>
+</table>

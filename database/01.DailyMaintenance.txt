@@ -1,0 +1,172 @@
+
+#------------------------------------------------------------------------------------------------------------------------
+# 检索当前可登录帐户
+#------------------------------------------------------------------------------------------------------------------------
+SELECT e.company, e.ne_zh, r.ne_zh FROM tbl_emp e JOIN tbl_role r ON e.role=r.role WHERE e.can_login='Y' ORDER BY e.company,e.part,e.job_id;
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# 检索重复员工
+#------------------------------------------------------------------------------------------------------------------------
+SELECT emp,ne_zh,COUNT(emp) AS cnt_emp FROM tbl_emp GROUP BY ne_zh ORDER BY cnt_emp DESC LIMIT 10;
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# 彻底删除已取消员工
+#------------------------------------------------------------------------------------------------------------------------
+SELECT emp FROM tbl_emp WHERE sys_flg='Cancel';
+DELETE FROM trn_contract_record WHERE emp IN(1023,1165);
+DELETE FROM trn_trace_record WHERE emp IN(1023,1165);
+DELETE FROM trn_wage_record WHERE emp IN(1023,1165);
+DELETE FROM trn_travel_record WHERE driver IN(1023);
+DELETE FROM trn_oil_record WHERE driver IN(1023,1165);
+DELETE FROM tbl_emp WHERE emp IN(1023,1165);
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# 初始化系统SQL
+#------------------------------------------------------------------------------------------------------------------------
+INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('XYZABC','9101','Y');
+INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('XYZABC','9102','Y');
+INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('XYZABC','9103','116.224.53.248');
+INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('XYZABC','9201','202101');
+INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('XYZABC','9202','202012');
+INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('XYZABC','9203','202101');
+INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('XYZABC','9204','202012');
+INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('XYZABC','9205','R');
+
+
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# 重置车辆的当前里程表(加油)
+#------------------------------------------------------------------------------------------------------------------------
+SELECT truck INTO @truckID FROM tbl_truck WHERE plate_number LIKE '%8612%';
+SELECT @truckID;
+UPDATE tbl_truck SET qty_km_o=(SELECT MAX(qty_km_e) FROM trn_oil_record WHERE truck=@truckID) WHERE truck=@truckID;
+SELECT qty_km_c, qty_km_o FROM tbl_truck WHERE truck=@truckID;
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# 投票选举
+#------------------------------------------------------------------------------------------------------------------------
+SELECT MAX(vote) INTO @maxVote FROM tbl_vote;
+UPDATE tbl_vote SET sys_flg='Close' WHERE vote=@maxVote;
+CALL proc_vote_new('2017年2月优秀员工评选','请选择您建议入选的同事(只能投一次)。','2017-03-03 09:30','2017-03-05 18:00','30','Y',@rID,@result); SELECT @rID,@result;
+CALL proc_voteitem_update(@rID,'李静=LJ=财务部-出纳&刘宝林=LBL=行政人事部-人事助理&张振峰=ZZF=行政人事部-厨师&范乃光=FNG=上海分公司-司机&张红民=ZHM=上海分公司-司机&杨学良=YXL=上海分公司-装卸&宋军红=SJH=上海分公司-叉车&张强=ZQ=上海分公司-业务员&楚成明=CCM=大连分公司-业务员&姜政辰=JZC=大连分公司-实习生&张丰=ZF=大连分公司-实习生&张强=ZQ2=长春分公司-业务员&杨柳=YL=长春分公司-仓库管理员&张全=ZQ3=长春分公司-装卸&齐凯=QK=长春分公司-司机&张绪华=ZXH=烟台分公司-业务员&刘虹池=LHC=天津分公司-业务员&于德洪=YDH=天津分公司-司机&周长亮=ZCL=天津分公司-仓管&王卫强=WWQ=保定分公司-仓管&于海峰=YHF=常州分公司-叉车&周旺=ZW=南昌分公司-业务员&范佳庆=FJQ=宁波分公司-叉车&弃权=99=对以上员工都不了解&',@result); SELECT @result;
+SELECT MAX(vote) INTO @maxVote FROM tbl_vote;
+UPDATE tbl_vote SET start_date='2017-05-26 13:00', end_date='2017-05-27 18:00', cnt_max_select=30, sys_flg='Normal' WHERE vote=@maxVote;
+
+SELECT MAX(vote) INTO @maxVote FROM tbl_vote;
+INSERT INTO tbl_vote_item(vote,item,href_tag,remark)VALUES(@maxVote,'任毅','RY','烟台分公司-业务员');
+
+SELECT MAX(vote) INTO @maxVote FROM tbl_vote;
+UPDATE tbl_vote SET end_date='2016-12-07 18:00' WHERE vote=@maxVote;
+UPDATE tbl_vote SET title='2016年11月优秀员工评选' WHERE vote=@maxVote;
+UPDATE tbl_vote SET remark='请选择您建议入选的同事（珍惜选举权，只能投一次），说明：WHERE vote=@maxVote;
+
+SELECT MAX(vote) INTO @maxVote FROM tbl_vote;
+DELETE FROM trn_vote_record WHERE vote=@maxVote;
+UPDATE tbl_vote_item SET cnt_gain=0 WHERE vote=@maxVote;
+UPDATE tbl_vote SET cnt_vote=0 WHERE vote=@maxVote;
+
+SET NAMES gb2312;
+SELECT MAX(vote) INTO @maxVote FROM tbl_vote;
+SELECT r.mac_address,r.vote,r.vote_date,i.item,i.cnt_gain,i.remark FROM trn_vote_record r JOIN tbl_vote_item i ON r.vote_i=i.vote_i WHERE r.vote=@maxVote ORDER BY r.vote_date ASC;
+SELECT r.mac_address,r.vote,r.vote_date,i.item,i.cnt_gain,i.remark FROM trn_vote_record r JOIN tbl_vote_item i ON r.vote_i=i.vote_i WHERE r.vote=@maxVote ORDER BY i.cnt_gain DESC;
+
+扫码电脑端登录：
+https://oapi.dingtalk.com/connect/qrconnect?appid=dingoasoktui3wuawyvalp&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=http://101.37.173.75:3721/Self/myExamStart.jsp?AF4530B289C811EABEB800163E1355E1
+
+在钉钉中点击链接登录：
+https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=dingoasoktui3wuawyvalp&response_type=code&scope=snsapi_auth&state=STATE&redirect_uri=http://101.37.173.75:3721/Self/myExamStart.jsp?AF4530B289C811EABEB800163E1355E1
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# 初始计数器
+#------------------------------------------------------------------------------------------------------------------------
+INSERT INTO stc_counter(cnt_name,cnt_count)VALUES('COUNTER_PAYMENT',100);		#支付单号
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# Encrypt && Decrypt
+#------------------------------------------------------------------------------------------------------------------------
+UPDATE tbl_account_binding SET user_pwd_original=AES_ENCRYPT(user_pwd_original,'vvkaimen');
+SELECT id, AES_DECRYPT(user_pwd_original,'vvkaimen') FROM tbl_account_binding;
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# 日志
+#------------------------------------------------------------------------------------------------------------------------
+FLUSH LOGS;
+RESET MASTER;
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# 重建日志文件和数据文件
+#------------------------------------------------------------------------------------------------------------------------
+NET STOP mysql
+DROP DATABASE 用户数据库  
+DEL "E:\MySQL\MySQL_5.5.28\data\ibdata1"  
+DEL "E:\MySQL\MySQL_5.5.28\data\ib_logfile0"  
+DEL "E:\MySQL\MySQL_5.5.28\data\ib_logfile1"  
+CREATE DATABASE 用户数据库
+NET START mysql  
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# 用户管理
+#------------------------------------------------------------------------------------------------------------------------
+#更改root用户密码
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abcd1234';	
+FLUSH PRIVILEGES;
+
+#创建超级用户
+CREATE USER  'igreen'@'localhost' IDENTIFIED BY 'abcd1234'
+GRANT ALL PRIVILEGES ON *.* TO 'igreen'@'localhost' WITH GRANT OPTION;		
+
+#创建只读用户/备份用户
+CREATE USER 'jun'@'%' IDENTIFIED BY 'knight';
+GRANT SELECT,REPLICATION SLAVE,LOCK TABLES,RELOAD ON *.* TO 'jun'@'%' WITH GRANT OPTION;
+
+#创建Tomcat连接用户
+CREATE USER 'nywl'@'localhost' IDENTIFIED BY 'abcd1234';
+GRANT SELECT,INSERT,UPDATE,DELETE,LOCK TABLES,EXECUTE ON LogisticsWEBDB.* TO 'nywl'@'localhost' WITH GRANT OPTION;
+GRANT SELECT ON mysql.proc TO 'nywl'@'localhost';
+
+#创建维护用户(REVOKE FROM)
+CREATE USER  'nyAdmin'@'localhost' IDENTIFIED BY 'abcd1234';
+GRANT SELECT,CREATE,ALTER,INDEX,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE ON LogisticsWEBDB.* TO 'nyAdmin'@'localhost' WITH GRANT OPTION;
+GRANT PROCESS,SHOW DATABASES,SHUTDOWN,SUPER ON *.* TO 'nyAdmin'@'localhost' WITH GRANT OPTION;
+
+#删除用户和回收权限(用户名区分大小写)
+FLUSH PRIVILEGES;
+SHOW GRANTS FOR 'nywl'@'localhost';
+REVOKE SELECT,CREATE,ALTER,INDEX,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE ON LogisticsWEBDB.* FROM 'nyAdmin'@'localhost';
+DROP USER nyAdmin@localhost;
+
+#新增帐户
+INSERT INTO tbl_emp(emp,ne_zh,login_name,login_pwd,can_login,company,work_company,input_date,sys_flg)VALUES(1,'SystemAdministrator','sysAdmin',MD5('abcd1234'),'Y','SH','SH',NOW(),'Inner');
+INSERT INTO tbl_emp(emp,ne_zh,login_name,login_pwd,can_login,company,work_company,input_date,sys_flg)VALUES(1000,'SystemTest','sysTest',MD5('135246'),'Y','SH','SH',NOW(),'Dummy');
+
+UPDATE tbl_emp SET m_companies='\'ZB\',\'SH\',\'CZ\',\'NB\',\'NJ\',\'YW\',\'TZ\',\'DL\',\'CC\',\'YT\',\'SY\',\'TJ\',\'BD\',\'ZJ\',\'ZZ\',\'WH\',\'XA\',\'XT\',\'GZ\',\'CQ\',\'CD\'' WHERE LENGTH(m_companies)>60;
+UPDATE tbl_emp SET b_companies='\'SH\',\'CZ\',\'NB\',\'NJ\',\'YW\',\'TZ\',\'DL\',\'CC\',\'YT\',\'SY\',\'TJ\',\'BD\',\'ZJ\',\'ZZ\',\'WH\',\'XA\',\'XT\',\'GZ\',\'CQ\',\'CD\'' WHERE LENGTH(b_companies)>60;
+
+#重置所有账户信息
+UPDATE tbl_emp SET login_name=IF(login_name='sysAdmin','sysAdmin',init_spell), login_pwd=PASSWORD('Oracle') WHERE emp>=1 AND can_login='Y';
+
+
+#------------------------------------------------------------------------------------------------------------------------
+# Export LogisticsWEBDB
+# Export Procedures From LogisticsWEBDB
+#------------------------------------------------------------------------------------------------------------------------
+SET CUR_DATE=%date:~0,4%%date:~5,2%%date:~8,2%
+SET CUR_TIME=%time:~0,2%%time:~3,2%
+MYSQLDUMP -uroot -p --lock-all-tables --complete-insert --no-create-info --routines --flush-logs --master-data=2 LogisticsWEBDB > "%CUR_DATE%_%CUR_TIME%_LogisticsWEBDB_Server.sql"
+
+mysqldump -uroot -p -n -t -d -R LogisticsWEBDB > 20150331_Procedure.sql
+
+http://www.cuanfun.com/RemoteAgent?Action=Backup									#Export CuanFunWEBDB
+http://www.cuanfun.com/exportBrokerDB.jsp?AtCity=SH&CountSMS=1&QtyCalcDate=0		#Export BrokerDB
+
+

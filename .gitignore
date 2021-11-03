@@ -21,3 +21,11 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+
+# ignore some directory
+.idea
+bin
+target
+/database/基础配置数据.xlsx
+/webapp/WEB-INF/classes/

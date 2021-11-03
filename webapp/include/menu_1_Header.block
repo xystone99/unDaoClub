@@ -1,0 +1,41 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
+
+<div id="header" >
+	<img style="float:left;border-bottom:1px solid #AAD9EF;" src="../images/sort_up_down.png" />
+	<div id="menu">
+		<ul>
+		<%
+		if ( (PAGE_TAG >= CtrlConstants.PG_CUSTOMER_SERVICE_1) && (PAGE_TAG <= CtrlConstants.PG_CUSTOMER_SERVICE_2) ) {
+			%><li class="selected">运输计划<%
+		} else {
+			%><li><a href="../CustomerService/transPlanList.jsp">运输计划</a><%
+		}
+		%></li>
+		<li class="menuDiv"></li>
+		<%
+		if ( (PAGE_TAG >= CtrlConstants.PG_SHORT_DISPATCH_1) && (PAGE_TAG <= CtrlConstants.PG_SHORT_DISPATCH_2) ) {
+			%><li class="selected">车队调度</li><%
+		} else {
+			%><li><a href="../ShortDispatch/waitDispatchList.jsp">车队调度</a></li><%
+		}
+		%>
+		<li class="menuDiv"></li>
+		<%
+		if ( (PAGE_TAG >= CtrlConstants.PG_WARE_HOUSE_1) && (PAGE_TAG <= CtrlConstants.PG_WARE_HOUSE_2) ) {
+			%><li class="selected">仓库管理</li><%
+		} else {
+			%><li><a href="../WareHouse/waitInOutList.jsp">仓库管理</a></li><%
+		}
+		%>
+		<li class="menuDiv"></li>
+		<%
+		if ( (PAGE_TAG >= CtrlConstants.PG_SYS_CONFIGURE_1) && (PAGE_TAG <= CtrlConstants.PG_SYS_CONFIGURE_2) ) {
+			%><li class="selected">系统配置</li><%
+		} else {
+			%><li><a href="../SysConfigure/roleList.jsp">系统配置</a></li><%
+		}
+		%>
+		</ul>
+	</div>
+</div>
+
