@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<Context docBase="E:\unDaoClub\webapp" debug="0" reloadable="true">
+
+	<!--TomcatJDBC参数配置参考：https://blog.csdn.net/u011179993/article/details/54099214  -->
+    <Resource name="jdbc/unDaoDB" auth="Container"
+              type="javax.sql.DataSource" driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/unDaoDB?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;rewriteBatchedStatements=true"
+              username="root"
+              password="abcd1234"
+              maxActive="100" maxIdle="100" minIdle="10" initialSize="10"  maxWait="300000"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" />
+
+</Context>
+
+
