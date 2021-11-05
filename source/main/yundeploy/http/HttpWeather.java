@@ -2663,7 +2663,8 @@ public class HttpWeather {
 		if ( DateUtils.formatCurrentDate().equals(date) ) {
 			return getTodayWeather( city );
 		}
-		Calendar cal = DateUtils.buildCalendar(date);
+//		Calendar cal = DateUtils.buildCalendar(date);
+		Calendar cal = null;
 		String reg_Weather = reg_WeatherFuture.replaceFirst("XXX", cal.get(Calendar.DAY_OF_MONTH)+"日" );
 		Pattern p_WeatherFuture = Pattern.compile( reg_Weather, Pattern.CASE_INSENSITIVE );
 		

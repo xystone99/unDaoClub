@@ -1,7 +1,9 @@
 package com.undao.utils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalField;
 import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,27 +12,27 @@ public class DateUtils {
 
 	public final static String BORDER_DATE_1 = "2001-01-01";
 	public final static String BORDER_DATE_2 = "2049-12-31";
-	
-	private static SimpleDateFormat fmt_date_1 = new SimpleDateFormat( "yyyy-MM-dd" );
-	private static SimpleDateFormat fmt_date_2 = new SimpleDateFormat( "MM/dd/yyyy" );
-	private static SimpleDateFormat fmt_yyyymmdd = new SimpleDateFormat( "yyyyMMdd" );
-	private static SimpleDateFormat fmt_mmdd = new SimpleDateFormat( "MM-dd" );
+
+	private static DateTimeFormatter fmt_date_1 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
+	private static DateTimeFormatter fmt_date_2 = DateTimeFormatter.ofPattern( "MM/dd/yyyy" );
+	private static DateTimeFormatter fmt_yyyymmdd = DateTimeFormatter.ofPattern( "yyyyMMdd" );
+	private static DateTimeFormatter fmt_mmdd = DateTimeFormatter.ofPattern( "MM-dd" );
 
 	private static DateTimeFormatter fmt_datetime = DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm:ss" );
 	private static DateTimeFormatter fmt_datetime_2 = DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm" );
 	private static DateTimeFormatter fmt_datetime_3 = DateTimeFormatter.ofPattern( "MM-dd HH:mm" );
 
 	
-	private static SimpleDateFormat fmt_time = new SimpleDateFormat( "HH:mm:ss" );
-	private static SimpleDateFormat fmt_time_2 = new SimpleDateFormat( "HH:mm" );
-	private static SimpleDateFormat fmt_HHmmss = new SimpleDateFormat( "HHmmss" );
+	private static DateTimeFormatter fmt_time = DateTimeFormatter.ofPattern( "HH:mm:ss" );
+	private static DateTimeFormatter fmt_time_2 = DateTimeFormatter.ofPattern( "HH:mm" );
+	private static DateTimeFormatter fmt_HHmmss = DateTimeFormatter.ofPattern( "HHmmss" );
 
-	private static SimpleDateFormat fmt_year = new SimpleDateFormat( "yyyy" );
-	private static SimpleDateFormat fmt_year_zh = new SimpleDateFormat( "yyyy年");
+	private static DateTimeFormatter fmt_year = DateTimeFormatter.ofPattern( "yyyy" );
+	private static DateTimeFormatter fmt_year_zh = DateTimeFormatter.ofPattern( "yyyy年");
 
-	private static SimpleDateFormat fmt_month_1 = new SimpleDateFormat( "yyyyMM" );
-	private static SimpleDateFormat fmt_month_2 = new SimpleDateFormat( "yyyy-MM" );
-	private static SimpleDateFormat fmt_month_zh = new SimpleDateFormat( "yyyy年MM月" );
+	private static DateTimeFormatter fmt_month_1 = DateTimeFormatter.ofPattern( "yyyyMM" );
+	private static DateTimeFormatter fmt_month_2 = DateTimeFormatter.ofPattern( "yyyy-MM" );
+	private static DateTimeFormatter fmt_month_zh = DateTimeFormatter.ofPattern( "yyyy年MM月" );
 
 	private static SimpleDateFormat fmt_week_zh = new SimpleDateFormat( "EEEE" ); 	
 	private static SimpleDateFormat fmt_week_en = new SimpleDateFormat( "EEE", Locale.ENGLISH ); 	
@@ -38,49 +40,24 @@ public class DateUtils {
     /**
      * About Date - Build 
      */
-    public static final Date buildDate( String strDate ) {			//Convert 
-        try {
-        	if ( strDate.indexOf("-") >= 0 ) {
-        		return fmt_date_1.parse( strDate );
-        	} else if ( strDate.indexOf( "/" ) >= 0 ) {
-        		return fmt_date_2.parse( strDate );
-        	} else {
-        		return fmt_yyyymmdd.parse( strDate );
-        	}
-        } catch( ParseException pe ) {
-        	System.out.println( "DateUtils.buildDate(String)>> " + pe.getMessage() );
-        }      
-        return null;
+    public static final LocalDate buildDate( String strDate ) {			//Convert
+		if ( strDate.indexOf("-") >= 0 ) {
+			return LocalDate.parse( strDate, fmt_date_1 );
+		} else if ( strDate.indexOf( "/" ) >= 0 ) {
+			return LocalDate.parse( strDate, fmt_date_2 );
+		} else {
+			return LocalDate.parse( strDate, fmt_yyyymmdd );
+		}
     }
-    
-    public static final GregorianCalendar buildCalendar( String strDate ) {
-    	try {   
-    		GregorianCalendar calendar = new GregorianCalendar( );
-    		if ( strDate.indexOf("-") >= 0 ) {
-    			calendar.setTime( fmt_date_1.parse( strDate ) );
-        	} else if ( strDate.indexOf( "/" ) >= 0 ) {
-        		calendar.setTime( fmt_date_2.parse( strDate ) );
-        	} else {
-        		calendar.setTime( fmt_yyyymmdd.parse( strDate ) );
-        	}
-    		return calendar;
-        } catch( ParseException pe ) { 
-        	System.out.println( "DateUtils.buildCalendar(String)>> " + pe.getMessage() );
-        }      
-        return null;
-    }
-    
-    public static final GregorianCalendar buildCalendar( Date date ) {
-        GregorianCalendar calendar = new GregorianCalendar( );
-        calendar.setTime( date );
-        return calendar;
-        
-    }
-    
+
     /**
      * About Date - Special 
      */
     public static final String formatFirstOfCurrentWeek( ) {		//本周周一
+    	LocalDate curDate = LocalDate.now();
+    	int step = 1 + 1 - curDate.get()
+    	 curDate.
+
     	Calendar calendar = Calendar.getInstance( ); 
     	calendar.setTime( new Date() );
     	int step = 1 + 1 - calendar.get(Calendar.DAY_OF_WEEK);
@@ -184,9 +161,9 @@ public class DateUtils {
 	}
 
     public static final String formatDateStepDays( String startDate, int interval ) {		//以指定日期为起始，加减天数
-    	GregorianCalendar calendar = buildCalendar( startDate );
-		calendar.add( Calendar.DATE, interval );
-		return fmt_date_1.format( calendar.getTime() );
+    	LocalDate stDate = LocalDate.parse( startDate, fmt_date );
+		stDate = stDate.plusDays( interval );
+		return fmt_date.format( stDate );
 	}
 
 	public static final String formatDateStepMonths( int interval ) {						//以当前日期为起始，加减月数
@@ -549,11 +526,7 @@ public class DateUtils {
 	 * MAIN TEST
 	 */
 	public static void main( String[] args ) {
-		System.out.println( DateUtils.calcMinutesBetween( "0940" ) );
-		System.out.println( DateUtils.calcMinutesBetween( "0940","1840" ) );
-		System.out.println( DateUtils.getLastDayOfCurrentMonth() );
-
-		System.out.println( DateUtils.formatCurrentDateTime() );
+		System.out.println( formatDateStepDays("2021-01-10", -7 ) );
 	}
 
 
