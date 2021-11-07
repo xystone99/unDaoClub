@@ -10,6 +10,7 @@
 <%@ page import="com.undao.database.AbstractQuery" %>
 <%@ page import="com.undao.enumeration.EnumConstants" %>
 <%@ page import="com.undao.control.AbstractDaemon" %>
+<%@ page import="com.undao.utils.DateUtils" %>
 <%
 	int PAGE_TAG = CtrlConstants.PG_TRANS_PLAN_LIST;
 	boolean acceptInnerUser = true;
@@ -110,7 +111,7 @@ CommonSet dataSet = transPlanList.getQueryResult( );
 		%>
 		<tr class="<%=j%2==1?"content1_tr":"content2_tr" %>"> 
 		<td align="center"><%=baseIndex+j %></td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"plan_date")%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh")%>]</td>
+		<td align="left">&nbsp;<%=DateUtils.format_mmdd(dataSet.getValue(j,"plan_date"))%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh")%>]</td>
 		<td align="center"><a href="javascript:void(0)" onclick="javascript:openUpdate('<%=trans_p.toString()%>')"><%=dataSet.getValue(j,"obj_short")%></a></td>
 		<td align="center"><%=dataSet.getValue(j,"plan_k")%></td>
 		<td align="center"><%=dataSet.getValue(j,"time_level")%></td>
