@@ -286,6 +286,84 @@ BASIC_BLOCK:BEGIN
 END BASIC_BLOCK $$
 
 
+/************************************************************************************************************************
+ * 回报车辆闲置情况
+ * CALL proc_truck_idle_feedback('Idle','1000','沪DK7348','10002','张三-18125673567','2021-11-16','2021-11-18','Remark','10002','XYZABC',@result); SELECT @result;
+ * CALL proc_truck_idle_delete('1','10002','XYZABC',@result); SELECT @result;
+ ************************************************************************************************************************/
+DROP PROCEDURE IF EXISTS `proc_truck_idle_feedback` $$
+CREATE PROCEDURE `proc_truck_idle_feedback`(
+	IN	pIDLE_K					VARCHAR(10),
+	IN	pTRUCK					VARCHAR(10),
+	IN	pPLATE_NUMBER			VARCHAR(10),
+	IN	pDRIVER					VARCHAR(10),
+	IN	pTEL_DRIVER				VARCHAR(30),
+	IN	pSTART_DATE				VARCHAR(10),
+	IN	pEND_DATE				VARCHAR(10),
+	IN	pREMARK					VARCHAR(50),
+	IN	pUSER_A					VARCHAR(10),
+	IN	pCLOUD_ID				VARCHAR(20),
+	
+	OUT	result					VARCHAR(50) )
+BASIC_BLOCK:BEGIN
+	DECLARE xCount INTEGER DEFAULT 0;
+	DECLARE qCloudID VARCHAR(20);
+	
+	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
+		SET result = 'SQLException';
+	END;
+	
+	IF ( pTRUCK <> '0' ) THEN
+		SELECT cloud_id INTO qCloudID FROM tbl_truck WHERE truck = pTRUCK;
+		IF ( pCLOUD_ID <> qCloudID ) THEN
+			SET result = 'Invalid';
+			LEAVE BASIC_BLOCK;
+		END IF;
+		SELECT COUNT(trk_idle) INTO xCount FROM tbl_truck_idle WHERE truck=pTRUCK AND ((start_date<=pSTART_DATE AND end_date>=pSTART_DATE) OR (start_date<=pEND_DATE AND end_date>=pEND_DATE) ) LIMIT 1;
+		IF ( xCount > 0 ) THEN
+			SET result = 'InUse';
+			LEAVE BASIC_BLOCK;
+		END IF;		
+	END IF;
+	
+	START TRANSACTION;
+	INSERT INTO tbl_truck_idle(idle_k,truck,plate_number,driver,tel_driver,start_date,end_date,remark,user_a,input_date,cloud_id)
+	VALUES(pIDLE_K,pTRUCK,pPLATE_NUMBER,pDRIVER,pTEL_DRIVER,pSTART_DATE,pEND_DATE,pREMARK,pUSER_A,NOW(),pCLOUD_ID);
+
+	COMMIT;
+	SET result = 'FeedSuccess';
+END BASIC_BLOCK $$
+
+
+DROP PROCEDURE IF EXISTS `proc_truck_idle_delete` $$
+CREATE PROCEDURE `proc_truck_idle_delete`(
+	IN	pTRK_IDLE				VARCHAR(10),
+	IN	pUSER_A					VARCHAR(10),
+	IN	pCLOUD_ID				VARCHAR(20),
+	
+	OUT	result					VARCHAR(50) )
+BASIC_BLOCK:BEGIN
+	DECLARE qUserA INTEGER DEFAULT 0;
+	DECLARE qCloudID VARCHAR(20);
+	
+	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
+		SET result = 'SQLException';
+	END;
+	
+	SELECT user_a, cloud_id INTO qUserA, qCloudID FROM tbl_truck_idle WHERE trk_idle = pTRK_IDLE;
+	IF ( (qCloudID<>pCLOUD_ID) OR (qUserA<>pUSER_A) ) THEN
+		SET result = 'Invalid';
+		LEAVE BASIC_BLOCK;
+	END IF;
+
+	
+	START TRANSACTION;
+	DELETE FROM tbl_truck_idle WHERE trk_idle = pTRK_IDLE;
+
+	COMMIT;
+	SET result = 'DeleteSuccess';
+END BASIC_BLOCK $$
+
 
 
 DELIMITER ;

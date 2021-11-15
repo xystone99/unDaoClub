@@ -156,4 +156,24 @@ CREATE TABLE trn_dispatch_record(
 );
 
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+#	回报车辆闲置()
+#	tbl_truck_idle
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `tbl_truck_idle`;				#车辆闲置表
+CREATE TABLE tbl_truck_idle(
+	trk_idle				INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,	#
+	idle_k					ENUM('Idle','Lack') NOT NULl,				#闲置,缺少
+	truck					INT UNSIGNED NOT NULL DEFAULT 0,			#车辆ID(为0表示闲置)
+	plate_number			VARCHAR(10) NOT NULL DEFAULT '',			#车牌号/车型
+	driver					INT UNSIGNED NOT NULL DEFAULT 0,			#驾驶员ID(为0表示未设置)
+	tel_driver				VARChAR(20) NOT NULL DEFAULT '',			#驾驶员姓名-电话
+	start_date				DATE NOT NULL,								#开始日期
+	end_date				DATE NOT NULL,								#结束日期
+	remark					VARCHAR(50) NOT NULL DEFAULT '',			#其它说明			
+	user_a					INT UNSIGNED NOT NULL,						#登记人
+	input_date				DATETIME NOT NULL,							#登记时间
+	cloud_id				VARCHAR(20) NOT NULL						#
+);
+
 
