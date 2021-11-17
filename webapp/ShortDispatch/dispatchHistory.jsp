@@ -33,18 +33,19 @@
 DispatchHistory dispatchHistory = new DispatchHistory( XmsInitial.getDataSource() );
 dispatchHistory.setCloudID(AbstractDaemon.getCloudID(request));
 
-String page_size = request.getParameter( DispatchHistory.QP_PAGE_SIZE );
 String cur_page = request.getParameter( DispatchHistory.QP_CUR_PAGE );
-if ( page_size != null ) {
-	dispatchHistory.setPageSize( Integer.parseInt(page_size) );
-}
 if ( cur_page != null ) {
 	dispatchHistory.setCurrentPage( Integer.parseInt( cur_page ) );
-}		
-String[] arr_params = dispatchHistory.getParamSerial();
-for ( int j=0; j<arr_params.length; j++ ) {
-	dispatchHistory.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	dispatchHistory.setPageSize( Integer.parseInt(request.getParameter( DispatchHistory.QP_PAGE_SIZE )) );
+
+	String[] arr_params = dispatchHistory.getParamSerial();
+	for ( int j=0; j<arr_params.length; j++ ) {
+		dispatchHistory.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	}
+} else {
+	dispatchHistory.setDefaultParameterValue( );
 }
+
 dispatchHistory.executeQuery();
 CommonSet dataSet = dispatchHistory.getQueryResult( );
 %>

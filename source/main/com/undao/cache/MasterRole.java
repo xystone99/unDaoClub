@@ -15,7 +15,7 @@ import com.undao.database.*;
 public class MasterRole extends AbstractDatabase {
 
 	private StringBuilder bufOptions = new StringBuilder( );
-	private final static String QUERY_SQL = "SELECT role,ne_zh,href_index FROM tbl_role ORDER BY cloud_id, sort_tag ASC";
+	private final static String QUERY_SQL = "SELECT role,ne_zh,href_index FROM tbl_role ORDER BY sort_tag ASC";
 
 	protected HashMap<String,String> mapHref = new HashMap<String,String>();
 
@@ -37,7 +37,7 @@ public class MasterRole extends AbstractDatabase {
 
 		CommonSet dataList = DBUtils.executeQuery( getDataSource(), QUERY_SQL,false );
 		for( int j=0; j<dataList.getRowCount(); j++ ) {
-			bufOptions.append( "<options value=\"" ).append(((Integer)dataList.getValue(j,"role")).toString()).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+			bufOptions.append( "<options value=\"" ).append(((Long)dataList.getValue(j,"role")).toString()).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
 			mapHref.put( ((Long)dataList.getValue(j,"role")).toString(), (String)dataList.getValue(j,"href_index") );
 		}
 		

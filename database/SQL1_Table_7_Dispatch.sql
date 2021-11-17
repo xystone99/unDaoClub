@@ -162,8 +162,9 @@ CREATE TABLE trn_dispatch_record(
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS `tbl_truck_idle`;				#车辆闲置表
 CREATE TABLE tbl_truck_idle(
-	trk_idle				INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,	#
+	truck_i					INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,	#
 	idle_k					ENUM('Idle','Lack') NOT NULl,				#闲置,缺少
+	cur_company				INT UNSIGNED NOT NULL DEFAULT 0,			#当前分公司(使用权)
 	truck					INT UNSIGNED NOT NULL DEFAULT 0,			#车辆ID(为0表示闲置)
 	plate_number			VARCHAR(10) NOT NULL DEFAULT '',			#车牌号/车型
 	driver					INT UNSIGNED NOT NULL DEFAULT 0,			#驾驶员ID(为0表示未设置)

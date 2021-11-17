@@ -33,17 +33,17 @@ RoleList roleList = new RoleList( XmsInitial.getDataSource() );
 roleList.setIfSystemAdministrator( AbstractDaemon.isSystemAdministrator(request) );
 roleList.setCloudID( AbstractDaemon.getCloudID(request) );
 
-String page_size = request.getParameter( RoleList.QP_PAGE_SIZE );
 String cur_page = request.getParameter( RoleList.QP_CUR_PAGE );
-if ( page_size != null ) {
-	roleList.setPageSize( Integer.parseInt(page_size) );
-}
 if ( cur_page != null ) {
+	roleList.setPageSize( Integer.parseInt(request.getParameter( RoleList.QP_PAGE_SIZE )) );
 	roleList.setCurrentPage( Integer.parseInt( cur_page ) );
-}		
-String[] arr_params = roleList.getParamSerial();
-for ( int j=0; j<arr_params.length; j++ ) {
-	roleList.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+
+	String[] arr_params = roleList.getParamSerial();
+	for ( int j=0; j<arr_params.length; j++ ) {
+		roleList.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	}
+} else {
+	roleList.setDefaultParameterValue();
 }
 roleList.executeQuery();
 CommonSet dataSet = roleList.getQueryResult( );

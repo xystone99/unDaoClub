@@ -246,6 +246,11 @@ public abstract class AbstractQuery extends AbstractDatabase {
 	}
 
 	/**
+	 * 设置默认的查询参数
+	 */
+	public abstract void setDefaultParameterValue( );
+
+	/**
 	 * 执行查询
 	 */
 	public abstract void executeQuery( );

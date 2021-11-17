@@ -33,12 +33,16 @@ public class RoleList extends AbstractQuery {
 	public RoleList(DataSource ds) {
 		super(ds);
 		parameterMap = new HashMap<String,String>(arr_param_serial.length);
+	}
+
+	@Override
+	public void setDefaultParameterValue( ) {
 		parameterMap.put( QP_SORT_TAG, SORT_TAG_ASC );
 		parameterMap.put( QP_NAME_ZH, "" );
 		this.setPageSize( DEFAULT_PAGE_SIZE );
 		this.setCurrentPage( 1 );
 	}
-	
+
 	@Override
 	public String[] getParamSerial( ) {
 		return arr_param_serial;

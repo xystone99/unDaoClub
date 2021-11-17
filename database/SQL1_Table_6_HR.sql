@@ -2,6 +2,66 @@ USE unDaoDB
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
+#	基础配置表
+#	tbl_role  stc_role_astricts  mst_company  mst_part  mst_post
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `tbl_role`;				#角色表
+CREATE TABLE tbl_role(
+	role					INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	ne_zh					VARCHAR(20) NOT NULL,
+	sort_tag				VARCHAR(20) NOT NULL DEFAULT 'ABC',
+	href_index				VARCHAR(50) NOT NULL,
+	remark					VARCHAR(80) NOT NULL DEFAULT '',
+	input_date				DATETIME NOT NULL,
+	cloud_id				VARCHAR(20) NOT NULL
+);
+
+
+DROP TABLE IF EXISTS `stc_role_astricts`;		#角色权限关系表
+CREATE TABLE stc_role_astricts(
+	id						INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	role					INT UNSIGNED NOT NULL,
+	astrict					VARCHAR(10) NOT NULL
+);
+
+
+DROP TABLE IF EXISTS `mst_company`;				#分公司表
+CREATE TABLE mst_company(
+	company					INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	ne_zh					VARCHAR(20) NOT NULL,
+	sort_tag				VARCHAR(20) NOT NULL DEFAULT 'ABC',
+	input_date				DATETIME NOT NULL,
+	last_update				DATETIME NOT NULL,
+	sys_flg					ENUM('Normal','Disable') NOT NULL DEFAULT 'Normal',
+	cloud_id				VARCHAR(20) NOT NULL
+);
+
+
+DROP TABLE IF EXISTS `mst_part`;				#部门表
+CREATE TABLE mst_part(
+	part					INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	ne_zh					VARCHAR(20) NOT NULL,
+	sort_tag				VARCHAR(20) NOT NULL DEFAULT 'ABC',
+	input_date				DATETIME NOT NULL,
+	last_update				DATETIME NOT NULL,
+	sys_flg					ENUM('Normal','Disable') NOT NULL DEFAULT 'Normal',
+	cloud_id				VARCHAR(20) NOT NULL
+);
+
+
+DROP TABLE IF EXISTS `mst_post`;				#岗位表
+CREATE TABLE mst_post(
+	post					INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	ne_zh					VARCHAR(20) NOT NULL,
+	sort_tag				VARCHAR(20) NOT NULL DEFAULT 'ABC',
+	input_date				DATETIME NOT NULL,
+	last_update				DATETIME NOT NULL,
+	sys_flg					ENUM('Normal','Disable') NOT NULL DEFAULT 'Normal',
+	cloud_id				VARCHAR(20) NOT NULL
+);
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
 #	用户账户
 #	tbl_user_account
 #------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -24,26 +84,6 @@ CREATE TABLE tbl_user_account(
 	sys_flg					ENUM('Normal','Inner','Quit') NOT NULL		#正常,内置用户,离职
 );
 INSERT INTO tbl_user_account(user_a,ne_zh,cloud_id,login_name,login_pwd,can_login,sys_flg)VALUES(10001,'SysAdministrator','XYZABC','sysAdmin',MD5('369258'),'Y','Inner');
-
-
-DROP TABLE IF EXISTS `tbl_role`;				#角色表
-CREATE TABLE tbl_role(
-	role					INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	ne_zh					VARCHAR(20) NOT NULL,
-	sort_tag				VARCHAR(20) NOT NULL DEFAULT 'ABC',
-	href_index				VARCHAR(50) NOT NULL,
-	remark					VARCHAR(80) NOT NULL DEFAULT '',
-	input_date				DATETIME NOT NULL,
-	cloud_id				VARCHAR(20) NOT NULL
-);
-
-
-DROP TABLE IF EXISTS `stc_role_astricts`;		#角色权限关系表
-CREATE TABLE stc_role_astricts(
-	id						INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	role					INT UNSIGNED NOT NULL,
-	astrict					VARCHAR(10) NOT NULL
-);
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------

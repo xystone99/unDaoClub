@@ -205,7 +205,7 @@ public interface CtrlConstants {
 	
 	public final static int PG_WARE_HOUSE_1 = 9401;						//仓库管理-开始
 	public final static int PG_WAIT_INOUT_LIST = 9411;					//等待出入库一览
-	public final static int PG_INOUT_HISTORY = 9412;					//历史出入库一览
+	public final static int PG_TRUCK_IDLE_LIST = 9412;					//车辆使用情况一览
 	public final static int PG_WARE_HOUSE_2 = 9499;						//仓库管理-结束
 	
 	public final static int PG_LONG_DISPATCH_1 = 9501;					//干线配载-开始

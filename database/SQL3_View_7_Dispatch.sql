@@ -121,4 +121,27 @@ FROM
 	LEFT JOIN tbl_user_account u ON d.sub_driver = u.user_a;
 
 	
+CREATE OR REPLACE VIEW view_truck_idle_list AS 
+SELECT
+	i.truck_i						truck_i,
+	i.idle_k						idle_k,
+	i.cur_company					cur_company,
+	c.ne_zh							company_zh,
+	i.truck							truck,
+	i.plate_number					plate_number,
+	i.driver						driver,
+	i.tel_driver					tel_driver,
+	i.start_date					start_date,
+	i.end_date						end_date,
+	i.remark						remark,
+	i.user_a						user_a,
+	u.ne_zh							user_a_zh,
+	i.input_date					input_date,
+	i.cloud_id						cloud_id
+FROM
+	tbl_truck_idle i
+	JOIN mst_company c ON i.cur_company = c.company
+	JOIN tbl_user_account u ON i.user_a = u.user_a;
 
+
+	

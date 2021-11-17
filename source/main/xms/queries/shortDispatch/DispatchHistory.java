@@ -34,6 +34,10 @@ public class DispatchHistory extends AbstractQuery {
 	public DispatchHistory(DataSource dataSource ) {
 		super(dataSource);
 		parameterMap = new HashMap<String,String>(arr_param_serial.length);
+	}
+
+	@Override
+	public void setDefaultParameterValue( ) {
 		parameterMap.put( QP_SORT_TAG, INPUT_DATE_ASC );
 		parameterMap.put( QP_TRUCK, SQL_EMPTY );
 		parameterMap.put( QP_DRIVER, SQL_EMPTY );

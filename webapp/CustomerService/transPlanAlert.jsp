@@ -36,18 +36,19 @@
 TransPlanAlert transPlanAlert = new TransPlanAlert( XmsInitial.getDataSource() );
 transPlanAlert.setCloudID(AbstractDaemon.getCloudID(request));
 
-String page_size = request.getParameter( TransPlanAlert.QP_PAGE_SIZE );
 String cur_page = request.getParameter( TransPlanAlert.QP_CUR_PAGE );
-if ( page_size != null ) {
-	transPlanAlert.setPageSize( Integer.parseInt(page_size) );
-}
 if ( cur_page != null ) {
 	transPlanAlert.setCurrentPage( Integer.parseInt( cur_page ) );
-}		
-String[] arr_params = transPlanAlert.getParamSerial();
-for ( int j=0; j<arr_params.length; j++ ) {
-	transPlanAlert.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	transPlanAlert.setPageSize( Integer.parseInt(request.getParameter( TransPlanAlert.QP_PAGE_SIZE )) );
+
+	String[] arr_params = transPlanAlert.getParamSerial();
+	for ( int j=0; j<arr_params.length; j++ ) {
+		transPlanAlert.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	}
+} else {
+	transPlanAlert.setDefaultParameterValue( );
 }
+
 transPlanAlert.executeQuery();
 CommonSet dataSet = transPlanAlert.getQueryResult( );
 %>

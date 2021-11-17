@@ -36,17 +36,16 @@
 WaitInOutList waitInOutList = new WaitInOutList( XmsInitial.getDataSource() );
 waitInOutList.setCloudID( AbstractDaemon.getCloudID(request) );
 
-String page_size = request.getParameter( WaitInOutList.QP_PAGE_SIZE );
 String cur_page = request.getParameter( WaitInOutList.QP_CUR_PAGE );
-if ( page_size != null ) {
-	waitInOutList.setPageSize( Integer.parseInt(page_size) );
-}
 if ( cur_page != null ) {
 	waitInOutList.setCurrentPage( Integer.parseInt( cur_page ) );
-}		
-String[] arr_params = waitInOutList.getParamSerial();
-for ( int j=0; j<arr_params.length; j++ ) {
-	waitInOutList.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	waitInOutList.setPageSize( Integer.parseInt(request.getParameter( WaitInOutList.QP_PAGE_SIZE )) );
+	String[] arr_params = waitInOutList.getParamSerial();
+	for ( int j=0; j<arr_params.length; j++ ) {
+		waitInOutList.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	}
+} else {
+	waitInOutList.setDefaultParameterValue( );
 }
 waitInOutList.executeQuery( );
 CommonSet dataSet = waitInOutList.getQueryResult( );

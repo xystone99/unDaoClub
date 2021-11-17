@@ -36,18 +36,19 @@
 WaitDispatchList waitDispatchList = new WaitDispatchList( XmsInitial.getDataSource() );
 waitDispatchList.setCloudID(AbstractDaemon.getCloudID(request));
 
-String page_size = request.getParameter( WaitDispatchList.QP_PAGE_SIZE );
 String cur_page = request.getParameter( WaitDispatchList.QP_CUR_PAGE );
-if ( page_size != null ) {
-	waitDispatchList.setPageSize( Integer.parseInt(page_size) );
-}
 if ( cur_page != null ) {
 	waitDispatchList.setCurrentPage( Integer.parseInt( cur_page ) );
-}		
-String[] arr_params = waitDispatchList.getParamSerial();
-for ( int j=0; j<arr_params.length; j++ ) {
-	waitDispatchList.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	waitDispatchList.setPageSize( Integer.parseInt(request.getParameter( WaitDispatchList.QP_PAGE_SIZE )) );
+
+	String[] arr_params = waitDispatchList.getParamSerial();
+	for ( int j=0; j<arr_params.length; j++ ) {
+		waitDispatchList.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	}
+} else {
+	waitDispatchList.setDefaultParameterValue( );
 }
+
 waitDispatchList.executeQuery();
 CommonSet dataSet = waitDispatchList.getQueryResult( );
 %>

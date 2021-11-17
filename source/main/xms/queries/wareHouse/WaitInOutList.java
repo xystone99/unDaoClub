@@ -37,6 +37,10 @@ public class WaitInOutList extends AbstractQuery {
 	public WaitInOutList(DataSource dataSource ) {
 		super(dataSource);
 		parameterMap = new HashMap<String,String>(arr_param_serial.length);
+	}
+
+	@Override
+	public void setDefaultParameterValue( ) {
 		parameterMap.put( QP_SORT_TAG, PLAN_K_ASC );
 		parameterMap.put( QP_PLAN_K, SQL_ALL );
 		parameterMap.put( QP_OBJECT_P, SQL_EMPTY );

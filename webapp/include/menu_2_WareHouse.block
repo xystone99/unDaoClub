@@ -6,8 +6,8 @@
 		<b>等待出入库:</b>&nbsp;
         <a href="../WareHouse/waitInOutList.jsp"><%=PAGE_TAG==CtrlConstants.PG_WAIT_INOUT_LIST?"<b>一览</b>":"一览"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
 
-        <b>历史记录:</b>&nbsp;
-        <a href="#" onclick="javascript:alert('建设中......')"";><%=PAGE_TAG==CtrlConstants.PG_INOUT_HISTORY?"<b>一览</b>":"一览"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <b>车辆使用情况:</b>&nbsp;
+        <a href="../WareHouse/truckIdleList.jsp"><%=PAGE_TAG==CtrlConstants.PG_TRUCK_IDLE_LIST?"<b>一览</b>":"一览"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
 
 	</td>
     </tr>

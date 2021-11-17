@@ -21,12 +21,17 @@ public class UppGroupList extends AbstractQuery {
 	public UppGroupList(DataSource dataSource) {
 		super(dataSource);
 		parameterMap = new HashMap<String,String>(arr_param_serial.length);
+	}
+
+	@Override
+	public void setDefaultParameterValue( ) {
 		parameterMap.put( QP_NAME_ZH, SQL_EMPTY );
 		parameterMap.put( QP_COMPANY, SQL_EMPTY );
 		parameterMap.put( QP_SYS_FLG, "Normal" );
 		this.setPageSize( DEFAULT_PAGE_SIZE );
 		this.setCurrentPage( 1 );
 	}
+
 	
 	@Override
 	public String[] getParamSerial( ) {

@@ -36,17 +36,17 @@
 TransPlanList transPlanList = new TransPlanList( XmsInitial.getDataSource() );
 transPlanList.setCloudID(AbstractDaemon.getCloudID(request));
 
-String page_size = request.getParameter( TransPlanList.QP_PAGE_SIZE );
 String cur_page = request.getParameter( TransPlanList.QP_CUR_PAGE );
-if ( page_size != null ) {
-	transPlanList.setPageSize( Integer.parseInt(page_size) );
-}
 if ( cur_page != null ) {
 	transPlanList.setCurrentPage( Integer.parseInt( cur_page ) );
-}		
-String[] arr_params = transPlanList.getParamSerial();
-for ( int j=0; j<arr_params.length; j++ ) {
-	transPlanList.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	transPlanList.setPageSize( Integer.parseInt(request.getParameter( TransPlanList.QP_PAGE_SIZE )) );
+
+	String[] arr_params = transPlanList.getParamSerial();
+	for ( int j=0; j<arr_params.length; j++ ) {
+		transPlanList.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
+	}
+} else {
+	transPlanList.setDefaultParameterValue( );
 }
 transPlanList.executeQuery();
 CommonSet dataSet = transPlanList.getQueryResult( );

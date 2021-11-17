@@ -12,7 +12,6 @@ public abstract class AbstractDatabase implements DatabaseConstants, CtrlConstan
 	protected boolean DEBUG = true;											//DEBUG开关
 	private DataSource dataSource;
 	private String cloudID = null;
-	protected ArrayList<String> parameterList = new ArrayList<String>();			//保存参数名称
 	protected HashMap<String,String> parameterMap = new HashMap<String,String>();		//保存QueryParameters
 
 	private final static HashMap<String,String> mapResult = new HashMap<String,String>();
@@ -57,9 +56,6 @@ public abstract class AbstractDatabase implements DatabaseConstants, CtrlConstan
 	 */
 	public void setParameterValue( String paramTag, String paramValue ) {
 		if ( paramValue != null ) {
-			if ( parameterList.indexOf( paramTag ) < 0 ) {
-				parameterList.add( paramTag );
-			}
 			parameterMap.put( paramTag, paramValue.trim() );
 		}
 	}

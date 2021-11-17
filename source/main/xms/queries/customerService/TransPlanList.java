@@ -34,6 +34,10 @@ public class TransPlanList extends AbstractQuery {
 	public TransPlanList(DataSource dataSource ) {
 		super(dataSource);
 		parameterMap = new HashMap<String,String>(arr_param_serial.length);
+	}
+
+	@Override
+	public void setDefaultParameterValue( ) {
 		parameterMap.put( QP_SORT_TAG, INPUT_DATE_ASC );
 		parameterMap.put( QP_PLAN_K, SQL_ALL );
 		parameterMap.put( QP_OBJECT_P, SQL_EMPTY );
