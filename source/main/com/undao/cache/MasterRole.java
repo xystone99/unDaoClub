@@ -14,9 +14,10 @@ import com.undao.database.*;
  */
 public class MasterRole extends AbstractDatabase {
 
-	private StringBuilder bufOptions = new StringBuilder( );
-	private final static String QUERY_SQL = "SELECT role,ne_zh,href_index FROM tbl_role ORDER BY sort_tag ASC";
+	private final static String QUERY_SQL = "SELECT role, ne_zh, href_index FROM tbl_role ORDER BY sort_tag ASC";
 
+	private StringBuilder bufOptions = new StringBuilder( );
+	protected HashMap<String,String> mapDisplay = new HashMap<String,String>();
 	protected HashMap<String,String> mapHref = new HashMap<String,String>();
 
 	private static MasterRole instance = null;
@@ -34,20 +35,28 @@ public class MasterRole extends AbstractDatabase {
 	public void fixSingletonObject( ) {
 		bufOptions.delete(0, bufOptions.length()-1 );
 		mapHref.clear( );
+		mapDisplay.clear( );
 
 		CommonSet dataList = DBUtils.executeQuery( getDataSource(), QUERY_SQL,false );
 		for( int j=0; j<dataList.getRowCount(); j++ ) {
-			bufOptions.append( "<options value=\"" ).append(((Long)dataList.getValue(j,"role")).toString()).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
-			mapHref.put( ((Long)dataList.getValue(j,"role")).toString(), (String)dataList.getValue(j,"href_index") );
+			Long roleID = (Long)dataList.getValue(j,"role");
+			String roleName = (String)dataList.getValue(j,"ne_zh");
+			bufOptions.append( "<options value=\"" ).append( roleID.toString() ).append( "\"").append( roleName ).append( "</options" );
+			mapDisplay.put( roleID.toString(), roleName );
+			mapHref.put( roleID.toString(), (String)dataList.getValue(j,"href_index") );
 		}
 		
 	}
-	
-	public String getHrefByID( String roleID ) {
-    	return mapHref.get( roleID );
+
+	public String getDisplay( String roleID ) {
+		return mapDisplay.get( roleID );
 	}
 
-	public String getSelectOptions( String cloudID ) {
+	public String getHrefByID( String roleID ) {
+		return mapHref.get( roleID );
+	}
+
+	public String getSelectOptions( String placeID ) {
 		return bufOptions.toString( );
 	}
 

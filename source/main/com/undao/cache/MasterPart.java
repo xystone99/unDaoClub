@@ -16,9 +16,9 @@ import java.util.HashMap;
 public class MasterPart extends AbstractDatabase {
 
 	private StringBuilder bufOptions = new StringBuilder( );
-	private final static String QUERY_SQL = "SELECT part,ne_zh,sys_flg FROM mst_part ORDER BY sort_tag ASC";
+	private final static String QUERY_SQL = "SELECT part, ne_zh, sys_flg FROM mst_part ORDER BY sort_tag ASC";
 
-	protected HashMap<String,String> mapPart = new HashMap<String,String>();
+	protected HashMap<String,String> mapDisplay = new HashMap<String,String>();
 
 	private static MasterPart instance = null;
 	public MasterPart( ) {
@@ -34,20 +34,20 @@ public class MasterPart extends AbstractDatabase {
 
 	public void fixSingletonObject( ) {
 		bufOptions.delete(0, bufOptions.length()-1 );
-		mapPart.clear( );
+		mapDisplay.clear( );
 
 		CommonSet dataList = DBUtils.executeQuery( getDataSource(), QUERY_SQL,false );
 		for( int j=0; j<dataList.getRowCount(); j++ ) {
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
 				bufOptions.append( "<options value=\"" ).append(((Long)dataList.getValue(j,"part")).toString()).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
 			}
-			mapPart.put( ((Long)dataList.getValue(j,"part")).toString(), (String)dataList.getValue(j,"ne_zh") );
+			mapDisplay.put( ((Long)dataList.getValue(j,"part")).toString(), (String)dataList.getValue(j,"ne_zh") );
 		}
 		
 	}
 	
-	public String getCompanyName( String company ) {
-    	return mapPart.get( company );
+	public String getDisplay( String partID ) {
+		return mapDisplay.get( partID );
 	}
 
 	public String getSelectOptions( String placeID ) {

@@ -16,8 +16,10 @@ import java.util.HashMap;
  */
 public class YunMasterRole extends MasterRole {
 
-	private HashMap<String,String> mapDisplay = new HashMap<String,String>();
-	private final static String QUERY_SQL = "SELECT cloud_id,role,ne_zh,href_index FROM tbl_role ORDER BY cloud_id, sort_tag ASC";
+	private final static String QUERY_SQL = "SELECT cloud_id, role, ne_zh, href_index FROM tbl_role ORDER BY cloud_id ASC, sort_tag ASC";
+	private final static String QUERY_SQL_WITH_CLOUD = "SELECT role, ne_zh, href_index FROM tbl_role WHERE cloud_id = ? ORDER BY sort_tag ASC";
+
+	private HashMap<String,String> mapSelectOptions = new HashMap<String,String>();
 
 	private static YunMasterRole instance = null;
 	private YunMasterRole( ) {
@@ -36,31 +38,65 @@ public class YunMasterRole extends MasterRole {
 	public void fixSingletonObject( ) {
 		mapDisplay.clear( );
 		mapHref.clear( );
+		mapSelectOptions.clear( );
 
 		CommonSet dataList = DBUtils.executeQuery( getDataSource(), QUERY_SQL,false );
-		String preCloudID = SQL_ZERO;
+		if ( dataList.getRowCount() <= 0 ) {
+			return;
+		}
+
+		String preCloudID = (String)dataList.getValue(0,"cloud_id");
+		Long roleID = (Long)dataList.getValue(0,"role");
+		String roleName = (String)dataList.getValue(0,"ne_zh");
+
 		StringBuilder bufOptions = new StringBuilder( );
-		for( int j=0; j<dataList.getRowCount(); j++ ) {
+		bufOptions.append( "<options value=\"" ).append( roleID.toString() ).append( "\"").append( roleName ).append( "</options" );
+		mapDisplay.put( roleID.toString(), roleName );
+		mapHref.put( roleID.toString(), (String)dataList.getValue(0,"href_index") );
+
+		for( int j=1; j<dataList.getRowCount(); j++ ) {
 			String curCloudID = (String)dataList.getValue(j,"cloud_id");
+			roleID = (Long)dataList.getValue(j,"role");
+			roleName = (String)dataList.getValue(j,"ne_zh");
+
+			mapDisplay.put( roleID.toString(), roleName );
+			mapHref.put( roleID.toString(), (String)dataList.getValue(j,"href_index") );
+
 			if ( !curCloudID.equals( preCloudID ) ) {
-				if ( !preCloudID.equals( SQL_ZERO ) ) {
-					mapDisplay.put( preCloudID, bufOptions.toString() );
-				}
+				mapSelectOptions.put( preCloudID, bufOptions.toString() );
 				bufOptions.delete(0, bufOptions.length() );
 				preCloudID = curCloudID;
 			}
-			bufOptions.append( "<options value=\"" ).append(((Long)dataList.getValue(j,"role")).toString()).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
-			mapHref.put( ((Long)dataList.getValue(j,"role")).toString(), (String)dataList.getValue(j,"href_index") );
-		}
-		if ( dataList.getRowCount() > 0 ) {
-			mapDisplay.put( preCloudID, bufOptions.toString() );
+			bufOptions.append( "<options value=\"" ).append( roleID.toString() ).append( "\"").append( roleName ).append( "</options" );
 		}
 
+		mapSelectOptions.put( preCloudID, bufOptions.toString() );
+	}
+
+	/**
+	 * 重置指定CloudID的角色缓存
+	 */
+	public void fixSingletonObject( String cloudID ) {
+		CommonSet dataList = DBUtils.prepareQuery( getDataSource(), QUERY_SQL_WITH_CLOUD, cloudID );
+		StringBuilder bufOptions = new StringBuilder( );
+
+		for( int j=1; j<dataList.getRowCount(); j++ ) {
+			Long roleID = (Long)dataList.getValue(0,"role");
+			mapDisplay.put( roleID.toString(), (String)dataList.getValue(j,"ne_zh") );
+			mapHref.put( roleID.toString(), (String)dataList.getValue(0,"href_index") );
+
+			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
+				bufOptions.append( "<options value=\"" ).append(roleID.toString()).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+			}
+		}
+
+		mapSelectOptions.put( cloudID, bufOptions.toString() );
 	}
 
 	@Override
 	public String getSelectOptions( String cloudID ) {
-		return mapDisplay.get( cloudID );
+		return mapSelectOptions.get( cloudID );
 	}
-	
+
+
 }
