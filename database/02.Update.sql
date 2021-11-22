@@ -1,4 +1,19 @@
 
+INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10001,'上海锂电池仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
+INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10002,'上海线束仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
+INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10003,'上海宝安公路仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
+INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10004,'上海长泾仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
+INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10005,'上海浦东仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
+
+INSERT INTO tbl_role(role,ne_zh,sort_tag,href_index,input_date,cloud_id)VALUES(11,'计划','ABC','CustomerService/transPlanList.jsp',NOW(),'XYZABC');
+INSERT INTO tbl_role(role,ne_zh,sort_tag,href_index,input_date,cloud_id)VALUES(12,'调度','ABC','ShortDispatch/waitDispatchList.jsp',NOW(),'XYZABC');
+INSERT INTO tbl_role(role,ne_zh,sort_tag,href_index,input_date,cloud_id)VALUES(13,'仓库','ABC','WareHouse/waitInOutList.jsp',NOW(),'XYZABC');
+
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10011,'夏芸','xiayun',MD5('abcd1234'),'Y',11,0,'10001,10002,10003','Normal','XYZABC');
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10012,'黄华','huanghua',MD5('abcd1234'),'Y',12,10002,'10001,10002,10003,10004,10005','Normal','XYZABC');
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10013,'吴方舟','wufangzhou',MD5('abcd1234'),'Y',13,10001,'10001','Normal','XYZABC');
+
+
 INSERT INTO tbl_payment_object(obj_p,ne_zh,ne_short,init_spell,if_cus,if_provider,cloud_id,sys_flg)VALUES(10001,'电池包国内陆路运输','电池包国内陆路运输','DCB','Y','N','XYZABC','Normal');
 INSERT INTO tbl_payment_object(obj_p,ne_zh,ne_short,init_spell,if_cus,if_provider,cloud_id,sys_flg)VALUES(10002,'华美工程塑料（常熟）有限公司','华美工程塑料（常熟）有限公司','HMGC','Y','N','XYZABC','Normal');
 INSERT INTO tbl_payment_object(obj_p,ne_zh,ne_short,init_spell,if_cus,if_provider,cloud_id,sys_flg)VALUES(10003,'柯锐世','柯锐世','KRS','Y','N','XYZABC','Normal');
