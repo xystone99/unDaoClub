@@ -24,6 +24,7 @@ public interface DatabaseConstants {
 	public static final String SQL_EMPTY = "";
 	public static final String SQL_SPACE = " ";
 	public static final String SQL_ZERO = "0";
+	public static final String SQL_COMMA = ",";
 	public static final String SQL_ALL = "All";
 	public static final String SQL_NORMAL = "Normal";
 	public static final String SQL_NOT = "N";

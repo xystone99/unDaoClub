@@ -19,7 +19,6 @@
 	String result = "#";
 	String info_tag = "#";
 	String redirect_url = "#";
-	boolean is_modal_dialog = false;
 	boolean is_refresh_parent = false;
 	boolean is_close_window = false;
 	boolean is_back = false;

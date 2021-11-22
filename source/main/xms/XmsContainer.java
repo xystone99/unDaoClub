@@ -1,15 +1,16 @@
 package xms;
 
 
-import com.undao.cache.MasterRole;
-import com.undao.cache.RoleAstricts;
-import com.undao.cache.SystemicVariables;
+import com.undao.cache.*;
 
 import javax.sql.DataSource;
 
 public class XmsContainer {
 
     private SystemicVariables systemicVariables = null;
+    private MasterCompany masterCompany = null;
+    private MasterPart masterPart = null;
+    private MasterPost masterPost = null;
     private MasterRole masterRole = null;
     private RoleAstricts roleAstricts = null;
 
@@ -19,6 +20,15 @@ public class XmsContainer {
     public void initialContainer(DataSource dataSource) {
         systemicVariables.setDataSource( dataSource );
         systemicVariables.fixSingletonObject( );
+
+        masterCompany.setDataSource( dataSource );
+        masterCompany.fixSingletonObject( );
+
+        masterPart.setDataSource( dataSource );
+        masterPart.fixSingletonObject( );
+
+        masterPost.setDataSource( dataSource );
+        masterPost.fixSingletonObject( );
 
         masterRole.setDataSource( dataSource );
         masterRole.fixSingletonObject( );
@@ -36,6 +46,21 @@ public class XmsContainer {
         this.systemicVariables = systemicVariables;
     }
 
+    public MasterCompany getMasterCompany() { return masterCompany; }
+
+    public void setMasterCompany(MasterCompany masterCompany) { this.masterCompany = masterCompany; }
+
+
+    public MasterPart getMasterPart() { return masterPart; }
+
+    public void setMasterPart(MasterPart masterPart) { this.masterPart = masterPart; }
+
+
+    public MasterPost getMasterPost() { return masterPost; }
+
+    public void setMasterPost(MasterPost masterPost) { this.masterPost = masterPost; }
+
+
     public MasterRole getMasterRole() {
         return masterRole;
     }
@@ -44,6 +69,7 @@ public class XmsContainer {
         this.masterRole = masterRole;
     }
 
+
     public RoleAstricts getRoleAstricts() {
         return roleAstricts;
     }
@@ -51,4 +77,6 @@ public class XmsContainer {
     public void setRoleAstricts(RoleAstricts roleAstricts) {
         this.roleAstricts = roleAstricts;
     }
+
+
 }

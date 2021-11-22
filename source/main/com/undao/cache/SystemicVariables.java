@@ -54,7 +54,6 @@ public class SystemicVariables extends AbstractDatabase {
 		}
 	}
 
-	protected final static String[] arrKey = new String[arrData.length];
 	protected HashMap<String,String> mapVars = new HashMap<String,String>();
 	
 	/**
@@ -139,4 +138,6 @@ public class SystemicVariables extends AbstractDatabase {
 	public static void main( String[] args ) {
 		SystemicVariables.createInitialSQL( );
 	}
+
+
 }

@@ -53,7 +53,8 @@ public class YunMasterCompany extends MasterCompany {
 
 		for( int j=1; j<dataList.getRowCount(); j++ ) {
 			String curCloudID = (String)dataList.getValue(j,"cloud_id");
-			mapDisplay.put( ((Long)dataList.getValue(j,"company")).toString(), (String)dataList.getValue(j,"ne_zh") );
+			companyID = (Long)dataList.getValue(0,"company");
+			mapDisplay.put( companyID.toString(), (String)dataList.getValue(j,"ne_zh") );
 
 			if ( !curCloudID.equals( preCloudID ) ) {
 				mapSelectOptions.put( preCloudID, bufOptions.toString() );
@@ -61,7 +62,7 @@ public class YunMasterCompany extends MasterCompany {
 				preCloudID = curCloudID;
 			}
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append(((Long)dataList.getValue(j,"company")).toString()).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<options value=\"" ).append( companyID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
 			}
 		}
 

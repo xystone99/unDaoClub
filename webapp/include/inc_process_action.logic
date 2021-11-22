@@ -11,11 +11,7 @@
 	    %>self.location=document.referrer;<%
 	}
 	if ( is_refresh_parent ) {
-		if ( is_modal_dialog ) {
-			%>window.returnValue = "Refresh";<%
-		} else {
-			%>if (!opener.closed) opener.document.location.reload( true );<%
-		}
+		%>if (!opener.closed) opener.document.location.reload( true );<%
 	}
 	if ( is_close_window ) {
 		%>window.close( );<%

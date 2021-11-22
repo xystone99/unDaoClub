@@ -79,11 +79,11 @@ CREATE TABLE tbl_user_account(
 	role					INT UNSIGNED NOT NULL DEFAULT 0,			#角色编号
 	astrict_level			TINYINT UNSIGNED NOT NULL DEFAULT 0,		#权限级别:0最高;5一般;9最低.
 	cur_company				INT UNSIGNED NOT NULL DEFAULT 0,			#系统操作时默认分公司(company)
-	available_companys		VARCHAR(300) NOT NULL DEFAULT '0',			#可访问分公司列表(IN函数)(company)
-	cloud_id				VARCHAR(20) NOT NULL,
-	sys_flg					ENUM('Normal','Inner','Quit') NOT NULL		#正常,内置用户,离职
+	available_companys		VARCHAR(200) NOT NULL DEFAULT '',			#可访问分公司列表(IN函数)(company)
+	sys_flg					ENUM('Normal','Inner','Quit') NOT NULL,		#正常,内置用户,离职
+	cloud_id				VARCHAR(20) NOT NULL
 );
-INSERT INTO tbl_user_account(user_a,ne_zh,cloud_id,login_name,login_pwd,can_login,sys_flg)VALUES(10001,'SysAdministrator','XYZABC','sysAdmin',MD5('369258'),'Y','Inner');
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,cur_company,available_companys,sys_flg,cloud_id)VALUES(10001,'SysAdministrator','sysAdmin',MD5('369258'),'Y',10001,'10001,10002,10003,10004,10005','Inner','XYZABC');
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------

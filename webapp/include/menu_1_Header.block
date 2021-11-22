@@ -1,9 +1,24 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
+<script language="javascript">
+function checkExitSystem( ) {
+    if ( confirm( "确定退出系统吗？" ) ) {
+        window.location.href = "../processLogin.jsp?Action=ExitSystem";
+    }
+}
+</script>
 
 <div id="header" >
 	<img style="float:left;border-bottom:1px solid #AAD9EF;" src="../images/sort_up_down.png" />
 	<div id="menu">
 		<ul>
+        <%
+        if ( (PAGE_TAG >= CtrlConstants.PG_SELF_1) && (PAGE_TAG <= CtrlConstants.PG_SELF_2) ) {
+        	%><li class="selected">个人办公<%
+        } else {
+        	%><li><a href="../Self/myDomain.jsp">个人办公</a><%
+        }
+        %></li>
+        <li class="menuDiv"></li>
 		<%
 		if ( (PAGE_TAG >= CtrlConstants.PG_CUSTOMER_SERVICE_1) && (PAGE_TAG <= CtrlConstants.PG_CUSTOMER_SERVICE_2) ) {
 			%><li class="selected">运输计划<%

@@ -3,7 +3,7 @@
  */
 package yundeploy.cache;
 
-import com.undao.cache.MasterPart;
+import com.undao.cache.MasterPost;
 import com.undao.database.CommonSet;
 import com.undao.database.DBUtils;
 
@@ -13,21 +13,21 @@ import java.util.HashMap;
  * @author Administrator
  *
  */
-public class YunMasterPart extends MasterPart {
+public class YunMasterPost extends MasterPost {
 
-	private final static String QUERY_SQL = "SELECT cloud_id, part, ne_zh, sys_flg FROM mst_part ORDER BY cloud_id ASC, sort_tag ASC";
-	private final static String QUERY_SQL_WITH_CLOUD = "SELECT part, ne_zh, sys_flg FROM mst_part WHERE cloud_id = ? ORDER BY sort_tag ASC";
+	private final static String QUERY_SQL = "SELECT cloud_id, post, ne_zh, sys_flg FROM mst_post ORDER BY cloud_id ASC, sort_tag ASC";
+	private final static String QUERY_SQL_WITH_CLOUD = "SELECT post, ne_zh, sys_flg FROM mst_post WHERE cloud_id = ? ORDER BY sort_tag ASC";
 
 	private HashMap<String,String> mapSelectOptions = new HashMap<String,String>();
 
-	private static YunMasterPart instance = null;
-	private YunMasterPart( ) {
+	private static YunMasterPost instance = null;
+	private YunMasterPost( ) {
 		super();
 	}
-	public static YunMasterPart getInstance( ) {
+	public static YunMasterPost getInstance( ) {
 		if ( instance == null ) {
-			synchronized( YunMasterPart.class ) {
-				if ( instance == null )  instance = new YunMasterPart( );
+			synchronized( YunMasterPost.class ) {
+				if ( instance == null )  instance = new YunMasterPost( );
 			}
 		}
 		return instance;
@@ -44,17 +44,17 @@ public class YunMasterPart extends MasterPart {
 		}
 
 		String preCloudID = (String)dataList.getValue(0,"cloud_id");
-		Long partID = (Long)dataList.getValue(0,"part");
-		String partName = (String)dataList.getValue(0,"ne_zh");
+		Long postID = (Long)dataList.getValue(0,"post");
+		String postName = (String)dataList.getValue(0,"ne_zh");
 
 		StringBuilder bufOptions = new StringBuilder( );
-		bufOptions.append( "<options value=\"" ).append( partID.toString() ).append( "\"").append( partName ).append( "</options" );
-		mapDisplay.put( partID.toString(), partName );
+		bufOptions.append( "<options value=\"" ).append( postID.toString() ).append( "\"").append( postName ).append( "</options" );
+		mapDisplay.put( postID.toString(), postName );
 
 		for( int j=1; j<dataList.getRowCount(); j++ ) {
 			String curCloudID = (String)dataList.getValue(j,"cloud_id");
-			partID = (Long)dataList.getValue(j,"part");
-			mapDisplay.put( partID.toString(), (String)dataList.getValue(j,"ne_zh") );
+			postID = (Long)dataList.getValue(j,"post");
+			mapDisplay.put( postID.toString(), (String)dataList.getValue(j,"ne_zh") );
 
 			if ( !curCloudID.equals( preCloudID ) ) {
 				mapSelectOptions.put( preCloudID, bufOptions.toString() );
@@ -62,7 +62,7 @@ public class YunMasterPart extends MasterPart {
 				preCloudID = curCloudID;
 			}
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append( partID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<options value=\"" ).append( postID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
 			}
 		}
 
@@ -70,17 +70,17 @@ public class YunMasterPart extends MasterPart {
 	}
 
     /**
-     * 重置指定CloudID的部门缓存
+     * 重置指定CloudID的公司缓存
 	 */
 	public void fixSingletonObject( String cloudID ) {
 		CommonSet dataList = DBUtils.prepareQuery( getDataSource(), QUERY_SQL_WITH_CLOUD, cloudID );
 		StringBuilder bufOptions = new StringBuilder( );
 
 		for( int j=1; j<dataList.getRowCount(); j++ ) {
-			Long partID = (Long)dataList.getValue(j,"part");
-			mapDisplay.put( partID.toString(), (String)dataList.getValue(j,"ne_zh") );
+			Long postID = (Long)dataList.getValue(0,"post");
+			mapDisplay.put( postID.toString(), (String)dataList.getValue(j,"ne_zh") );
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append( partID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<options value=\"" ).append( postID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
 			}
 		}
 

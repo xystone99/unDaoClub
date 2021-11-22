@@ -68,9 +68,9 @@ public class YunSystemicVariables extends SystemicVariables {
 	 * 初始化系统参数
 	 */
 	public void initialVariables( String cloudID ) {
-		for ( int j=0; j<arrKey.length; j++ ) {
+		for ( int j=0; j<arrData.length; j++ ) {
 			StringBuilder bufSQL = new StringBuilder();
-			bufSQL.append( "INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('" ).append( cloudID ).append( "','" ).append( arrKey[j] ).append( "','" ).append( arrData[j][1] ).append( "');" );
+			bufSQL.append( "INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('" ).append( cloudID ).append( "','" ).append( arrData[j][0] ).append( "','" ).append( arrData[j][1] ).append( "');" );
 			DBUtils.executeUpdate( getDataSource(), bufSQL.toString() );
 		}
 	}

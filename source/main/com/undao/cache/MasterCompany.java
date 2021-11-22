@@ -54,5 +54,20 @@ public class MasterCompany extends AbstractDatabase {
 		return bufOptions.toString( );
 	}
 
+	/**
+	 * 依据查询范围列表生成可选择Options字符串
+	 */
+	public String getAvaliableSelectOptions( String avaliableCompanys ) {
+		if ( avaliableCompanys.length() <= 1 ) {
+			return SQL_EMPTY;
+		}
+		StringBuilder buf = new StringBuilder( );
+		String[] arrCompany = avaliableCompanys.split( SQL_COMMA );
+		for ( int j=0; j<arrCompany.length; j++ ) {
+			buf.append("<option value=\">" ).append( arrCompany[j] ).append( "\">" ).append( mapDisplay.get(arrCompany[j]) ).append( "</option>" );
+		}
+		return buf.toString( );
+	}
+
 
 }

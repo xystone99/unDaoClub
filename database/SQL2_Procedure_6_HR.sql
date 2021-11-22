@@ -16,7 +16,7 @@ CREATE PROCEDURE `proc_employee_login`(
 	OUT r_ROLE				VARCHAR(20),
 	OUT	r_ASTRICT_LEVEL		VARCHAR(20),
 	OUT r_CUR_COMPANY		VARCHAR(20),
-	OUT r_COMPANYS			VARCHAR(20),
+	OUT r_COMPANYS			VARCHAR(200),
 	OUT r_SYS_FLG			VARCHAR(20),
 	
 	OUT result				VARCHAR(50)	)
@@ -53,15 +53,15 @@ END BASIC_BLOCK $$
  ************************************************************************************************************************/
 DROP PROCEDURE IF EXISTS `proc_password_update` $$
 CREATE PROCEDURE `proc_password_update`(
-	IN	pUSER_A				VARCHAR(20),
 	IN	pLOGIN_PWD			VARCHAR(20),	
 	IN	pLOGIN_NAME_NEW		VARCHAR(20),
 	IN	pLOGIN_PWD_NEW		VARCHAR(20),
+	IN	pUSER_A				VARCHAR(20),
 	IN	pCLOUD_ID			VARCHAR(20),
 	
 	OUT	result				VARCHAR(50) )
 BASIC_BLOCK:BEGIN
-	DECLARE xPwd VARCHAR(50);
+	DECLARE xPwd, xOldLoginName VARCHAR(50);
 	
 	DECLARE CONTINUE HANDLER FOR NOT FOUND BEGIN
 		SET xPwd = NULL;
@@ -70,15 +70,20 @@ BASIC_BLOCK:BEGIN
 		ROLLBACK;
 		SET result = 'SQLException';
 	END;	
-
-	SELECT login_pwd INTO xPwd FROM tbl_user_account WHERE cloud_id=pCLOUD_ID AND user_a=pUSER_A AND login_pwd = MD5(pLOGIN_PWD);
+	
+	SELECT login_name,login_pwd INTO xOldLoginName,xPwd FROM tbl_user_account WHERE cloud_id=pCLOUD_ID AND user_a=pUSER_A AND login_pwd = MD5(pLOGIN_PWD);
 	IF ( (xPwd IS NULL) || (xPwd <> MD5(pLOGIN_PWD)) ) THEN
 		SET result = 'OldError';
 		LEAVE BASIC_BLOCK;
 	END IF;
 	
 	START TRANSACTION;
-	UPDATE tbl_user_account SET login_name=pLOGIN_NAME_NEW, login_pwd=MD5(pLOGIN_PWD_NEW) WHERE user_a = pUSER_A;
+	IF (pLOGIN_NAME_NEW <> 'sysAdmin') THEN
+		UPDATE tbl_user_account SET login_name=pLOGIN_NAME_NEW, login_pwd=MD5(pLOGIN_PWD_NEW) WHERE user_a = pUSER_A;
+	ELSE
+		UPDATE tbl_user_account SET login_pwd=MD5(pLOGIN_PWD_NEW) WHERE user_a = pUSER_A;
+	END IF;
+
 	COMMIT;
 	SET result = 'UpdateSuccess';
 END BASIC_BLOCK $$

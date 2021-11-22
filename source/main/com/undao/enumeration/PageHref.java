@@ -19,7 +19,7 @@ public class PageHref {
 	public static final String PG_SYS_CONFIGURE = "SysConfigure/roleList.jsp";
 	public static final String PG_CUSTOMER_SERVICE = "CustomerService/transPlanList.jsp";
 	public static final String PG_SHORT_DISPATCH = "ShortDispatch/waitDispatchList.jsp";
-	public static final String PG_WARE_HOUSE = "WareHouse/waitDispatchList.jsp";
+	public static final String PG_WARE_HOUSE = "WareHouse/waitInOutList.jsp";
 	
 	private static String[] arrPage = {
 			PG_SYS_CONFIGURE, PG_CUSTOMER_SERVICE, PG_SHORT_DISPATCH, PG_WARE_HOUSE
@@ -43,7 +43,7 @@ public class PageHref {
 	/**
 	 * 供JSP文件直接调用
 	 */
-	public static final String PURE_OPTIONS = "<option value=\"SysConfigure/roleList.jsp\">管理员主页</option><option value=\"CustomerService/transPlanList.jsp\">客户服务</option><option value=\"ShortDispatch/waitDispatchList.jsp\">车辆调度</option><option value=\"WareHouse/waitDispatchList.jsp\">仓库管理</option>";
+	public static final String PURE_OPTIONS = "<option value=\"SysConfigure/roleList.jsp\">管理员主页</option><option value=\"CustomerService/transPlanList.jsp\">客户服务</option><option value=\"ShortDispatch/waitDispatchList.jsp\">车辆调度</option><option value=\"WareHouse/waitInOutList.jsp\">仓库管理</option>";
 
 	/**
 	 * Test

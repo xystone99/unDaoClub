@@ -19,6 +19,8 @@ public class WareReturnDispatch extends AbstractProcedure implements ProcedureCo
 	private final static HashMap<String,String> mapResult = new HashMap<String,String>();
 	static {
 		mapResult.put( R_RETURN_SUCCESS, "回报成功." );
+		mapResult.put( R_INVALID, "非法修改." );
+		mapResult.put( R_IN_USE, "仅能回报三天内的计划." );
 	}
 
 	public WareReturnDispatch(DataSource dataSource ) {

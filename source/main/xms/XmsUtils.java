@@ -78,7 +78,7 @@ public class XmsUtils {
 		bufResult.append( "alert(\"权限不足......\");" );
 		bufResult.append( "window.close();" );
 		bufResult.append( "</Script>" );
-		CODE_EXIT_ASTRICT_PARENT = bufResult.toString();
+		CODE_EXIT_ASTRICT_OTHER = bufResult.toString();
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class XmsUtils {
 			return CtrlConstants.RET_BLANK;
 		}
 		
-		RoleAstricts roleAstricts = RoleAstricts.getInstance( );		
+		RoleAstricts roleAstricts = XmsInitial.getXmsContainer().getRoleAstricts( );
 		if ( !roleAstricts.checkPassport( curRole, needAstricts ) ) {
 			if ( winMode == CtrlConstants.WM_PARENT ) {
 				return CODE_EXIT_ASTRICT_PARENT;

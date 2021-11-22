@@ -6,12 +6,18 @@
 
     <!-- -->
     <bean id="stcVariables" class="yundeploy.cache.YunSystemicVariables"></bean>
+    <bean id="mstCompany" class="yundeploy.cache.YunMasterCompany"></bean>
+    <bean id="mstPart" class="yundeploy.cache.YunMasterPart"></bean>
+    <bean id="mstPost" class="yundeploy.cache.YunMasterPost"></bean>
     <bean id="mstRole" class="yundeploy.cache.YunMasterRole"></bean>
     <bean id="roleAstricts" class="com.undao.cache.RoleAstricts"></bean>
     <!-- -->
 
     <!--
     <bean id="stcVariables" class="com.undao.cache.SystemicVariables"></bean>
+    <bean id="mstCompany" class="com.undao.cache.MasterCompany"></bean>
+    <bean id="mstPart" class="com.undao.cache.MasterPart"></bean>
+    <bean id="mstPost" class="com.undao.cache.MasterPost"></bean>
     <bean id="mstRole" class="com.undao.cache.MasterRole"></bean>
     <bean id="roleAstricts" class="com.undao.cache.RoleAstricts"></bean>
     -->
@@ -19,8 +25,12 @@
 
     <bean id="xmsContainer" class="xms.XmsContainer">
         <property name="systemicVariables" ref="stcVariables"></property>
+        <property name="masterCompany" ref="mstCompany"></property>
+        <property name="masterPart" ref="mstPart"></property>
+        <property name="masterPost" ref="mstPost"></property>
         <property name="masterRole" ref="mstRole"></property>
         <property name="roleAstricts" ref="roleAstricts"></property>
     </bean>
+
 
 </beans>
