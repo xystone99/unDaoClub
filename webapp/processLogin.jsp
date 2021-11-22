@@ -25,7 +25,7 @@
 			is_back = true;
 		} else if ( XmsInitial.getXmsContainer().getSystemicVariables().isAcceptLogin(cloudID) || loginName.equals(CtrlConstants.INNER_ADMIN) ) {
 			LoginSystem loginSystem = new LoginSystem( XmsInitial.getDataSource() );
-			AbstractDaemon.fixQueryParams( loginSystem, request, false, false );
+			AbstractDaemon.fixQueryParams( loginSystem, request, false, false, false );
 			loginSystem.executeCall();
 			String[] y_result = loginSystem.getReturnValues( );
 			result = y_result[7];
@@ -40,6 +40,7 @@
 				session.setAttribute( CtrlConstants.SESS_LANDER_ROLE, y_result[2] );
 				session.setAttribute( CtrlConstants.SESS_ASTRICT_LEVEL, y_result[3] );
 				session.setAttribute( CtrlConstants.SESS_CUR_COMPANY, y_result[4] );
+				session.setAttribute( CtrlConstants.SESS_CUR_COMPANY_NAME, XmsInitial.getXmsContainer().getMasterCompany().getDisplay(y_result[4]) );
 				session.setAttribute( CtrlConstants.SESS_AVALIABLE_COMPANIES, y_result[5] );
 				session.setAttribute( CtrlConstants.SESS_AVALIABLE_OPTIONS, XmsInitial.getXmsContainer().getMasterCompany().getAvaliableSelectOptions(y_result[5]));
 				session.setAttribute( CtrlConstants.SESS_LANDER_FLG, y_result[6] );

@@ -26,15 +26,31 @@ public class DriverFetcher extends AbstractDaemon {
 		String matchTag = request.getParameter("term").trim();
     	DriverGeometry driverGeometry = DriverGeometry.getInstance();
 
+		StringBuilder buf = new StringBuilder( );
+		buf.append( "[" );
+
     	if ( actionTag.equals( "Driver" ) ) {
-			String json = driverGeometry.searchPattern( matchTag.toUpperCase() );
-			outputToClient(request, response, json );
+			buf.append(driverGeometry.searchPattern(matchTag.toUpperCase()));
+
+			buf.append(",{");
+			buf.append(AbstractDaemon.makeJsonItem("ID", "0")).append(",");
+			buf.append(AbstractDaemon.makeJsonItem("Mobile", "")).append(",");
+			buf.append(AbstractDaemon.makeJsonItem("Name", "")).append(",");
+			buf.append(AbstractDaemon.makeJsonItem("value", "社会司机")).append(",");
+			buf.append(AbstractDaemon.makeJsonItem("label", "社会司机..."));
+			buf.append("}");
+
+		} else if ( actionTag.equals( "TruckIdle" ) ) {
+			buf.append(driverGeometry.searchPattern(matchTag.toUpperCase()));
 
 		} else if ( actionTag.equals( "SubDriver" ) ) {
-			String json = driverGeometry.searchPatternForSubDriver( matchTag.toUpperCase() );
-			outputToClient(request, response, json );
+			buf.append( driverGeometry.searchPatternForSubDriver( matchTag.toUpperCase() ) );
 
 		}
+
+		buf.append( "]" );
+		outputToClient(request, response, buf.toString() );
+
     }       
        
 }

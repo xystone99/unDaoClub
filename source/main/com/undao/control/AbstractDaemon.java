@@ -102,7 +102,11 @@ public abstract class AbstractDaemon extends HttpServlet implements CtrlConstant
 	public static String getCurrentCompany( HttpServletRequest request ) {			//当前用户所在公司
 		return (String)request.getSession().getAttribute( SESS_CUR_COMPANY );
 	}
-	
+
+	public static String getCurrentCompanyName( HttpServletRequest request ) {			//当前用户所在公司名称
+		return (String)request.getSession().getAttribute( SESS_CUR_COMPANY_NAME );
+	}
+
 	public static boolean isHighestAstrictLevel( HttpServletRequest request ) {		//权限级别-最高的
 		return request.getSession().getAttribute( SESS_ASTRICT_LEVEL ).equals( ASTRICT_LEVEL_HIGHEST );
 	}
@@ -129,7 +133,7 @@ public abstract class AbstractDaemon extends HttpServlet implements CtrlConstant
 	/**
 	 * 接收请求中的参数值，并保存到相关对象
 	 */
-	public static void fixQueryParams( AbstractBean bean, HttpServletRequest request, boolean supplyUserID, boolean supplyCloudID ) {
+	public static void fixQueryParams( AbstractBean bean, HttpServletRequest request, boolean supplyUserID, boolean supplyCurCompanyID, boolean supplyCloudID ) {
 		String[] arr_params = bean.getParamSerial();
 		for ( int j=0; j<arr_params.length; j++ ) {
 			bean.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
@@ -137,18 +141,24 @@ public abstract class AbstractDaemon extends HttpServlet implements CtrlConstant
 		if ( supplyUserID ) {
 			bean.setParameterValue( SESS_LANDER_ID, getLanderID(request) );
 		}
+		if ( supplyCurCompanyID ) {
+			bean.setParameterValue( SESS_CUR_COMPANY, getCurrentCompany(request) );
+		}
 		if ( supplyCloudID ) {
 			bean.setParameterValue( SESS_CLOUD_ID, getCloudID(request) );
 		}
 	}
 
-	public static void fixQueryParams(AbstractProcedure proc, HttpServletRequest request, boolean supplyUserID, boolean supplyCloudID ) {
+	public static void fixQueryParams(AbstractProcedure proc, HttpServletRequest request, boolean supplyUserID, boolean supplyCurCompanyID, boolean supplyCloudID ) {
 		String[] arr_params = proc.getParamSerial();
 		for ( int j=0; j<arr_params.length; j++ ) {
 			proc.setParameterValue( arr_params[j], request.getParameter( arr_params[j]) );
 		}
 		if ( supplyUserID ) {
 			proc.setParameterValue( SESS_LANDER_ID, getLanderID(request) );
+		}
+		if ( supplyCurCompanyID ) {
+			proc.setParameterValue( SESS_CUR_COMPANY, getCurrentCompany(request) );
 		}
 		if ( supplyCloudID ) {
 			proc.setParameterValue( SESS_CLOUD_ID, getCloudID(request) );

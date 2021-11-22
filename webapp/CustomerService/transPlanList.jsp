@@ -183,11 +183,11 @@ $(document).ready( function () {
 });
 function openNew( ) {
 	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=800,height=600,left=" + getCenteredLeft(800) + ",top=" + getCenteredTop(600);
-	window.open( "transPlanNew.jsp?WM=<%=CtrlConstants.WM_CHILD%>", "_blank", strStatus );
+	window.open( "transPlanNew.jsp?WM=<%=CtrlConstants.WM_CHILD%>", "NewTransPlan", strStatus, false );
 }
 function openUpdate( id ) {
 	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=800,height=600,left=" + getCenteredLeft(800) + ",top=" + getCenteredTop(600);
-	window.open( "transPlanUpdate.jsp?WM=<%=CtrlConstants.WM_CHILD%>&ID="+id, "_blank", strStatus );
+	window.open( "transPlanUpdate.jsp?WM=<%=CtrlConstants.WM_CHILD%>&ID="+id, "UpdateTransPlan", strStatus, false );
 }
 </script>
 

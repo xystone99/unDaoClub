@@ -27,7 +27,7 @@
 <%	
 	if ( action.equals( "DispatchNew" ) ) {					//新增车次
 		Dispatch dipatch = new Dispatch( XmsInitial.getDataSource(), Dispatch.BTYPE_INSERT );
-		AbstractDaemon.fixQueryParams( dipatch, request, true, true );
+		AbstractDaemon.fixQueryParams( dipatch, request, true, false, true );
 		dipatch.executeCall( );
 		info_tag = dipatch.getResultDisplay( );
 		if ( !dipatch.getResult().equals( Dispatch.R_SQL_EXCEPTION ) ) {
@@ -38,7 +38,7 @@
 
 	} else if ( action.equals( "DispatchDelete" ) ) {
 		Dispatch dipatch = new Dispatch( XmsInitial.getDataSource(), Dispatch.BTYPE_DELETE );
-		AbstractDaemon.fixQueryParams( dipatch, request, true, true );
+		AbstractDaemon.fixQueryParams( dipatch, request, true, false, true );
 		dipatch.executeCall( );
 		info_tag = dipatch.getResultDisplay( );
 		if ( !dipatch.getResult().equals( Dispatch.R_SQL_EXCEPTION ) ) {

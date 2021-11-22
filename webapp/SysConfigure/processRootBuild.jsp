@@ -19,7 +19,6 @@
 	String result = "#";
 	String info_tag = "#";
 	String redirect_url = "#";
-	boolean is_modal_dialog = false;
 	boolean is_refresh_parent = false;
 	boolean is_close_window = false;
 	boolean is_back = false;
@@ -28,7 +27,7 @@
 <%	
 	if ( action.equals( "RoleNew" ) ) {						//角色管理
 		Role role = new Role( XmsInitial.getDataSource(), Role.BTYPE_INSERT );
-		AbstractDaemon.fixQueryParams( role, request, false, true );
+		AbstractDaemon.fixQueryParams( role, request, false, false, true );
 		role.executeCall( );
 		info_tag = role.getResultDisplay();
 		if ( role.getResult().equals(Role.R_NEW_SUCCESS) ) {
@@ -40,7 +39,7 @@
 		
 	} else if ( action.equals( "RoleUpdate" ) ) {
 		Role role = new Role( XmsInitial.getDataSource(), Role.BTYPE_UPDATE );
-		AbstractDaemon.fixQueryParams( role, request, false, true );
+		AbstractDaemon.fixQueryParams( role, request, false, false, true );
 		role.executeCall( );
 		info_tag = role.getResultDisplay( );
 		if ( role.getResult().equals(Role.R_UPDATE_SUCCESS) ) {
@@ -52,7 +51,7 @@
 		
 	} else if ( action.equals( "RoleDelete" ) ) {		
 		Role role = new Role( XmsInitial.getDataSource(), Role.BTYPE_DELETE );
-		AbstractDaemon.fixQueryParams( role, request, false, true );
+		AbstractDaemon.fixQueryParams( role, request, false, false, true );
 		role.executeCall( );
 		info_tag = role.getResultDisplay( );
 		if ( role.getResult().equals(Role.R_DELETE_SUCCESS) ) {

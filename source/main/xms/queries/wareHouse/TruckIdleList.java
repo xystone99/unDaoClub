@@ -66,7 +66,7 @@ public class TruckIdleList extends AbstractQuery {
 
 		String date1 = parameterMap.get(QP_DATE1);
 		String date2 = parameterMap.get(QP_DATE2);
-		bufMainSQL.append( "AND ( (start_date<='" ).append( date1 ).append( "' AND end_date>='" ).append( date1 ).append( "') OR (start_date<='" ).append( date2 ).append( "' AND end_date>='" ).append( date2 ).append( "') ) " );
+		bufMainSQL.append( "AND ( (start_date>='" ).append( date1 ).append( "' AND start_date<='" ).append( date2 ).append( "') OR (end_date>='" ).append( date1 ).append( "' AND end_date<='" ).append( date2 ).append( "') ) " );
 
 		String sortTag = parameterMap.get(QP_SORT_TAG);
 		if ( sortTag.equals( COMPANY_ASC ) ) {

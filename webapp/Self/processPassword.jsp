@@ -28,7 +28,7 @@
 	
 	if ( action.equals( "PasswordUpdate" ) ) {
         UpdatePassword updatePassword = new UpdatePassword( XmsInitial.getDataSource() );
-        AbstractDaemon.fixQueryParams( updatePassword, request, true, true );
+        AbstractDaemon.fixQueryParams( updatePassword, request, true, false, true );
         updatePassword.executeCall( );
         info_tag = updatePassword.getResultDisplay( );
         if ( !updatePassword.getResult().equals( Dispatch.R_SQL_EXCEPTION ) ) {

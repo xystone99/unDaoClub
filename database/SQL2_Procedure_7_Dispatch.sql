@@ -302,6 +302,7 @@ CREATE PROCEDURE `proc_truck_idle_feedback`(
 	IN	pEND_DATE				VARCHAR(10),
 	IN	pREMARK					VARCHAR(50),
 	IN	pUSER_A					VARCHAR(10),
+	IN	pCUR_COMPANY			VARCHAR(10),
 	IN	pCLOUD_ID				VARCHAR(20),
 	
 	OUT	result					VARCHAR(50) )
@@ -319,7 +320,7 @@ BASIC_BLOCK:BEGIN
 			SET result = 'Invalid';
 			LEAVE BASIC_BLOCK;
 		END IF;
-		SELECT COUNT(trk_idle) INTO xCount FROM tbl_truck_idle WHERE truck=pTRUCK AND ((start_date<=pSTART_DATE AND end_date>=pSTART_DATE) OR (start_date<=pEND_DATE AND end_date>=pEND_DATE) ) LIMIT 1;
+		SELECT COUNT(truck_i) INTO xCount FROM tbl_truck_idle WHERE truck=pTRUCK AND ((start_date<=pSTART_DATE AND end_date>=pSTART_DATE) OR (start_date<=pEND_DATE AND end_date>=pEND_DATE) ) LIMIT 1;
 		IF ( xCount > 0 ) THEN
 			SET result = 'InUse';
 			LEAVE BASIC_BLOCK;
@@ -327,11 +328,10 @@ BASIC_BLOCK:BEGIN
 	END IF;
 	
 	START TRANSACTION;
-	INSERT INTO tbl_truck_idle(idle_k,truck,plate_number,driver,tel_driver,start_date,end_date,remark,user_a,input_date,cloud_id)
-	VALUES(pIDLE_K,pTRUCK,pPLATE_NUMBER,pDRIVER,pTEL_DRIVER,pSTART_DATE,pEND_DATE,pREMARK,pUSER_A,NOW(),pCLOUD_ID);
-
+	INSERT INTO tbl_truck_idle(idle_k,cur_company,truck,plate_number,driver,tel_driver,start_date,end_date,remark,user_a,input_date,cloud_id)VALUES(pIDLE_K,pCUR_COMPANY,pTRUCK,pPLATE_NUMBER,pDRIVER,pTEL_DRIVER,pSTART_DATE,pEND_DATE,pREMARK,pUSER_A,NOW(),pCLOUD_ID);
+	
 	COMMIT;
-	SET result = 'FeedSuccess';
+	SET result = 'NewSuccess';
 END BASIC_BLOCK $$
 
 
@@ -350,7 +350,7 @@ BASIC_BLOCK:BEGIN
 		SET result = 'SQLException';
 	END;
 	
-	SELECT user_a, cloud_id INTO qUserA, qCloudID FROM tbl_truck_idle WHERE trk_idle = pTRK_IDLE;
+	SELECT user_a, cloud_id INTO qUserA, qCloudID FROM tbl_truck_idle WHERE truck_i = pTRK_IDLE;
 	IF ( (qCloudID<>pCLOUD_ID) OR (qUserA<>pUSER_A) ) THEN
 		SET result = 'Invalid';
 		LEAVE BASIC_BLOCK;
@@ -358,7 +358,7 @@ BASIC_BLOCK:BEGIN
 
 	
 	START TRANSACTION;
-	DELETE FROM tbl_truck_idle WHERE trk_idle = pTRK_IDLE;
+	DELETE FROM tbl_truck_idle WHERE truck_i = pTRK_IDLE;
 
 	COMMIT;
 	SET result = 'DeleteSuccess';

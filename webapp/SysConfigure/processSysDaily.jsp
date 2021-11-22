@@ -1,18 +1,14 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
-<%@ page import = "com.cuanfun.utils.*" %>
-<%@ page import = "com.cuanfun.database.*" %>
-<%@ page import = "com.cuanfun.control.*" %>
-<%@ page import = "com.cuanfun.cache.*" %>
-<%@ page import = "com.cuanfun.enumeration.*" %>
 <%@ page import = "xms.*" %>
-<%@ page import = "xms.beans.admin.*" %>
+<%@ page import="com.undao.enumeration.SysAstricts" %>
+<%@ page import="com.undao.cache.OnlineManager" %>
 
 <%
 	int PAGE_TAG = 0;
 	boolean acceptInnerUser = true;
 	String[] needAstricts = { SysAstricts.QX_SYS_CONFIGURE };
 %>
-<%@ include file="/include/inc_header.logic" %>
+<%@ include file="../include/inc_header.logic" %>
 
 <%
 	String action = request.getParameter( "Action" );
@@ -20,7 +16,6 @@
 	String result = "#";
 	String info_tag = "#";
 	String redirect_url = "#";
-	boolean is_modal_dialog = false;
 	boolean is_refresh_parent = false;
 	boolean is_close_window = false;
 	boolean is_back = false;	
@@ -39,6 +34,6 @@
 		is_close_window = true;
 	}
 
-	%><%@ include file="/include/inc_process_action.logic" %><%
+	%><%@ include file="../include/inc_process_action.logic" %><%
 	
 %>

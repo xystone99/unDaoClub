@@ -42,6 +42,7 @@ public interface CtrlConstants {
 	public final static String SESS_AVALIABLE_COMPANIES = "Companies";	//访问范围
 	public final static String SESS_AVALIABLE_OPTIONS = "aOptions";		//访问范围OPTIONS列表
 	public final static String SESS_CUR_COMPANY = "Company";			//当前用户的工作分公司
+	public final static String SESS_CUR_COMPANY_NAME = "CompanyName";	//当前用户的工作分公司
 	public final static String SESS_ASTRICT_LEVEL = "aLevel";			//权限级别
 	public final static String SESS_CLOUD_ID = "CloudID";
 	public final static String SESS_LANDER_FLG = "Flag";				//登录者系统标记

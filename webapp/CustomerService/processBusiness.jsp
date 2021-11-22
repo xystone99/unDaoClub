@@ -26,7 +26,7 @@
 <%	
 	if ( action.equals( "TransPlanNew" ) ) {					//新增运输计划
 		TransPlan transPlan = new TransPlan( XmsInitial.getDataSource(), TransPlan.BTYPE_INSERT );
-		AbstractDaemon.fixQueryParams( transPlan, request, true, true );
+		AbstractDaemon.fixQueryParams( transPlan, request, true, false, true );
 		transPlan.executeCall( );
 		info_tag = transPlan.getResultDisplay( );
 		if ( !transPlan.getResult().equals( TransPlan.R_SQL_EXCEPTION ) ) {
@@ -38,7 +38,7 @@
 
 	} else if ( action.equals( "TransPlanUpdate" ) ) {
 		TransPlan transPlan = new TransPlan( XmsInitial.getDataSource(), TransPlan.BTYPE_UPDATE );
-		AbstractDaemon.fixQueryParams( transPlan, request, true, true );
+		AbstractDaemon.fixQueryParams( transPlan, request, true, false, true );
 		transPlan.executeCall( );
 		info_tag = transPlan.getResultDisplay( );
 		if ( !transPlan.getResult().equals( TransPlan.R_SQL_EXCEPTION ) ) {
@@ -50,7 +50,7 @@
 
 	} else if ( action.equals( "TransPlanDelete" ) ) {
 		TransPlan transPlan = new TransPlan( XmsInitial.getDataSource(), TransPlan.BTYPE_DELETE );
-		AbstractDaemon.fixQueryParams( transPlan, request, true, true );
+		AbstractDaemon.fixQueryParams( transPlan, request, true, false, true );
 		transPlan.executeCall( );
 		info_tag = transPlan.getResultDisplay( );
 		if ( !transPlan.getResult().equals( TransPlan.R_SQL_EXCEPTION ) ) {

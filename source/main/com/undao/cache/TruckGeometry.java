@@ -87,7 +87,6 @@ public class TruckGeometry extends AbstractDatabase {
 		int counter = 0;
 		StringBuilder buf = new StringBuilder( );
 		StringBuilder bufLabel = new StringBuilder( );
-		buf.append( "[" );
 		for ( int j=0; j<arrPlate.length; j++ ) {
 			if ( !arrPlate[j].contains(term) ) continue;
 			bufLabel.delete(0, bufLabel.length() );
@@ -101,16 +100,8 @@ public class TruckGeometry extends AbstractDatabase {
     		counter++;
     		if ( counter >= 12 ) break;
 		}
-		
-		buf.append( "{" );
-		buf.append( AbstractDaemon.makeJsonItem("ID", "0" ) ).append( "," );
-		buf.append( AbstractDaemon.makeJsonItem("PlateNumber", "" ) ).append( "," );
-		buf.append( AbstractDaemon.makeJsonItem("value", "社会车辆" ) ).append( "," );
-		buf.append( AbstractDaemon.makeJsonItem("label", "社会车辆..." ) );
-		buf.append( "}," );
-		
+
 		buf.deleteCharAt( buf.length() -1 );
-		buf.append( "]" );
 		return buf.toString( );
 	}
 

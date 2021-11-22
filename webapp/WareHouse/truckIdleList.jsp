@@ -11,6 +11,7 @@
 <%@ page import="com.undao.control.AbstractDaemon" %>
 <%@ page import="com.undao.utils.DateUtils" %>
 <%@ page import="xms.queries.wareHouse.TruckIdleList" %>
+<%@ page import="xms.beans.wareHouse.TruckIdle" %>
 <%
 	int PAGE_TAG = CtrlConstants.PG_TRUCK_IDLE_LIST;
 	boolean acceptInnerUser = true;
@@ -87,13 +88,14 @@ CommonSet dataSet = idleList.getQueryResult( );
 	<tr>
 	<th width="50">序号</th>
 	<th width="150">所属仓库</th>
+	<th width="90">闲置类型</th>
 	<th width="120">车牌号</th>
 	<th width="180">司机</th>
 	<th width="90">起始日期</th>
 	<th width="90">截止日期</th>
 	<th >备注</th>
 	<th width="90">登记人</th>
-	<th width="130">登记日期</th>
+	<th width="135">登记日期</th>
 	<th width="120">操作</th>
 	</tr>
 	</thead>
@@ -107,19 +109,21 @@ CommonSet dataSet = idleList.getQueryResult( );
 		<tr class="<%=j%2==1?"content1_tr":"content2_tr" %>"> 
 		<td align="center"><%=baseIndex+j %></td>
 		<td align="center"><a href="javascript:void(0)"><%=dataSet.getValue(j,"company_zh")%></a></td>
+		<td align="center"><%=EnumConstants.getDisplay((String)dataSet.getValue(j,"idle_k"))%></td>
 		<td align="center"><%=dataSet.getValue(j,"plate_number")%></td>
 		<td align="center"><%=dataSet.getValue(j,"tel_driver")%></td>
 		<td align="center"><%=dataSet.getValue(j,"start_date")%></td>
 		<td align="center"><%=dataSet.getValue(j,"end_date")%></td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"remark")%></td>
 		<td align="center"><%=dataSet.getValue(j,"user_a_zh")%></td>
-		<td align="center"><%=DateUtils.formatDateTime(dataSet.getValue(j,"input_date"))%></td>
-		<td align="center">删除</td>
+		<td align="center"><%=DateUtils.formatDateTime2(dataSet.getValue(j,"input_date"))%></td>
+		<td align="center"><a href="javascript:openDelete('<%=((Long)dataSet.getValue(j,"truck_i")).toString()%>')">删除</a></td>
 		</tr>
 		<%
 	}
 	%>
 	<tr class="total_tr">
+	<td></td>
 	<td></td>
 	<td></td>
 	<td align="right">本页合计：</td>
@@ -162,8 +166,14 @@ $(document).ready( function () {
 	$("#thDate1,#thDate2").datepicker({dateFormat: 'yy-mm-dd'});
 });
 function openNew( ) {
-	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=800,height=600,left=" + getCenteredLeft(800) + ",top=" + getCenteredTop(600);
-	window.open( "transPlanNew.jsp?WM=<%=CtrlConstants.WM_CHILD%>", "_blank", strStatus );
+	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=640,height=480,left=" + getCenteredLeft(640) + ",top=" + getCenteredTop(480);
+	window.open( "truckIdleNew.jsp?WM=<%=CtrlConstants.WM_CHILD%>", "NewTruckIdle", strStatus, false );
+}
+function openDelete( id ) {
+	if ( confirm( "确定删除吗？" ) ) {
+		var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=640,height=480,left=" + getCenteredLeft(640) + ",top=" + getCenteredTop(480);
+		window.open( "processBusiness.jsp?WM=<%=CtrlConstants.WM_CHILD%>&Action=TruckIdleDelete&ID="+id, "DeleteTruckIdle", strStatus, false );
+	}
 }
 </script>
 

@@ -24,7 +24,7 @@ function encodeURL( strURL ) {		//URL Encode
 }
 
 function reloadCurrentPage( ) { 
-	if ( confirm("你确定重置当前页面吗？") ) {
+	if ( confirm("确定重置当前页面吗？") ) {
 		setTimeout( "self.location.reload(); ",1000);
 	}
 }

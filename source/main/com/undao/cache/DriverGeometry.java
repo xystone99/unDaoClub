@@ -72,7 +72,6 @@ public class DriverGeometry extends AbstractDatabase {
 		int counter = 0;
 		StringBuilder buf = new StringBuilder( );
 		StringBuilder bufLabel = new StringBuilder( );
-		buf.append( "[" );
 		for ( int j=0; j<arrInitSpell.length; j++ ) {
 			if ( !arrInitSpell[j].contains(term) ) continue;
 			bufLabel.delete(0, bufLabel.length() );
@@ -88,16 +87,7 @@ public class DriverGeometry extends AbstractDatabase {
     		if ( counter >= 12 ) break;
 		}
 		
-		buf.append( "{" );
-		buf.append( AbstractDaemon.makeJsonItem("ID", "0" ) ).append( "," );
-		buf.append( AbstractDaemon.makeJsonItem("Mobile", "" ) ).append( "," );
-		buf.append( AbstractDaemon.makeJsonItem("Name", "" ) ).append( "," );
-		buf.append( AbstractDaemon.makeJsonItem("value", "社会司机" ) ).append( "," );
-		buf.append( AbstractDaemon.makeJsonItem("label", "社会司机..." ) );
-		buf.append( "}," );
-		
 		buf.deleteCharAt( buf.length() -1 );
-		buf.append( "]" );
 		return buf.toString( );
 	}
 
@@ -110,7 +100,6 @@ public class DriverGeometry extends AbstractDatabase {
 		int counter = 0;
 		StringBuilder buf = new StringBuilder( );
 		StringBuilder bufLabel = new StringBuilder( );
-		buf.append( "[" );
 		for ( int j=0; j<arrInitSpell.length; j++ ) {
 			if ( !arrInitSpell[j].contains(term) ) continue;
 			bufLabel.delete(0, bufLabel.length() );
@@ -126,7 +115,6 @@ public class DriverGeometry extends AbstractDatabase {
 			if ( counter >= 12 ) break;
 		}
 		buf.deleteCharAt( buf.length() -1 );
-		buf.append( "]" );
 		return buf.toString( );
 	}
 	
