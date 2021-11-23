@@ -321,12 +321,15 @@ BASIC_BLOCK:BEGIN
 			LEAVE BASIC_BLOCK;
 		END IF;
 		SELECT COUNT(truck_i) INTO xCount FROM tbl_truck_idle WHERE truck=pTRUCK AND ((start_date<=pSTART_DATE AND end_date>=pSTART_DATE) OR (start_date<=pEND_DATE AND end_date>=pEND_DATE) ) LIMIT 1;
-		IF ( xCount > 0 ) THEN
-			SET result = 'InUse';
-			LEAVE BASIC_BLOCK;
-		END IF;		
+	ELSE 
+		SELECT COUNT(truck_i) INTO xCount FROM tbl_truck_idle WHERE plate_number=pPLATE_NUMBER AND cur_company=pCUR_COMPANY AND ((start_date<=pSTART_DATE AND end_date>=pSTART_DATE) OR (start_date<=pEND_DATE AND end_date>=pEND_DATE) ) LIMIT 1;
 	END IF;
 	
+	IF ( xCount > 0 ) THEN
+		SET result = 'InUse';
+		LEAVE BASIC_BLOCK;
+	END IF;
+		
 	START TRANSACTION;
 	INSERT INTO tbl_truck_idle(idle_k,cur_company,truck,plate_number,driver,tel_driver,start_date,end_date,remark,user_a,input_date,cloud_id)VALUES(pIDLE_K,pCUR_COMPANY,pTRUCK,pPLATE_NUMBER,pDRIVER,pTEL_DRIVER,pSTART_DATE,pEND_DATE,pREMARK,pUSER_A,NOW(),pCLOUD_ID);
 	

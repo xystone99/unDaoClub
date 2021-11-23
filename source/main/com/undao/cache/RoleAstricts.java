@@ -76,16 +76,10 @@ public class RoleAstricts extends AbstractDatabase {
 	 * @return
 	 */
 	public boolean checkPassport( String role, String[] needAstricts ) {
-		System.out.println( "Need:" + Arrays.toString( needAstricts ) );
-		System.out.println( "Have1:" + getAstrictsOfRole(role) );
-
 		if ( needAstricts == null ) {
 			return true;
 		}
 		HashSet<String> astricts = role_astricts.get( role );
-		for ( String a : astricts ) {
-			System.out.println( "Have2:" + a );
-		}
 		if ( astricts == null ) {
 			return false;
 		}

@@ -48,7 +48,7 @@ public class YunMasterPost extends MasterPost {
 		String postName = (String)dataList.getValue(0,"ne_zh");
 
 		StringBuilder bufOptions = new StringBuilder( );
-		bufOptions.append( "<options value=\"" ).append( postID.toString() ).append( "\"").append( postName ).append( "</options" );
+		bufOptions.append( "<option value=\"" ).append( postID.toString() ).append( "\">").append( postName ).append( "</option>" );
 		mapDisplay.put( postID.toString(), postName );
 
 		for( int j=1; j<dataList.getRowCount(); j++ ) {
@@ -62,7 +62,7 @@ public class YunMasterPost extends MasterPost {
 				preCloudID = curCloudID;
 			}
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append( postID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<option value=\"" ).append( postID.toString() ).append( "\">").append( (String)dataList.getValue(j,"ne_zh") ).append( "</option>" );
 			}
 		}
 
@@ -77,10 +77,10 @@ public class YunMasterPost extends MasterPost {
 		StringBuilder bufOptions = new StringBuilder( );
 
 		for( int j=1; j<dataList.getRowCount(); j++ ) {
-			Long postID = (Long)dataList.getValue(0,"post");
+			Long postID = (Long)dataList.getValue(j,"post");
 			mapDisplay.put( postID.toString(), (String)dataList.getValue(j,"ne_zh") );
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append( postID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<option value=\"" ).append( postID.toString() ).append( "\">").append( (String)dataList.getValue(j,"ne_zh") ).append( "</option>" );
 			}
 		}
 

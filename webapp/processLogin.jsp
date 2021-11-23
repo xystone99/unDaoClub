@@ -54,9 +54,8 @@
 					redirect_url = XmsInitial.getXmsContainer().getMasterRole().getHrefByID( y_result[2] );
 				}
 			} else {
-				out.println( loginSystem.getCallString() );
 				info_tag = loginSystem.getResultDisplay( );
-				//is_back = true;
+				is_back = true;
 			}
 		} else {
 			info_tag = "当前系统已被管理员设置为禁止登录，请稍后再试！";

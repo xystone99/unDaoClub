@@ -39,7 +39,7 @@ public class MasterPost extends AbstractDatabase {
 		CommonSet dataList = DBUtils.executeQuery( getDataSource(), QUERY_SQL,false );
 		for( int j=0; j<dataList.getRowCount(); j++ ) {
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append(((Long)dataList.getValue(j,"post")).toString()).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<option value=\"" ).append(((Long)dataList.getValue(j,"post")).toString()).append( "\">").append( (String)dataList.getValue(j,"ne_zh") ).append( "</option>" );
 			}
 			mapDisplay.put( ((Long)dataList.getValue(j,"post")).toString(), (String)dataList.getValue(j,"ne_zh") );
 		}

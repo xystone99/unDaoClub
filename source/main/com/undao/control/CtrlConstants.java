@@ -202,6 +202,7 @@ public interface CtrlConstants {
 	public final static int PG_SHORT_DISPATCH_1 = 9301;					//短驳调度-开始
 	public final static int PG_WAIT_DISPATCH_LIST = 9311;				//等待安排
 	public final static int PG_DISPATCH_HISTORY = 9312;					//车次一览
+	public final static int PG_TRUCK_IDLE_SUMMARY = 9315;				//车辆闲置情况概览
 	public final static int PG_SHORT_DISPATCH_2 = 9399;					//短驳调度-结束
 	
 	public final static int PG_WARE_HOUSE_1 = 9401;						//仓库管理-开始

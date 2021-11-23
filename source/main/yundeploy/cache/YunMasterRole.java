@@ -50,7 +50,7 @@ public class YunMasterRole extends MasterRole {
 		String roleName = (String)dataList.getValue(0,"ne_zh");
 
 		StringBuilder bufOptions = new StringBuilder( );
-		bufOptions.append( "<options value=\"" ).append( roleID.toString() ).append( "\"").append( roleName ).append( "</options" );
+		bufOptions.append( "<option value=\"" ).append( roleID.toString() ).append( "\">").append( roleName ).append( "</option>" );
 		mapDisplay.put( roleID.toString(), roleName );
 		mapHref.put( roleID.toString(), (String)dataList.getValue(0,"href_index") );
 
@@ -67,7 +67,7 @@ public class YunMasterRole extends MasterRole {
 				bufOptions.delete(0, bufOptions.length() );
 				preCloudID = curCloudID;
 			}
-			bufOptions.append( "<options value=\"" ).append( roleID.toString() ).append( "\"").append( roleName ).append( "</options" );
+			bufOptions.append( "<option value=\"" ).append( roleID.toString() ).append( "\">").append( roleName ).append( "</option>" );
 		}
 
 		mapSelectOptions.put( preCloudID, bufOptions.toString() );
@@ -81,12 +81,12 @@ public class YunMasterRole extends MasterRole {
 		StringBuilder bufOptions = new StringBuilder( );
 
 		for( int j=1; j<dataList.getRowCount(); j++ ) {
-			Long roleID = (Long)dataList.getValue(0,"role");
+			Long roleID = (Long)dataList.getValue(j,"role");
 			mapDisplay.put( roleID.toString(), (String)dataList.getValue(j,"ne_zh") );
-			mapHref.put( roleID.toString(), (String)dataList.getValue(0,"href_index") );
+			mapHref.put( roleID.toString(), (String)dataList.getValue(j,"href_index") );
 
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append(roleID.toString()).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<option value=\"" ).append(roleID.toString()).append( "\">").append( (String)dataList.getValue(j,"ne_zh") ).append( "</option>" );
 			}
 		}
 

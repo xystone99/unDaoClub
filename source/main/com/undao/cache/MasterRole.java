@@ -41,7 +41,7 @@ public class MasterRole extends AbstractDatabase {
 		for( int j=0; j<dataList.getRowCount(); j++ ) {
 			Long roleID = (Long)dataList.getValue(j,"role");
 			String roleName = (String)dataList.getValue(j,"ne_zh");
-			bufOptions.append( "<options value=\"" ).append( roleID.toString() ).append( "\"").append( roleName ).append( "</options" );
+			bufOptions.append( "<option value=\"" ).append( roleID.toString() ).append( "\">").append( roleName ).append( "</option>" );
 			mapDisplay.put( roleID.toString(), roleName );
 			mapHref.put( roleID.toString(), (String)dataList.getValue(j,"href_index") );
 		}

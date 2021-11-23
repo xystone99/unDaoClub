@@ -32,7 +32,7 @@
         updatePassword.executeCall( );
         info_tag = updatePassword.getResultDisplay( );
         if ( !updatePassword.getResult().equals( Dispatch.R_SQL_EXCEPTION ) ) {
-            //is_close_window = true;
+            is_close_window = true;
 			out.println( updatePassword.getCallString() );
         } else {
             out.println( updatePassword.getCallString() );

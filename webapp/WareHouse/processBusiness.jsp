@@ -43,8 +43,9 @@
 		truckIdle.executeCall( );
 		info_tag = truckIdle.getResultDisplay( );
 		if ( !truckIdle.getResult().equals( WareReturnDispatch.R_SQL_EXCEPTION ) ) {
-			is_close_window = true;
-			is_refresh_parent = true;
+			//is_close_window = true;
+			//is_refresh_parent = true;
+			out.println( truckIdle.getCallString() );
 		} else {
 			out.println( truckIdle.getCallString() );
 		}

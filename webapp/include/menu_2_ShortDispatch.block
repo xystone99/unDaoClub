@@ -9,6 +9,8 @@
         <b>派车计划:</b>&nbsp;
         <a href="../ShortDispatch/dispatchHistory.jsp"><%=PAGE_TAG==CtrlConstants.PG_DISPATCH_HISTORY?"<b>一览</b>":"一览"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
 
+        <b>车辆闲置情况:</b>&nbsp;
+        <a href="../ShortDispatch/truckIdleSummary.jsp"><%=PAGE_TAG==CtrlConstants.PG_TRUCK_IDLE_SUMMARY?"<b>概览</b>":"概览"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
 	</td>
     </tr>
 </table>

@@ -48,7 +48,7 @@ public class YunMasterPart extends MasterPart {
 		String partName = (String)dataList.getValue(0,"ne_zh");
 
 		StringBuilder bufOptions = new StringBuilder( );
-		bufOptions.append( "<options value=\"" ).append( partID.toString() ).append( "\"").append( partName ).append( "</options" );
+		bufOptions.append( "<option value=\"" ).append( partID.toString() ).append( "\">").append( partName ).append( "</option>" );
 		mapDisplay.put( partID.toString(), partName );
 
 		for( int j=1; j<dataList.getRowCount(); j++ ) {
@@ -62,7 +62,7 @@ public class YunMasterPart extends MasterPart {
 				preCloudID = curCloudID;
 			}
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append( partID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<option value=\"" ).append( partID.toString() ).append( "\">").append( (String)dataList.getValue(j,"ne_zh") ).append( "</option>" );
 			}
 		}
 
@@ -80,7 +80,7 @@ public class YunMasterPart extends MasterPart {
 			Long partID = (Long)dataList.getValue(j,"part");
 			mapDisplay.put( partID.toString(), (String)dataList.getValue(j,"ne_zh") );
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append( partID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<option value=\"" ).append( partID.toString() ).append( "\">").append( (String)dataList.getValue(j,"ne_zh") ).append( "</option>" );
 			}
 		}
 

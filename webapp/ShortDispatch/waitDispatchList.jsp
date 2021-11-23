@@ -121,12 +121,13 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 	<th width="80">运输类型</th>
 	<th width="80">时效要求</th>
 	<th width="160">发货方-发货窗口</th>
-	<th width="180">发货说明</th>
+	<th width="160">发货说明</th>
 	<th width="160">收货方-收货窗口</th>
-	<th width="180">收货说明</th>
-	<th width="180">返空箱说明</th>
+	<th width="160">收货说明</th>
+	<th width="160">返空箱说明</th>
 	<th width="130">货量(吨位&方数)</th>
 	<th width="80">占车米数</th>
+	<th width="90">调度路径</th>
 	<th width="80">操作</th>
 	<th >已安排车次</th>
 	</tr>
@@ -155,6 +156,7 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter"),false,"米")%>&nbsp;</td>
 		<td><input type="checkbox" id="cb<%=j%>" name="cb<%=j%>" onchange="javascript:checkSelectedTransPlan(this,'<%=dataSet.getValue(j,"trans_p")%>')" /><label for="cb<%=j%>">选择</label>&nbsp;&nbsp;
 			<input type="hidden" name="hID<%=j%>" value="<%=dataSet.getValue(j,"trans_p")%>" /></td>
+		<td align="left">&nbsp;<%=dataSet.getValue(j,"route_zh")%></td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"dispatch_remark")%>&nbsp;</td>
 		</tr>
 		<%
@@ -176,6 +178,7 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 	<td align="right">本页合计：</td>
 	<td align="right"><%=DecimalUtils.formatQty(pageWeight,true,"吨")%>&nbsp;<%=DecimalUtils.formatQty(pageVolume,true,"方")%>&nbsp;</td>
 	<td align="right"><%=DecimalUtils.formatQty(pageMeter,true,"米")%>&nbsp;</td>
+	<td></td>
 	<td></td>
 	<td></td>
 	</tr>

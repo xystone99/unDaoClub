@@ -1,5 +1,7 @@
 package com.undao.utils;
 
+import org.springframework.cglib.core.Local;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -137,6 +139,10 @@ public class DateUtils {
     /**
      * About Date - 格式化日期
      */
+	public static final String formatLocalDate(LocalDate localDate ) {
+		return localDate == null ? RTN_BLANK : fmt_date_1.format( localDate );
+	}
+
     public static final String formatCurrentDate( ) {				//当天
         return fmt_date_1.format( LocalDate.now() );
     }
@@ -144,16 +150,16 @@ public class DateUtils {
     public static final String formatCur_yyyymmdd( ) {				//当天
     	return fmt_yyyymmdd.format( LocalDate.now() );
     }
-    
-    public static final String formatDate( Object date ) {
-        return date == null ? RTN_BLANK : fmt_date_1.format( ((java.sql.Date)date).toLocalDate() );
+
+    public static final String formatDate( Object sqlDate ) {
+        return sqlDate == null ? RTN_BLANK : fmt_date_1.format( ((java.sql.Date)sqlDate).toLocalDate() );
     }
 
-    public static final String formatDate( Object date, boolean displayBorder ) {
-    	if ( date == null ) {
+    public static final String formatDate( Object sqlDate, boolean displayBorder ) {
+    	if ( sqlDate == null ) {
     		return RTN_BLANK;
     	}
-    	String display = fmt_date_1.format( ((java.sql.Date)date).toLocalDate() );
+    	String display = fmt_date_1.format( ((java.sql.Date)sqlDate).toLocalDate() );
     	if ( !displayBorder ) {
     	 	if ( display.equals( BORDER_DATE_1 ) || display.equals( BORDER_DATE_2 ) ) {
     			return RTN_BLANK;
@@ -162,11 +168,11 @@ public class DateUtils {
     	return display;
     }
     
-    public static final String formatDate( Object date, boolean displayBorder, String placeDate ) {
-    	if ( date == null ) {
+    public static final String formatDate( Object sqlDate, boolean displayBorder, String placeDate ) {
+    	if ( sqlDate == null ) {
     		return RTN_BLANK;
     	}
-    	String display = fmt_date_1.format( ((java.sql.Date)date).toLocalDate() );
+    	String display = fmt_date_1.format( ((java.sql.Date)sqlDate).toLocalDate() );
     	if ( !displayBorder ) {
     	 	if ( display.equals( BORDER_DATE_1 ) || display.equals( BORDER_DATE_2 ) ) {
     			return placeDate;
@@ -174,16 +180,20 @@ public class DateUtils {
     	}
     	return display;
     }
-    
-    public static final String format_mmdd( Object date ) {
-        return date == null ? RTN_BLANK : fmt_mmdd.format( ((java.sql.Date)date).toLocalDate() );
+
+	public static final String formatLocal_mmdd( LocalDate localdate ) {
+		return localdate == null ? RTN_BLANK : fmt_mmdd.format( localdate );
+	}
+
+    public static final String format_mmdd( Object sqlDate ) {
+        return sqlDate == null ? RTN_BLANK : fmt_mmdd.format( ((java.sql.Date)sqlDate).toLocalDate() );
     }
     
-    public static final String format_mmdd( Object date, boolean displayBorder ) {
-    	if ( date == null ) {
+    public static final String format_mmdd( Object sqlDate, boolean displayBorder ) {
+    	if ( sqlDate == null ) {
     		return RTN_BLANK;
     	}
-		LocalDate locDate = ((java.sql.Date)date).toLocalDate();
+		LocalDate locDate = ((java.sql.Date)sqlDate).toLocalDate();
     	String display = fmt_date_1.format( locDate );
     	if ( !displayBorder ) {
     	 	if ( display.equals( BORDER_DATE_1 ) || display.equals( BORDER_DATE_2 ) ) {
@@ -207,15 +217,15 @@ public class DateUtils {
         return fmt_time_2.format( LocalDateTime.now() );
     }
     
-    public static final String formatTime( Object date ) {    	
-        return date == null ? RTN_BLANK : fmt_time.format( ((java.sql.Date)date).toLocalDate() );
+    public static final String formatTime( Object sqlDate ) {
+        return sqlDate == null ? RTN_BLANK : fmt_time.format( ((java.sql.Date)sqlDate).toLocalDate() );
     }
     
-    public static final String formatTime( Object date, boolean displayBorder ) {
-    	if ( date == null ) {
+    public static final String formatTime(Object sqlDate, boolean displayBorder ) {
+    	if ( sqlDate == null ) {
     		return RTN_BLANK;
     	}
-    	String display = fmt_time.format( ((java.sql.Date)date).toLocalDate() );
+    	String display = fmt_time.format( ((java.sql.Date) sqlDate).toLocalDate() );
     	if ( !displayBorder ) {
     	 	if ( display.equals( BORDER_TIME ) ) {
     			return RTN_BLANK;
@@ -231,15 +241,15 @@ public class DateUtils {
         return fmt_datetime.format( LocalDateTime.now() );
     }
     
-    public static final String formatDateTime( Object date ) {    	
-        return date == null ? "" : fmt_datetime.format( (LocalDateTime)date );
+    public static final String formatDateTime( Object localDateTime ) {
+        return localDateTime == null ? "" : fmt_datetime.format( (LocalDateTime)localDateTime );
     }
     
-    public static final String formatDateTime( Object date, boolean displayBorder ) {
-    	if ( date == null ) {
+    public static final String formatDateTime( Object localDateTime, boolean displayBorder ) {
+    	if ( localDateTime == null ) {
     		return RTN_BLANK;
     	}
-    	String display = fmt_datetime.format( (LocalDateTime)date );
+    	String display = fmt_datetime.format( (LocalDateTime)localDateTime );
     	if ( !displayBorder ) {
     	 	if ( display.equals( BORDER_DATETIME ) || display.indexOf( BORDER_YEAR_2 )>=0 ) {
     			return RTN_BLANK;
@@ -248,15 +258,15 @@ public class DateUtils {
     	return display;
     }
     
-    public static final String formatDateTime2( Object date ) {
-        return date == null ? RTN_BLANK : fmt_datetime_2.format( (LocalDateTime)date );
+    public static final String formatDateTime2( Object localDateTime ) {
+        return localDateTime == null ? RTN_BLANK : fmt_datetime_2.format( (LocalDateTime)localDateTime );
     }
     
-    public static final String formatDateTime2( Object date, boolean displayBorder ) {
-    	if ( date == null ) {
+    public static final String formatDateTime2( Object localDateTime, boolean displayBorder ) {
+    	if ( localDateTime == null ) {
     		return RTN_BLANK;
     	}
-    	String display = fmt_datetime_2.format( (LocalDateTime)date );
+    	String display = fmt_datetime_2.format( (LocalDateTime)localDateTime );
     	if ( !displayBorder ) {
     	 	if ( display.equals( BORDER_DATETIME ) || display.indexOf( BORDER_YEAR_2 )>=0  ) {
     			return RTN_BLANK;
@@ -265,21 +275,21 @@ public class DateUtils {
     	return display;
     }
     
-    public static final String formatDateTime3( Object date ) {
-        return date == null ? RTN_BLANK : fmt_datetime_3.format( (LocalDateTime)date );
+    public static final String formatDateTime3( Object localDateTime ) {
+        return localDateTime == null ? RTN_BLANK : fmt_datetime_3.format( (LocalDateTime)localDateTime );
     }
     
-    public static final String formatDateTime3( Object date, boolean displayBorder ) {
-    	if ( date == null ) {
+    public static final String formatDateTime3( Object localDateTime, boolean displayBorder ) {
+    	if ( localDateTime == null ) {
     		return RTN_BLANK;
     	}
-    	String tDisplay = fmt_year.format( ((java.sql.Date)date).toLocalDate() );
+    	String tDisplay = fmt_year.format( (LocalDateTime)localDateTime );
     	if ( !displayBorder ) {
     	 	if ( tDisplay.equals( BORDER_YEAR_1 ) || tDisplay.equals( BORDER_YEAR_2 ) ) {
     			return "";
     		}    		
     	}
-    	return fmt_datetime_3.format( (LocalDateTime)date );
+    	return fmt_datetime_3.format( (LocalDateTime)localDateTime );
     }
     
     /**
@@ -330,6 +340,10 @@ public class DateUtils {
     
     public static final String formatWeekTag( int weekDay ) {				//得出对应的中文星期几
 		return WEEK_TAG[weekDay -1];
+	}
+
+	public static final String formatWeekTag(LocalDate localDate) {				//得出对应的中文星期几
+		return WEEK_TAG[localDate.get( ChronoField.DAY_OF_WEEK ) -1];
 	}
     
     /**

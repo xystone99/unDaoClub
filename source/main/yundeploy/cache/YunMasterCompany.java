@@ -48,12 +48,12 @@ public class YunMasterCompany extends MasterCompany {
 		String companyName = (String)dataList.getValue(0,"ne_zh");
 
 		StringBuilder bufOptions = new StringBuilder( );
-		bufOptions.append( "<options value=\"" ).append( companyID.toString() ).append( "\"").append( companyName ).append( "</options" );
+		bufOptions.append( "<option value=\"" ).append( companyID.toString() ).append( "\">").append( companyName ).append( "</option>" );
 		mapDisplay.put( companyID.toString(), companyName );
 
 		for( int j=1; j<dataList.getRowCount(); j++ ) {
 			String curCloudID = (String)dataList.getValue(j,"cloud_id");
-			companyID = (Long)dataList.getValue(0,"company");
+			companyID = (Long)dataList.getValue(j,"company");
 			mapDisplay.put( companyID.toString(), (String)dataList.getValue(j,"ne_zh") );
 
 			if ( !curCloudID.equals( preCloudID ) ) {
@@ -62,7 +62,7 @@ public class YunMasterCompany extends MasterCompany {
 				preCloudID = curCloudID;
 			}
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append( companyID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<option value=\"" ).append( companyID.toString() ).append( "\">").append( (String)dataList.getValue(j,"ne_zh") ).append( "</option>" );
 			}
 		}
 
@@ -77,10 +77,10 @@ public class YunMasterCompany extends MasterCompany {
 		StringBuilder bufOptions = new StringBuilder( );
 
 		for( int j=1; j<dataList.getRowCount(); j++ ) {
-			Long companyID = (Long)dataList.getValue(0,"company");
+			Long companyID = (Long)dataList.getValue(j,"company");
 			mapDisplay.put( companyID.toString(), (String)dataList.getValue(j,"ne_zh") );
 			if ( dataList.getValue(j,"sys_flg").equals( SQL_NORMAL ) ) {
-				bufOptions.append( "<options value=\"" ).append( companyID.toString() ).append( "\"").append( (String)dataList.getValue(j,"ne_zh") ).append( "</options" );
+				bufOptions.append( "<option value=\"" ).append( companyID.toString() ).append( "\">").append( (String)dataList.getValue(j,"ne_zh") ).append( "</option>" );
 			}
 		}
 

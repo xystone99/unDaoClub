@@ -63,7 +63,7 @@ public class WaitDispatchList extends AbstractQuery {
 		bufSQL.append( parseLikeWhere( "obj_short", parameterMap.get(QP_OBJECT_P), SQL_LIKE_BOTH ) );
 		bufSQL.append( parseEqualsWhere( "plan_date", parameterMap.get(QP_DATE), false ) );
 		bufSQL.append( parseLikeWhere( "user_zh", parameterMap.get(QP_USER_ZH), SQL_LIKE_BOTH ) );
-		bufSQL.append( parseLikeWhere( "user_zh", parameterMap.get(QP_ROUTE_ZH), SQL_LIKE_BOTH ) );
+		bufSQL.append( parseLikeWhere( "route_zh", parameterMap.get(QP_ROUTE_ZH), SQL_LIKE_BOTH ) );
 		String load_name = parameterMap.get(QP_LOAD_NAME);
 		if ( load_name.length() > 0 ) {
 			bufSQL.append( " AND (ne_zh1 LIKE '%" ).append( load_name ).append( "%' OR ne_zh2 LIKE '%" ).append( load_name ).append( "%' OR ne_recycle LIKE '%" ).append( load_name ).append( "%') " );
