@@ -18,6 +18,12 @@ public interface CtrlConstants {
 	public final static String INNER_CLOUD_ID = "XYZABC";
 
 	/**
+	 * 常量定义
+	 */
+	public final static String CTRL_CONST_Y = "Y";
+	public final static String CTRL_CONST_N = "N";
+
+	/**
 	 * 边界日期（一般代表空值）
 	 */
 	public final static String BORDER_DATE_1 = "2001-01-01";
@@ -47,6 +53,10 @@ public interface CtrlConstants {
 	public final static String SESS_CLOUD_ID = "CloudID";
 	public final static String SESS_LANDER_FLG = "Flag";				//登录者系统标记
 	public final static String SESS_ONLINE_SENSOR = "onSensor";			//SESSION传感器
+
+	public final static String SESS_MODULE_CUS = "mCus";				//访问客户模块
+	public final static String SESS_MODULE_DISPATCH = "mDispatch";		//访问调度模块
+	public final static String SESS_MODULE_WH = "mWH";					//访问仓库模块
 
 	/**
 	 * COOKIE常量

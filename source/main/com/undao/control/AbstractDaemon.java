@@ -118,7 +118,11 @@ public abstract class AbstractDaemon extends HttpServlet implements CtrlConstant
 	public static boolean isLowestAstrictLevel( HttpServletRequest request ) {		//权限级别-一般的
 		return request.getSession().getAttribute( SESS_ASTRICT_LEVEL ).equals( ASTRICT_LEVEL_LOWEST );
 	}
-	
+
+	public static boolean canVisit( HttpServletRequest request, String moduleTag ) {	//是否允许访问某个系统模块
+		return request.getSession().getAttribute( moduleTag ).equals( CTRL_CONST_Y );
+	}
+
 	/**
 	 * 输出一条监控日志
 	 */

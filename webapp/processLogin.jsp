@@ -3,6 +3,11 @@
 <%@ page import="com.undao.cache.*" %>
 <%@ page import="xms.*" %>
 <%@ page import="xms.procedures.LoginSystem" %>
+<%@ page import="static com.undao.enumeration.SysAstricts.QX_CUS_READ" %>
+<%@ page import="static com.undao.control.CtrlConstants.CTRL_CONST_Y" %>
+<%@ page import="static com.undao.control.CtrlConstants.CTRL_CONST_N" %>
+<%@ page import="static com.undao.enumeration.SysAstricts.QX_DISPATCH_READ" %>
+<%@ page import="static com.undao.enumeration.SysAstricts.*" %>
 
 <%
 	String action = request.getParameter( "Action" );
@@ -47,6 +52,11 @@
 				session.setAttribute( CtrlConstants.SESS_LOGIN_NAME, loginName );
 				session.setAttribute( CtrlConstants.SESS_CLOUD_ID, cloudID );
 				OnlineManager.getInstance().createSession(session,request.getRemoteAddr(),y_result[0],y_result[1]);
+
+				RoleAstricts roleAstricts = XmsInitial.getXmsContainer().getRoleAstricts( );
+				session.setAttribute( CtrlConstants.SESS_MODULE_CUS, roleAstricts.checkPassport(y_result[2], QX_CUS_READ)?CTRL_CONST_Y:CTRL_CONST_N );
+				session.setAttribute( CtrlConstants.SESS_MODULE_DISPATCH, roleAstricts.checkPassport(y_result[2], QX_DISPATCH_READ)? CTRL_CONST_Y:CTRL_CONST_N );
+				session.setAttribute( CtrlConstants.SESS_MODULE_WH, roleAstricts.checkPassport(y_result[2], QX_WH_READ)? CTRL_CONST_Y:CTRL_CONST_N );
 
 				if ( AbstractDaemon.isSystemAdministrator(request) ) {
 					redirect_url = "./SysConfigure/roleList.jsp";

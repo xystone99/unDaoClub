@@ -3,6 +3,7 @@
 <%@ page import="com.undao.enumeration.SysAstricts" %>
 <%@ page import="com.undao.enumeration.EnumConstants" %>
 <%@ page import="xms.XmsInitial" %>
+<%@ page import="com.undao.control.AbstractDaemon" %>
 <%
 	int PAGE_TAG = 0;
 	boolean acceptInnerUser = true;
@@ -116,7 +117,7 @@
 	<td align="left"><input type="text" name="<%=TransPlan.QP_QTY_METER_R%>" size="12" maxlength="3" class="input_text" /></td>
 	<td align="right">返空仓库:</td>
 	<td></td>
-	<td colspan="4" align="left"><select id="whList" name="sWareList" class="select" onchange="javascript:changeMultiSelected(this,myForm.<%=TransPlan.QP_NE_RECYCLE%>)"><option value="0">--选择仓库--</option><%=EnumConstants.WH_LIST_OPTIONS %></select>&nbsp;<span id="multi_selected_list"></span>
+	<td colspan="4" align="left"><select id="whList" name="sWareList" class="select" onchange="javascript:changeMultiSelected(this,myForm.<%=TransPlan.QP_NE_RECYCLE%>)"><option value="0">--选择仓库--</option><%=XmsInitial.getXmsContainer().getMasterCompany().getSelectOptions(AbstractDaemon.getCloudID(request))%></select>&nbsp;<span id="multi_selected_list"></span>
 		<input type="hidden" name="<%=TransPlan.QP_NE_RECYCLE%>" /></td>
 	</tr>
 
@@ -195,10 +196,10 @@ function changeMultiSelected(objSelect, objHidden ) {
 	var display = objSelect.options[objSelect.selectedIndex].text;
 	$("#multi_selected_list").append("<span class='increaseSpacing'>"+ display + "<b id='" + val + "'>x</b></span>");
 	$("#"+val).click(function(){
-		objHidden.value = objHidden.value.replace( val+",", "" );
+		objHidden.value = objHidden.value.replace( display+",", "" );
 		$(this).parent().remove();
 	});
-	objHidden.value = objHidden.value + val + ","
+	objHidden.value = objHidden.value + display + ","
 }
 function checkValue( inForm ) {
 	var strErr = new String( "" );

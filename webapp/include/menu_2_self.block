@@ -6,11 +6,6 @@ function openUpdatePassword( ) {
     var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=640,height=480,left=" + getCenteredLeft(640) + ",top=" + getCenteredTop(480);
     window.open( "../Self/pwdUpdate.jsp?WM=<%=CtrlConstants.WM_CHILD%>", "UpdateAccount", strStatus, false );
 }
-function checkExitSystem( ) {
-    if ( confirm( "确定退出系统吗？" ) ) {
-        window.location.href = "../processLogin.jsp?Action=ExitSystem";
-    }
-}
 </script>
 
 <table width="100%" border="0" cellspacing="1" cellpadding="0" align="center">
@@ -21,7 +16,6 @@ function checkExitSystem( ) {
 
 		<b>帐户设置:</b>&nbsp;
 		<a href="javascript:openUpdatePassword()">修改账户</a>&nbsp;&nbsp;
-        <a href="javascript:checkExitSystem()">退出系统</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	</td>
     </tr>
 </table>

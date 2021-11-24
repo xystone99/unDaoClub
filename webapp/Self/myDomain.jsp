@@ -2,7 +2,7 @@
 <%@ page import="com.undao.control.CtrlConstants" %>
 <%@ page import="com.undao.control.AbstractDaemon" %>
 <%
-    int PAGE_TAG = CtrlConstants.PG_DISPATCH_HISTORY;
+    int PAGE_TAG = CtrlConstants.PG_MY_DOMAIN;
     boolean acceptInnerUser = true;
     String[] needAstricts = null;
 %>

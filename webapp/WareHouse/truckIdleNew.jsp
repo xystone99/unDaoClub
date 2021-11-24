@@ -70,10 +70,10 @@
 	<tr class="content_tr">
 	<td width="19%" align="right">闲置起始日期:</td>
 	<td width="1%"></td>
-	<td width="30%" align="left"><input type="text" name="<%=TruckIdle.QP_START_DATE%>" size="12" maxlength="10" class="input_text" readonly /></td>
+	<td width="30%" align="left"><input type="text" id="thDate1" name="<%=TruckIdle.QP_START_DATE%>" size="12" maxlength="10" class="input_text" /></td>
 	<td width="14%" align="right">结束日期:</td>
 	<td width="1%"></td>
-	<td width="35%" align="left"><input type="text" name="<%=TruckIdle.QP_END_DATE%>" size="12" maxlength="10" class="input_text" /></td>
+	<td width="35%" align="left"><input type="text" id="thDate2" name="<%=TruckIdle.QP_END_DATE%>" size="12" maxlength="10" class="input_text" /></td>
 	</tr>
 
 	<tr class="empty_tr"><td colspan="6"></td></tr>
@@ -107,6 +107,7 @@
 <script type="text/javascript">
 	setIntervalDate( myForm.<%=TruckIdle.QP_START_DATE%>, 1 );
 	setIntervalDate( myForm.<%=TruckIdle.QP_END_DATE%>, 1 );
+	$("#thDate1,#thDate2").datepicker({dateFormat: 'yy-mm-dd'});
 </script>
 
 <script type="text/javascript">

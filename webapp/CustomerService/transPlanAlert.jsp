@@ -14,7 +14,7 @@
 <%
 	int PAGE_TAG = CtrlConstants.PG_TRANS_PLAN_ALERT;
 	boolean acceptInnerUser = true;
-	String[] needAstricts = { SysAstricts.QX_DISPATCH_READ  };
+	String[] needAstricts = { SysAstricts.QX_CUS_READ  };
 %>
 <%@ include file="../include/inc_header.logic" %>
 

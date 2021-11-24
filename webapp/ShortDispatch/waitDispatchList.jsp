@@ -154,9 +154,10 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_recycle")%><br/>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter_r"),false,"米")%></td>
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_w"),false,"吨")%>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_v"),false,"方")%>&nbsp;</td>
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter"),false,"米")%>&nbsp;</td>
+		<td align="left">&nbsp;<%=dataSet.getValue(j,"route_zh")%></td>
 		<td><input type="checkbox" id="cb<%=j%>" name="cb<%=j%>" onchange="javascript:checkSelectedTransPlan(this,'<%=dataSet.getValue(j,"trans_p")%>')" /><label for="cb<%=j%>">选择</label>&nbsp;&nbsp;
 			<input type="hidden" name="hID<%=j%>" value="<%=dataSet.getValue(j,"trans_p")%>" /></td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"route_zh")%></td>
+
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"dispatch_remark")%>&nbsp;</td>
 		</tr>
 		<%
@@ -255,7 +256,7 @@ function checkSelectedTransPlan( obj, transPlanID ) {
 			queryForm["cb"+j].checked = false;
 			queryForm.<%=Dispatch.QP_TRANS_PLANS%>.value = "";
 		}
-		alert( "请重新选择.选择的第一条线路为计件线路。" )
+		alert( "请重新选择。\n选择的第一条线路为计件线路。" )
 	}
 }
 
