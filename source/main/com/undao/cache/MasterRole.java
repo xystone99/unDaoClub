@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import com.undao.database.*;
+import com.undao.utils.DateUtils;
 
 /**
  * @author Administrator
@@ -45,7 +46,6 @@ public class MasterRole extends AbstractDatabase {
 			mapDisplay.put( roleID.toString(), roleName );
 			mapHref.put( roleID.toString(), (String)dataList.getValue(j,"href_index") );
 		}
-		
 	}
 
 	public String getDisplay( String roleID ) {

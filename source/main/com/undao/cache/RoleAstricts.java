@@ -6,6 +6,7 @@ package com.undao.cache;
 import java.util.*;
 
 import com.undao.database.*;
+import com.undao.utils.DateUtils;
 
 /**
  * @author Administrator
@@ -42,7 +43,8 @@ public class RoleAstricts extends AbstractDatabase {
 				astricts.add( (String)dataList.getValue(j,"astrict") );
 				role_astricts.put( role.toString(), astricts );
 			}  
-		}	
+		}
+		System.out.println( "RoleAstricts Fixed At " + DateUtils.formatCurrentDateTime() );
 	}
 	
 	/**

@@ -120,7 +120,7 @@ public abstract class AbstractDaemon extends HttpServlet implements CtrlConstant
 	}
 
 	public static boolean canVisit( HttpServletRequest request, String moduleTag ) {	//是否允许访问某个系统模块
-		return request.getSession().getAttribute( moduleTag ).equals( CTRL_CONST_Y );
+		return request.getSession().getAttribute( moduleTag ).equals( CTRL_CONST_Y ) || isSystemAdministrator( request );
 	}
 
 	/**

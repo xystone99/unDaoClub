@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 public class XmsContainer {
 
     private SystemicVariables systemicVariables = null;
+    private DispatchRoute dispatchRoute = null;
     private MasterCompany masterCompany = null;
     private MasterPart masterPart = null;
     private MasterPost masterPost = null;
@@ -20,6 +21,9 @@ public class XmsContainer {
     public void initialContainer(DataSource dataSource) {
         systemicVariables.setDataSource( dataSource );
         systemicVariables.fixSingletonObject( );
+
+        dispatchRoute.setDataSource( dataSource );
+        dispatchRoute.fixSingletonObject( );
 
         masterCompany.setDataSource( dataSource );
         masterCompany.fixSingletonObject( );
@@ -44,6 +48,14 @@ public class XmsContainer {
 
     public void setSystemicVariables(SystemicVariables systemicVariables) {
         this.systemicVariables = systemicVariables;
+    }
+
+    public DispatchRoute getDispatchRoute() {
+        return dispatchRoute;
+    }
+
+    public void setDispatchRoute(DispatchRoute dispatchRoute) {
+        this.dispatchRoute = dispatchRoute;
     }
 
     public MasterCompany getMasterCompany() { return masterCompany; }

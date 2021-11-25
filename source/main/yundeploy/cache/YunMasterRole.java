@@ -7,6 +7,7 @@ import com.undao.cache.MasterRole;
 import com.undao.database.AbstractMaster;
 import com.undao.database.CommonSet;
 import com.undao.database.DBUtils;
+import com.undao.utils.DateUtils;
 
 import java.util.HashMap;
 
@@ -71,6 +72,7 @@ public class YunMasterRole extends MasterRole {
 		}
 
 		mapSelectOptions.put( preCloudID, bufOptions.toString() );
+		System.out.println( "YunMasterRole Fixed At " + DateUtils.formatCurrentDateTime() );
 	}
 
 	/**

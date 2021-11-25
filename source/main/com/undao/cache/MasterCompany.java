@@ -6,6 +6,7 @@ package com.undao.cache;
 import com.undao.database.AbstractDatabase;
 import com.undao.database.CommonSet;
 import com.undao.database.DBUtils;
+import com.undao.utils.DateUtils;
 
 import java.util.HashMap;
 
@@ -43,7 +44,6 @@ public class MasterCompany extends AbstractDatabase {
 			}
 			mapDisplay.put( ((Long)dataList.getValue(j,"company")).toString(), (String)dataList.getValue(j,"ne_zh") );
 		}
-		
 	}
 	
 	public String getDisplay( String companyID ) {

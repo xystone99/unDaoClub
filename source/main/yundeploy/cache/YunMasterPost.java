@@ -6,6 +6,7 @@ package yundeploy.cache;
 import com.undao.cache.MasterPost;
 import com.undao.database.CommonSet;
 import com.undao.database.DBUtils;
+import com.undao.utils.DateUtils;
 
 import java.util.HashMap;
 
@@ -67,6 +68,7 @@ public class YunMasterPost extends MasterPost {
 		}
 
 		mapSelectOptions.put( preCloudID, bufOptions.toString() );
+		System.out.println( "YunMasterPost Fixed At " + DateUtils.formatCurrentDateTime() );
 	}
 
     /**

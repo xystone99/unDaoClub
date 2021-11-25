@@ -1,13 +1,27 @@
 
+
+INSERT INTO tbl_dispatch_route(route_zh,sort_tag,cloud_id)VALUES('安亭线','ABC','XYZABC');
+INSERT INTO tbl_dispatch_route(route_zh,sort_tag,cloud_id)VALUES('浦东线','ABC','XYZABC');
+INSERT INTO tbl_dispatch_route(route_zh,sort_tag,cloud_id)VALUES('嘉定线','ABC','XYZABC');
+INSERT INTO tbl_dispatch_route(route_zh,sort_tag,cloud_id)VALUES('青浦线','ABC','XYZABC');
+INSERT INTO tbl_dispatch_route(route_zh,sort_tag,cloud_id)VALUES('昆山线','ABC','XYZABC');
+INSERT INTO tbl_dispatch_route(route_zh,sort_tag,cloud_id)VALUES('南京线','ABC','XYZABC');
+INSERT INTO tbl_dispatch_route(route_zh,sort_tag,cloud_id)VALUES('仪征线','ABC','XYZABC');
+INSERT INTO tbl_dispatch_route(route_zh,sort_tag,cloud_id)VALUES('平湖线','ABC','XYZABC');
+INSERT INTO tbl_dispatch_route(route_zh,sort_tag,cloud_id)VALUES('宁波线','ABC','XYZABC');
+
+
 INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10001,'上海锂电池仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
 INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10002,'上海线束仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
 INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10003,'上海宝安公路仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
 INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10004,'上海长泾仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
 INSERT INTO mst_company(company,ne_zh,sort_tag,input_date,last_update,sys_flg,cloud_id)VALUES(10005,'上海浦东仓库','ABC',NOW(),NOW(),'Normal','XYZABC');
 
+
 INSERT INTO tbl_role(role,ne_zh,sort_tag,href_index,input_date,cloud_id)VALUES(11,'计划','ABC','CustomerService/transPlanList.jsp',NOW(),'XYZABC');
 INSERT INTO tbl_role(role,ne_zh,sort_tag,href_index,input_date,cloud_id)VALUES(12,'调度','ABC','ShortDispatch/waitDispatchList.jsp',NOW(),'XYZABC');
 INSERT INTO tbl_role(role,ne_zh,sort_tag,href_index,input_date,cloud_id)VALUES(13,'仓库','ABC','WareHouse/waitInOutList.jsp',NOW(),'XYZABC');
+
 
 INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10011,'夏芸','xiayun',MD5('abcd1234'),'Y',11,0,'10001,10002,10003','Normal','XYZABC');
 INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10012,'黄华','huanghua',MD5('abcd1234'),'Y',12,10002,'10001,10002,10003,10004,10005','Normal','XYZABC');
@@ -47,7 +61,9 @@ INSERT INTO tbl_trans_line(line_tag,obj_p,plan_k,time_level,ne_zh1,address_1,lin
 INSERT INTO tbl_trans_line(line_tag,obj_p,plan_k,time_level,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,cloud_id)VALUES('',10007,'单程提货','可调','上海市嘉定区城北路','上海市嘉定区城北路3598号','赵健-13501893478','','数量确认，单据签收','外冈镇长泾村鸡场路','上海市外冈镇长泾村鸡场路37号','仓库-02139556839','','数量确认，单据签收','XYZABC');
 INSERT INTO tbl_trans_line(line_tag,obj_p,plan_k,time_level,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,cloud_id)VALUES('',10002,'单程提货','可调','江苏常熟海虞镇新材料产业园','中国江苏常熟海虞镇新材料产业园海宁路16号','陈柳营-13776231920','','数量确认，单据签收','外冈镇长泾村鸡场路','上海市外冈镇长泾村鸡场路37号','仓库-02139556839','','数量确认，单据签收','XYZABC');
 
+
 UPDATE tbl_trans_line SET line_tag=CONCAT(ne_zh1,'-->',ne_zh2);
+
 
 INSERT INTO tbl_user_account(ne_zh,tel,if_driver,can_login,cloud_id,sys_flg)VALUES('张细毛','15800638806','Y','N','XYZABC','Normal');
 INSERT INTO tbl_user_account(ne_zh,tel,if_driver,can_login,cloud_id,sys_flg)VALUES('殷志昂','18721955715','Y','N','XYZABC','Normal');
@@ -109,7 +125,9 @@ INSERT INTO tbl_user_account(ne_zh,tel,if_driver,can_login,cloud_id,sys_flg)VALU
 INSERT INTO tbl_user_account(ne_zh,tel,if_driver,can_login,cloud_id,sys_flg)VALUES('马跃文','15987339389','Y','N','XYZABC','Normal');
 INSERT INTO tbl_user_account(ne_zh,tel,if_driver,can_login,cloud_id,sys_flg)VALUES('段新生','13837859868','Y','N','XYZABC','Normal');
 
+
 UPDATE tbl_user_account SET init_spell=LEFT(getInitSpell(ne_zh),5);
+
 
 INSERT INTO tbl_truck(plate_number,truck_type,cloud_id,sys_flg)VALUES('沪DK7348','普货单车','XYZABC','Normal');
 INSERT INTO tbl_truck(plate_number,truck_type,cloud_id,sys_flg)VALUES('沪FE5587','普货单车','XYZABC','Normal');

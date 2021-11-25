@@ -6,6 +6,7 @@
 
     <!-- -->
     <bean id="stcVariables" class="yundeploy.cache.YunSystemicVariables"></bean>
+    <bean id="disptRoute" class="yundeploy.cache.YunDispatchRoute"></bean>
     <bean id="mstCompany" class="yundeploy.cache.YunMasterCompany"></bean>
     <bean id="mstPart" class="yundeploy.cache.YunMasterPart"></bean>
     <bean id="mstPost" class="yundeploy.cache.YunMasterPost"></bean>
@@ -25,6 +26,7 @@
 
     <bean id="xmsContainer" class="xms.XmsContainer">
         <property name="systemicVariables" ref="stcVariables"></property>
+        <property name="dispatchRoute" ref="disptRoute"></property>
         <property name="masterCompany" ref="mstCompany"></property>
         <property name="masterPart" ref="mstPart"></property>
         <property name="masterPost" ref="mstPost"></property>
