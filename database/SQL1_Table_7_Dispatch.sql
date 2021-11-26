@@ -62,7 +62,7 @@ CREATE TABLE tbl_truck(
 	plate_number			VARCHAR(10) NOT NULL DEFAULT '',			#车牌号
 	company					INT UNSIGNED NOT NULL DEFAULT 0,			#所属分公司(所有权)
 	cur_company				INT UNSIGNED NOT NULL DEFAULT 0,			#当前分公司(使用权)
-	truck_type				VARCHAR(20) NOT NULL DEFAULT '',			#类别:普货单车,普货车头,危险品单车,危险品车头
+	truck_type				VARCHAR(20) NOT NULL DEFAULT '',			#类别:单车,挂车,危险品单车,危险品挂车
 	truck_trailer			VARCHAR(10) NOT NULL DEFAULT '',			#对应挂车(不保存ID)
 	truck_form				VARCHAR(20) NOT NULL DEFAULT '',			#车型(如厢式牵引车)
 	truck_kind				VARCHAR(20) NOT NULL DEFAULT '',			#车型(如9.6/13.5)
