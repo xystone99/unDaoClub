@@ -2,6 +2,7 @@ package xms.queries.sysConfigure;
 
 import com.undao.database.AbstractQuery;
 import com.undao.database.DBUtils;
+import com.undao.enumeration.EnumConstants;
 import com.undao.utils.DateUtils;
 
 import javax.sql.DataSource;
@@ -40,11 +41,11 @@ public class UserAccountList extends AbstractQuery {
 		parameterMap.put( QP_COMPANY, SQL_ALL );
 		parameterMap.put( QP_IF_DRIVER, SQL_ALL );
 		parameterMap.put( QP_EMP_RELY, SQL_ALL );
-		parameterMap.put( QP_CAN_LOGIN, SQL_ALL );
+		parameterMap.put( QP_CAN_LOGIN, SQL_YES );
 		parameterMap.put( QP_ROLE, SQL_ALL );
 		parameterMap.put( QP_ASTRICT_LEVEL, SQL_ALL );
 		parameterMap.put( QP_AVALIABLE_COMPANYS, SQL_ALL );
-		parameterMap.put( QP_SYS_FLG, SQL_ALL );
+		parameterMap.put( QP_SYS_FLG, SQL_NORMAL );
 		this.setPageSize( DEFAULT_PAGE_SIZE );
 		this.setCurrentPage( 1 );
 	}

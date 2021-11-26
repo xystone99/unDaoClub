@@ -104,12 +104,15 @@
 		<td align="center"><%=dataSet.getValue(j,"init_spell")%></td>
 		<td align="center"><%=((Long)dataSet.getValue(j,"emp_rely")).intValue()>0?"是":"否"%></td>
 		<td align="center"><%=dataSet.getValue(j,"can_login").equals("Y")?"允许":"禁止"%></td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"login_name")%></td>
+		<td align="left">[<a href="javascript:void(0)" onclick="javascript:resetPsw('<%=dataSet.getValue(j,"user_a")%>')">重置</a>]&nbsp;<%=dataSet.getValue(j,"login_name")%></td>
 		<td align="center"><%=XmsInitial.getXmsContainer().getMasterRole().getDisplay((Long)dataSet.getValue(j,"role")) %></td>
 		<td align="center"><%=((Integer)dataSet.getValue(j,"astrict_level")).toString()%></td>
 		<td align="left">&nbsp;<%=XmsInitial.getXmsContainer().getMasterCompany().getAvaliableList((String)dataSet.getValue(j,"available_companys"))%></td>
 		<td align="center">&nbsp;<%=EnumConstants.getDisplay( (String)dataSet.getValue(j,"sys_flg") )%></td>
-		<td></td>
+		<td align="center"><%
+			if ( dataSet.getValue(j,"sys_flg").equals( "Normal" ) ) {
+				%><a href="javascript:void(0)" onclick="javascript:checkDelete('<%=dataSet.getValue(j,"user_a")%>');">删除</a><%
+			}%></td>
 		</tr>
 		<%
 	}
@@ -144,16 +147,24 @@
 
 <script type="text/javascript">
 function openNew( ) {
-	alert( "建设中......" );
-	return;
 	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=800,height=600,left=" + getCenteredLeft(800) + ",top=" + getCenteredTop(600);
-	window.open( "userAccountNew.jsp?WM=<%=CtrlConstants.WM_CHILD%>", "NewTransPlan", strStatus, false );
+	window.open( "userAccountNew.jsp?WM=<%=CtrlConstants.WM_CHILD%>", "NewUserAccount", strStatus, false );
 }
 function openUpdate( id ) {
-	alert( "建设中......" );
-	return;
-	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=800,height=600,left=" + getCenteredLeft(800) + ",top=" + getCenteredTop(600);
-	window.open( "userAccountUpdate.jsp?WM=<%=CtrlConstants.WM_CHILD%>&ID="+id, "UpdateTransPlan", strStatus, false );
+	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=640,height=480,left=" + getCenteredLeft(640) + ",top=" + getCenteredTop(480);
+	window.open( "userAccountUpdate.jsp?WM=<%=CtrlConstants.WM_CHILD%>&ID="+id, "UpdateUserAccount", strStatus, false );
+}
+function resetPsw( id ) {
+	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=640,height=480,left=" + getCenteredLeft(640) + ",top=" + getCenteredTop(480);
+	if ( confirm("确定重置该用户的登录密码吗？") && confirm("再次确认重置该用户的登录密码吗？") ) {
+		window.open("processSysConfigure.jsp?Action=ResetPsw&ID="+id, "UpdateUserPsw", strStatus, false );
+	}
+}
+function checkDelete( id ) {
+	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=640,height=480,left=" + getCenteredLeft(640) + ",top=" + getCenteredTop(480);
+	if ( confirm('确定删除吗？') ) {
+		window.open( "processSysConfigure.jsp?Action=DeleteUserAccount&ID="+id, "DeleteUserAccount", strStatus, false );
+	}
 }
 </script>
 

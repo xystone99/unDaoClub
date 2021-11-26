@@ -209,5 +209,79 @@ BASIC_BLOCK:BEGIN
 END BASIC_BLOCK $$
 
 
+/************************************************************************************************************************
+ * UserAccount - tbl_user_account
+ * CALL proc_user_account_update('10011','Name','Tel','Init','N','loginName','Y','101','6','10002','10002,10003','XYZABC',@result); SELECT @result;
+ * CALL proc_user_account_delete('10011','XYZABC',@result); SELECT @result;
+ ************************************************************************************************************************/
+DROP PROCEDURE IF EXISTS `proc_user_account_update` $$
+CREATE PROCEDURE `proc_user_account_update`(
+	IN	pUSER_A					VARCHAR(10),
+	IN	pNE_ZH					VARCHAR(20),
+	IN	pTEL					VARCHAR(20),
+	IN	pINIT_SPELL				VARCHAR(50),
+	IN	pIF_DRIVER				VARCHAR(10),
+	IN	pLOGIN_NAME				VARCHAR(20),
+	IN	pCAN_LOGIN				VARCHAR(10),
+	IN	pROLE					VARCHAR(10),
+	IN	pASTRICT_LEVEL			VARCHAR(10),
+	IN	pCUR_COMPANY			VARCHAR(10),
+	IN	pAVAILABLE_COMPANYS		VARCHAR(200),
+	IN	pCLOUD_ID				VARCHAR(20),
+	
+	OUT	result					VARCHAR(50) )
+BASIC_BLOCK:BEGIN
+	DECLARE xCloudID VARCHAR(20);
+	
+	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
+		ROLLBACK;
+		SET result = 'SQLException';
+	END;
+	
+	SELECT cloud_id INTO xCloudID FROM tbl_user_account WHERE user_a = pUSER_A;
+	IF ( xCloudID <> pCLOUD_ID ) THEN
+		SET result = "Invalid";
+		LEAVE BASIC_BLOCK;
+	END IF;
+	
+	START TRANSACTION;
+	UPDATE tbl_user_account SET 
+		ne_zh=pNE_ZH, tel=pTEL, init_spell=pINIT_SPELL, if_driver=pIF_DRIVER, login_name=pLOGIN_NAME, can_login=pCAN_LOGIN, role=pROLE, 
+		astrict_level=pASTRICT_LEVEL, cur_company=pCUR_COMPANY, available_companys=pAVAILABLE_COMPANYS
+	WHERE user_a = pUSER_A AND cloud_id = pCLOUD_ID;
+	
+	COMMIT;
+	SET result = 'UpdateSuccess';
+END BASIC_BLOCK $$
+
+
+DROP PROCEDURE IF EXISTS `proc_user_account_delete` $$
+CREATE PROCEDURE `proc_user_account_delete`(	
+	IN	pUSER_A					VARCHAR(10),
+	IN	pCLOUD_ID				VARCHAR(20),
+	
+	OUT	result					VARCHAR(50) )
+BASIC_BLOCK:BEGIN
+	DECLARE xCloudID VARCHAR(20);
+	
+	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
+		ROLLBACK;
+		SET result = 'SQLException';
+	END;
+
+	SELECT cloud_id INTO xCloudID FROM tbl_user_account WHERE user_a = pUSER_A;
+	IF ( xCloudID <> pCLOUD_ID ) THEN
+		SET result = "Invalid";
+		LEAVE BASIC_BLOCK;
+	END IF;
+
+	START TRANSACTION;
+	UPDATE tbl_user_account SET can_login='N', sys_flg='Quit' WHERE user_a = pUSER_A;
+	
+	COMMIT;
+	SET result = 'DeleteSuccess';
+END BASIC_BLOCK $$
+
+
 
 DELIMITER ;
