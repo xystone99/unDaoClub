@@ -187,13 +187,10 @@ public interface CtrlConstants {
 	
 	public final static int PG_SYS_CONFIGURE_1 = 8701;					//系统配置-开始
 	public final static int PG_CONSOLE_PANEL = 8711;					//控制台
-	public final static int PG_EMP_SECURITY = 8721;						//账号设定
+	public final static int PG_USER_ACCOUNT_LIST = 8721;				//用户账户一览
 	public final static int PG_ROLE_LIST = 8731;						//角色一览
-	public final static int PG_EVALUATION_LIST = 8732;					//考核指标
-	public final static int PG_PROJECT_LIST = 8741;						//项目一览
 	public final static int PG_ADDRESS_LIST = 8742;						//收发货地址一览
 	public final static int PG_FEE_ENGINE_LIST = 8743;					//费用模板一览
-	public final static int PG_UPP_GROUP_LIST = 8744;					//工作班组一览
 	public final static int PG_SYS_CONFIGURE_2 = 8799;					//系统配置-结束
 	
 	public final static int PG_SALE_MANAGE_1 = 9101;					//销售管理-开始

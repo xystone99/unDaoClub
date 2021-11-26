@@ -12,7 +12,7 @@ function checkExitSystem( ) {
 	<tr class="switch_tr">
     <td>
 		<b>账户设定:</b>&nbsp;
-		<a href="../SysConfigure/empSecurityList.jsp"><%=PAGE_TAG==CtrlConstants.PG_EMP_SECURITY?"<b>账户一览 </b>":"账户一览 "%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="../SysConfigure/userAccountList.jsp"><%=PAGE_TAG==CtrlConstants.PG_USER_ACCOUNT_LIST?"<b>用户一览 </b>":"用户一览 "%></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<b>系统配置:</b>&nbsp;
         <a href="../SysConfigure/roleList.jsp"><%=PAGE_TAG==CtrlConstants.PG_ROLE_LIST?"<b>角色</b>":"角色"%></a>&nbsp;&nbsp;&nbsp;&nbsp;
         <b>基础配置:</b>&nbsp;

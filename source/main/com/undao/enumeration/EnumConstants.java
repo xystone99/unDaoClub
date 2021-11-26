@@ -19,10 +19,15 @@ public class EnumConstants {
 		mapEnum.put( "Cancel", "已取消" );
 		mapEnum.put( "Idle", "车辆闲置" );
 		mapEnum.put( "Lack", "车辆空缺" );
+		mapEnum.put( "Dimission", "已离职" );
+		mapEnum.put( "Inner", "内置用户" );
 	}
 	public final static String getDisplay( String enumKey ) {
 		return mapEnum.get( enumKey );
 	}
+
+	//是否
+	public static final String YES_NO_OPTIONS = "<option value=\"Y\">是</option><option value=\"N\">否</option>";
 
 	//运输计划类别
 	public static final String TRANS_PLAN_K_OPTIONS = "<option value=\"单程提货\">单程提货</option><option value=\"返空提货\">返空提货</option><option value=\"单程送货\">单程送货</option><option value=\"返空送货\">返空送货</option><option value=\"直提直送\">直提直送</option><option value=\"往返运输\">往返运输</option>";
@@ -38,18 +43,24 @@ public class EnumConstants {
 
 
 	//允许登录(员工表)
-	public static final String CAN_LOGIN_PURE_OPTIONS = "<option value=\"Y\">允许</option><option value=\"N\">禁止</option>";
+	public static final String CAN_LOGIN_OPTIONS = "<option value=\"Y\">允许</option><option value=\"N\">禁止</option>";
+
+	//权限级别
+	public static final String ASTRICT_LEVEL_OPTIONS = "<option value=\"0\">最低</option><option value=\"5\">一般</option><option value=\"9\">最高</option>";
+
+	//用户状态
+	public static final String USER_STATUS_OPTIONS = "<option value=\"Normal\">正常</option><option value=\"Inner\">内置用户</option><option value=\"Dimission\">已离职</option>";
 
 	//员工状态
-	public static final String EMP_STATUS_PURE_OPTIONS = "<option value=\"Normal\">普通员工 </option><option value=\"Dimission\">已离职</option><option value=\"Cancel\">已取消</option>";
+	public static final String EMP_STATUS_OPTIONS = "<option value=\"Normal\">普通员工</option><option value=\"Dimission\">已离职</option><option value=\"Cancel\">已取消</option>";
 
 	//驾驶员状态
-	public static final String DRIVER_STATUS_PURE_OPTIONS = "<option value=\"Normal\">正常</option><option value=\"Dimission\">离职</option><option value=\"Cancel\">待删除</option>";
+	public static final String DRIVER_STATUS_OPTIONS = "<option value=\"Normal\">正常</option><option value=\"Dimission\">离职</option><option value=\"Cancel\">待删除</option>";
 	
 	//车辆类别
-	public static final String TRUCK_K_PURE_OPTIONS = "<option value=\"Normal\">普通车</option><option value=\"Head\">车头</option><option value=\"Trailer\">挂车</option>";
+	public static final String TRUCK_K_OPTIONS = "<option value=\"Normal\">普通车</option><option value=\"Head\">车头</option><option value=\"Trailer\">挂车</option>";
 	
 	//车辆状态
-	public static final String TRUCK_STATUS_PURE_OPTIONS = "<option value=\"Normal\">正常</option><option value=\"Scrap\">报废</option><option value=\"Cancel\">已取消</option>";
+	public static final String TRUCK_STATUS_OPTIONS = "<option value=\"Normal\">正常</option><option value=\"Scrap\">报废</option><option value=\"Cancel\">已取消</option>";
 
 }

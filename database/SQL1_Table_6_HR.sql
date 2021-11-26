@@ -77,7 +77,7 @@ CREATE TABLE tbl_user_account(
 	login_pwd				VARCHAR(50) NOT NULL DEFAULT '',			#登录密码
 	can_login				ENUM('N','Y') NOT NULL DEFAULT 'N',			#是否允许登录
 	role					INT UNSIGNED NOT NULL DEFAULT 0,			#角色编号
-	astrict_level			TINYINT UNSIGNED NOT NULL DEFAULT 0,		#权限级别:0最高;5一般;9最低.
+	astrict_level			TINYINT UNSIGNED NOT NULL DEFAULT 0,		#权限级别:9最高;5一般;0最低.
 	cur_company				INT UNSIGNED NOT NULL DEFAULT 0,			#系统操作时默认分公司(company)
 	available_companys		VARCHAR(200) NOT NULL DEFAULT '',			#可访问分公司列表(IN函数)(company)
 	sys_flg					ENUM('Normal','Inner','Quit') NOT NULL,		#正常,内置用户,离职

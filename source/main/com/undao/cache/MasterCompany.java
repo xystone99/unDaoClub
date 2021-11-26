@@ -50,6 +50,13 @@ public class MasterCompany extends AbstractDatabase {
     	return mapDisplay.get( companyID );
 	}
 
+	public String getDisplay( Long companyID ) {
+		if ( companyID.intValue() == 0 ) {
+			return SQL_EMPTY;
+		}
+		return mapDisplay.get( companyID.toString() );
+	}
+
 	public String getSelectOptions( String placeID ) {
 		return bufOptions.toString( );
 	}
@@ -69,5 +76,19 @@ public class MasterCompany extends AbstractDatabase {
 		return buf.toString( );
 	}
 
+	/**
+	 * 依据查询范围列表生成可识别字符串
+	 */
+	public String getAvaliableList( String avaliableCompanys ) {
+		if ( avaliableCompanys.length() <= 1 ) {
+			return SQL_EMPTY;
+		}
+		StringBuilder buf = new StringBuilder( );
+		String[] arrCompany = avaliableCompanys.split( SQL_COMMA );
+		for ( int j=0; j<arrCompany.length; j++ ) {
+			buf.append( mapDisplay.get(arrCompany[j]) ).append( SQL_COMMA );
+		}
+		return buf.toString( );
+	}
 
 }

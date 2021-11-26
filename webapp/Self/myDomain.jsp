@@ -23,7 +23,7 @@
 <%@ include file="../include/menu_1_Header.block" %>
 
 <div id="container">
-<%@ include file="../include/menu_2_self.block" %>
+<%@ include file="../include/menu_2_Self.block" %>
 
 <br/><br/><br/><br/><br/>
 您好。系统正在建设中，欢迎提出宝贵意见！！！

@@ -52,6 +52,13 @@ public class MasterRole extends AbstractDatabase {
 		return mapDisplay.get( roleID );
 	}
 
+	public String getDisplay( Long roleID ) {
+		if ( roleID.intValue() == 0 ) {
+			return SQL_EMPTY;
+		}
+		return mapDisplay.get( roleID.toString() );
+	}
+
 	public String getHrefByID( String roleID ) {
 		return mapHref.get( roleID );
 	}
