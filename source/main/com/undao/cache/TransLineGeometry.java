@@ -12,7 +12,7 @@ import com.undao.database.*;
  */
 public class TransLineGeometry extends AbstractDatabase {
 
-	private static String FETCH_SQL = "SELECT trans_l,line_tag,obj_p,plan_k,time_level,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,route_zh FROM tbl_trans_line WHERE cloud_id='XYZABC' ORDER BY obj_p ASC, sort_tag ASC";
+	private static String FETCH_SQL = "SELECT trans_l,line_tag,obj_p,plan_k,time_level,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,route_zh FROM tbl_trans_line WHERE cloud_id='XYZABC' ORDER BY obj_p ASC, sort_tag ASC, line_tag ASC";
 	
 	private static TransLineGeometry instance = null;
 	private TransLineGeometry( ) {
@@ -107,10 +107,14 @@ public class TransLineGeometry extends AbstractDatabase {
 			return SQL_ZERO;
 		}
 		int counter = 0;
+		boolean hasLineTag = lineTag.trim().length() > 0;
 		StringBuilder buf = new StringBuilder( );
 		buf.append( "[" );
 		for ( int j=0; j<arrTransLine.size(); j++ ) {
 			TransLine transLine = arrTransLine.get( j );
+			if ( hasLineTag && transLine.LineTag.indexOf( lineTag ) < 0 ) {
+				continue;
+			}
 			buf.append( "{" );
 			buf.append( AbstractDaemon.makeJsonItem("ID", transLine.ID ) ).append( "," );
 			buf.append( AbstractDaemon.makeJsonItem("PlanK", transLine.PlanK ) ).append( "," );
