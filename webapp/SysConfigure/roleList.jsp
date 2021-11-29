@@ -119,15 +119,15 @@ CommonSet dataSet = roleList.getQueryResult( );
 <script type="text/javascript">
 function openNew( ) {
 	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=640,height=640,left=" + getCenteredLeft(640) + ",top=" + getCenteredTop(640);
-	window.open( "roleNew.jsp?WM=<%=CtrlConstants.WM_CHILD%>", "_blank", strStatus );
+	window.open( "roleNew.jsp?WM=<%=CtrlConstants.WM_CHILD%>", "NewRole", strStatus );
 }
 function openUpdate( id ) {
 	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=640,height=640,left=" + getCenteredLeft(640) + ",top=" + getCenteredTop(640);
-	window.open( "roleUpdate.jsp?WM=<%=CtrlConstants.WM_CHILD%>&ID="+id, "_blank", strStatus );
+	window.open( "roleUpdate.jsp?WM=<%=CtrlConstants.WM_CHILD%>&ID="+id, "UpdateRole", strStatus );
 }
 function openDelete( id ) {
 	if ( confirm('确定删除吗？') ) {
-		window.open( "processRootBuild.jsp?WM=<%=CtrlConstants.WM_CHILD%>&Action=RoleDelete&ID="+id, "_blank", "toolbar=no,Scrollbars=yes,status=yes,width=640,height=480,left=0,top=0" );
+		window.open( "processRootBuild.jsp?WM=<%=CtrlConstants.WM_CHILD%>&Action=RoleDelete&ID="+id, "DeleteRole", "toolbar=no,Scrollbars=yes,status=yes,width=640,height=480,left=0,top=0" );
 	}
 }
 </script>

@@ -34,7 +34,7 @@ public class MasterRole extends AbstractDatabase {
 	}
 
 	public void fixSingletonObject( ) {
-		bufOptions.delete(0, bufOptions.length()-1 );
+		bufOptions.delete(0, bufOptions.length() );
 		mapHref.clear( );
 		mapDisplay.clear( );
 

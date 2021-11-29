@@ -76,10 +76,10 @@
 	<tr>
 	<th width="50">序号</th>
 	<th width="120">姓名</th>
-	<th width="100">当前分公司</th>
+	<th width="120">当前分公司</th>
 	<th width="130">手机号码</th>
-	<th width="90">速记码</th>
-	<th width="90">是员工？</th>
+	<th width="80">速记码</th>
+	<th width="80">是员工？</th>
 	<th width="90">允许登录？</th>
 	<th width="150">登录名</th>
 	<th width="100">所属角色</th>

@@ -26,7 +26,7 @@
 <body>
 <%
 	Role role = new Role( XmsInitial.getDataSource(), Role.BTYPE_DETAIL );
-	AbstractDaemon.fixQueryParams( role, request, false, true );
+	AbstractDaemon.fixQueryParams( role, request, false, false, true );
 	role.executeQuery();
 	CommonSet dataSet = role.getQueryResult();
 	String astricts = role.getAstricts();
