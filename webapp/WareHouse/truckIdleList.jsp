@@ -61,12 +61,12 @@ CommonSet dataSet = idleList.getQueryResult( );
 	<tr class="query_tr">
 	<td align="right">
 		<select name="<%=TruckIdleList.QP_SORT_TAG%>" class="select">
-		<option value="<%=TruckIdleList.IDLE_DATE_ASC%>">--排序规则--</option>
+		<option value="<%=TruckIdleList.IDLE_DATE_ASC%>">登记日期升序</option>
 		<option value="<%=TruckIdleList.COMPANY_ASC%>">公司升序</option>
 			<option value="<%=TruckIdleList.USER_ASC%>">用户升序</option>
 		</select>&nbsp;&nbsp;&nbsp;&nbsp;
 
-		<select name="<%=TruckIdleList.QP_COMPANY%>" class="select"><option value="All">--所属仓库--</option><%=EnumConstants.TRANS_PLAN_K_OPTIONS%></select>&nbsp;&nbsp;&nbsp;&nbsp;
+		<select name="<%=TruckIdleList.QP_COMPANY%>" class="select"><option value="All">--所属仓库--</option><%=XmsInitial.getXmsContainer().getMasterCompany().getAvaliableSelectOptions(AbstractDaemon.getAvailableCompanies(request))%></select>&nbsp;&nbsp;&nbsp;&nbsp;
 		<select name="<%=TruckIdleList.QP_IDLE_K%>" class="select">
 		<option value="All">--闲置类型--</option>
 		<option value="Idle">闲置</option>
@@ -94,9 +94,9 @@ CommonSet dataSet = idleList.getQueryResult( );
 	<th width="90">起始日期</th>
 	<th width="90">截止日期</th>
 	<th >备注</th>
-	<th width="90">登记人</th>
+	<th width="120">登记人</th>
 	<th width="135">登记日期</th>
-	<th width="120">操作</th>
+	<th width="90">操作</th>
 	</tr>
 	</thead>
 	
