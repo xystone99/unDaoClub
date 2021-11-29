@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.undao.cache.*;
 import com.undao.control.AbstractDaemon;
+import com.undao.database.DatabaseConstants;
 
 /**
  * @author X.Stone
@@ -28,11 +29,14 @@ public class TruckFetcher extends AbstractDaemon {
 		StringBuilder buf = new StringBuilder( );
 		buf.append( "[" );
 
-
+		String avaliableCompanys = AbstractDaemon.getAvailableCompanies( request );
     	String action = request.getParameter( "Action" );
     	if ( action.equals("Normal") ) {
-			buf.append( truckGeometry.searchTruck( matchTag.toUpperCase() ) );
-
+			if ( avaliableCompanys.contains( DatabaseConstants.SQL_COMMA ) ) {
+				buf.append( truckGeometry.searchTruck( matchTag.toUpperCase(), avaliableCompanys ) );
+			} else {
+				buf.append( truckGeometry.searchTruck( matchTag.toUpperCase(), Integer.parseInt( avaliableCompanys ) ) );
+			}
 			buf.append( ",{" );
 			buf.append( AbstractDaemon.makeJsonItem("ID", "0" ) ).append( "," );
 			buf.append( AbstractDaemon.makeJsonItem("PlateNumber", "" ) ).append( "," );
@@ -41,7 +45,12 @@ public class TruckFetcher extends AbstractDaemon {
 			buf.append( "}" );
 
     	} else if ( action.equals( "TruckIdle" ) ) {
-			buf.append( truckGeometry.searchTruck( matchTag.toUpperCase() ) );
+			if ( avaliableCompanys.contains( DatabaseConstants.SQL_COMMA ) ) {
+				buf.append( truckGeometry.searchTruck( matchTag.toUpperCase(), avaliableCompanys ) );
+			} else {
+				buf.append( truckGeometry.searchTruck( matchTag.toUpperCase(), Integer.parseInt( avaliableCompanys ) ) );
+			}
+
 		}
 
 		buf.append( "]" );

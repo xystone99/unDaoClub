@@ -71,7 +71,7 @@ public class MasterCompany extends AbstractDatabase {
 		StringBuilder buf = new StringBuilder( );
 		String[] arrCompany = avaliableCompanys.split( SQL_COMMA );
 		for ( int j=0; j<arrCompany.length; j++ ) {
-			buf.append("<option value=\">" ).append( arrCompany[j] ).append( "\">" ).append( mapDisplay.get(arrCompany[j]) ).append( "</option>" );
+			buf.append("<option value=\"" ).append( arrCompany[j] ).append( "\">" ).append( mapDisplay.get(arrCompany[j]) ).append( "</option>" );
 		}
 		return buf.toString( );
 	}

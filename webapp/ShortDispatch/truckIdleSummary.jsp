@@ -5,7 +5,6 @@
 <%@ page import="com.undao.database.CommonSet" %>
 <%@ page import="xms.XmsUtils" %>
 <%@ page import="com.undao.database.AbstractQuery" %>
-<%@ page import="com.undao.enumeration.EnumConstants" %>
 <%@ page import="com.undao.control.AbstractDaemon" %>
 <%@ page import="com.undao.utils.DateUtils" %>
 <%@ page import="xms.queries.shortDispatch.TruckIdleSummary" %>
@@ -62,7 +61,7 @@ LocalDate date2 = DateUtils.buildDate( idleSummary.getParameterValue( TruckIdleS
 	<tr class="query_tr">
 	<td align="right">
 		<select name="<%=TruckIdleSummary.QP_SORT_TAG%>" class="select">
-		<option value="<%=TruckIdleSummary.COMPANY_ASC%>">--排序规则--</option>
+		<option value="<%=TruckIdleSummary.COMPANY_ASC%>">仓库升序</option>
 		<option value="<%=TruckIdleSummary.PLATE_ASC%>">车牌号升序</option>
 		</select>&nbsp;&nbsp;&nbsp;&nbsp;
 

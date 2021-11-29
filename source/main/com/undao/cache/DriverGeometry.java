@@ -14,7 +14,7 @@ import com.undao.database.*;
  */
 public class DriverGeometry extends AbstractDatabase {
 
-	private static String FETCH_SQL = "SELECT user_a,ne_zh,tel,init_spell FROM tbl_user_account WHERE if_driver='Y' ORDER BY init_spell ASC";
+	private static String FETCH_SQL = "SELECT user_a,ne_zh,tel,init_spell,cur_company FROM tbl_user_account WHERE if_driver='Y' ORDER BY init_spell ASC";
 	
 	private static DriverGeometry instance = null;
 	private DriverGeometry( ) {
@@ -32,6 +32,7 @@ public class DriverGeometry extends AbstractDatabase {
 	private String[] arrID = null;
 	private String[] arrName = null;
 	private String[] arrMobile = null;
+	private int[] arrCurCompany = null;
 	private HashMap<String,String> mapDriverName = new HashMap<String,String>(); 
 
 	public void fixSingletonObject( ) {
@@ -40,6 +41,7 @@ public class DriverGeometry extends AbstractDatabase {
 		arrInitSpell = new String[rowCount];
 		arrID = new String[rowCount];
 		arrName = new String[rowCount];
+		arrCurCompany = new int[rowCount];
 		arrMobile = new String[rowCount];
 		
 		for( int j=0; j<rowCount; j++ ) {
@@ -47,6 +49,7 @@ public class DriverGeometry extends AbstractDatabase {
 			arrID[j] = ((Long)dataList.getValue(j,"user_a")).toString();
 			arrName[j] = (String)dataList.getValue(j,"ne_zh");
 			arrMobile[j] = (String)dataList.getValue(j,"tel");
+			arrCurCompany[j] = ((Long)dataList.getValue(j,"cur_company")).intValue();
 			mapDriverName.put( arrID[j], arrName[j] );
 		}	
 	}
@@ -68,12 +71,13 @@ public class DriverGeometry extends AbstractDatabase {
 	 * @param term	: AutoComplete输入字符串
 	 * @return		：包含项目信息的JSON字符串
 	 */
-	public String searchPattern( String term ) {
+	public String searchPattern( String term, int companyID ) {
 		int counter = 0;
 		StringBuilder buf = new StringBuilder( );
 		StringBuilder bufLabel = new StringBuilder( );
 		for ( int j=0; j<arrInitSpell.length; j++ ) {
 			if ( !arrInitSpell[j].contains(term) ) continue;
+			if ( arrCurCompany[j] != companyID ) continue;
 			bufLabel.delete(0, bufLabel.length() );
 			bufLabel.append( arrName[j] ).append( "-" ).append( arrMobile[j] );
     		buf.append( "{" );
@@ -91,17 +95,13 @@ public class DriverGeometry extends AbstractDatabase {
 		return buf.toString( );
 	}
 
-	/**
-	 * 副驾驶员：根据快速检索代码匹配
-	 * @param term	: AutoComplete输入字符串
-	 * @return		：包含项目信息的JSON字符串
-	 */
-	public String searchPatternForSubDriver( String term ) {
+	public String searchPattern( String term, String companyList ) {
 		int counter = 0;
 		StringBuilder buf = new StringBuilder( );
 		StringBuilder bufLabel = new StringBuilder( );
 		for ( int j=0; j<arrInitSpell.length; j++ ) {
 			if ( !arrInitSpell[j].contains(term) ) continue;
+			if ( !companyList.contains( Integer.toString(arrCurCompany[j])) ) continue;
 			bufLabel.delete(0, bufLabel.length() );
 			bufLabel.append( arrName[j] ).append( "-" ).append( arrMobile[j] );
 			buf.append( "{" );
@@ -114,6 +114,7 @@ public class DriverGeometry extends AbstractDatabase {
 			counter++;
 			if ( counter >= 12 ) break;
 		}
+
 		buf.deleteCharAt( buf.length() -1 );
 		return buf.toString( );
 	}

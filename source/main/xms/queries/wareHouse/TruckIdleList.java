@@ -59,7 +59,7 @@ public class TruckIdleList extends AbstractQuery {
 	public void executeQuery() {
 		StringBuilder bufMainSQL = new StringBuilder( );
 		bufMainSQL.append( MAIN_SQL ).append( "WHERE cloud_id='" ).append( getCloudID() ).append( "' ");
-		bufMainSQL.append( parseEqualsWhere( "company", parameterMap.get(QP_COMPANY), false ) );
+		bufMainSQL.append( parseEqualsWhere( "cur_company", parameterMap.get(QP_COMPANY), false ) );
 		bufMainSQL.append( parseEqualsWhere( "idle_k", parameterMap.get(QP_IDLE_K), false ) );
 		bufMainSQL.append( parseLikeWhere( "plate_number", parameterMap.get(QP_PLATE), SQL_LIKE_BOTH ) );
 		bufMainSQL.append( parseLikeWhere( "user_a_zh", parameterMap.get(QP_USER), SQL_LIKE_BOTH ) );

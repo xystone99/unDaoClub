@@ -58,7 +58,7 @@
 			<input type="hidden" name="<%=TransPlan.QP_TRANS_L%>" value="0" /></td>
 	</tr>
 
-	<tr class="empty_tr"><td colspan="6"></td></tr>
+	<tr class="empty_tr"><td colspan="6"></td></tr><tr class="empty_tr"><td colspan="6"></td></tr>
 
 	<tr class="content_tr">
 		<td align="right">发货方:</td>
@@ -109,7 +109,7 @@
 		<td align="left" colspan="4"><input type="text" name="<%=TransPlan.QP_REMARK_2%>" size="80" maxlength="50" class="input_text" placeholder="单据、道口、特殊要求等" /></td>
 	</tr>
 
-	<tr class="empty_tr"><td colspan="6"></td></tr>
+	<tr class="empty_tr"><td colspan="6"></td></tr><tr class="empty_tr"><td colspan="6"></td></tr>
 
 	<tr class="content_tr30">
 		<td align="right">运输类型:</td>
@@ -123,10 +123,8 @@
 	<tr id="trRecycle" class="content_tr30">
 		<td align="right">返空占车米数:</td>
 		<td></td>
-		<td align="left"><input type="text" name="<%=TransPlan.QP_QTY_METER_R%>" size="12" maxlength="3" class="input_text" /></td>
-		<td align="right">返空仓库:</td>
-		<td></td>
-		<td colspan="4" align="left"><select id="whList" name="sWareList" class="select" onchange="javascript:changeMultiSelected(this,myForm.<%=TransPlan.QP_NE_RECYCLE%>)"><option value="0">--选择仓库--</option><%=XmsInitial.getXmsContainer().getMasterCompany().getSelectOptions(AbstractDaemon.getCloudID(request))%></select>&nbsp;<span id="multi_selected_list"></span>
+		<td align="left" colspan="4"><input type="text" name="<%=TransPlan.QP_QTY_METER_R%>" size="12" maxlength="3" class="input_text" />&nbsp;&nbsp;
+			<select id="whList" name="sWareList" class="select" onchange="javascript:changeMultiSelected(this,myForm.<%=TransPlan.QP_NE_RECYCLE%>)"><option value="0">--选择返空仓库--</option><%=EnumConstants.WH_RECYCLE_OPTIONS%></select>&nbsp;<span id="multi_selected_list"></span>
 			<input type="hidden" name="<%=TransPlan.QP_NE_RECYCLE%>" /></td>
 	</tr>
 
@@ -158,11 +156,6 @@
 
 <script type="text/javascript" src="../include/stc_validate.js"></script>
 <script type="text/javascript" src="../include/stc_function.js"></script>
-
-<script type="text/javascript">
-
-	$("#trRecycle").hide( );
-</script>
 
 <script type="text/javascript">
 	myForm.acCus.value = "<%=dataSet.getValue("obj_short")%>";
@@ -221,6 +214,9 @@
 </script>
 
 <script type="text/javascript">
+$(document).ready( function () {
+	$("#thDate1").datepicker({dateFormat: 'yy-mm-dd'});
+});
 $("#acCus").autocomplete({ source: "<%=XmsInitial.getContextPath()%>/fetchcus?Action=Fetch", minLength: 1, select: function(event, ui ) {
 	myForm.<%=TransPlan.QP_OBJ_P%>.value = ui.item.ID;
 	$("#acTransLine").autocomplete({ source: "<%=XmsInitial.getContextPath()%>/fetchtransline?CusID="+ui.item.ID, minLength: 0, select: function(event, ui ) {

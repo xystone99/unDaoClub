@@ -34,13 +34,16 @@ CREATE PROCEDURE `proc_trans_plan_new`(
 	OUT r_id					VARCHAR(10),
 	OUT	result					VARCHAR(50) )
 BASIC_BLOCK:BEGIN
+	DECLARE qRouteZh VARCHAR(20);
+	
 	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
 		SET result = 'SQLException';
 	END;
-		
+	
+	SELECT route_zh INTO qRouteZh FROM tbl_trans_line WHERE trans_l = pTRANS_L;
 	START TRANSACTION;
-	INSERT INTO trn_trans_plan(plan_k,plan_date,obj_p,time_level,ne_recycle,trans_l,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,qty_w,qty_v,qty_meter,qty_meter_r,user_a,cloud_id,input_date,last_update)
-	VALUES(pPLAN_K,pPLAN_DATE,pOBJ_P,pTIME_LEVEL,pNE_RECYCLE,pTRANS_L,pNE_ZH1,pADDRESS_1,pLINKMAN_1,pWINDOW_1,pREMARK_1,pNE_ZH2,pADDRESS_2,pLINKMAN_2,pWINDOW_2,pREMARK_2,pQTY_W,pQTY_V,pQTY_METER,pQTY_METER_R,pUSER_A,pCLOUD_ID,NOW(),NOW());
+	INSERT INTO trn_trans_plan(plan_k,plan_date,obj_p,time_level,ne_recycle,trans_l,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,qty_w,qty_v,qty_meter,qty_meter_r,route_zh,user_a,cloud_id,input_date,last_update)
+	VALUES(pPLAN_K,pPLAN_DATE,pOBJ_P,pTIME_LEVEL,pNE_RECYCLE,pTRANS_L,pNE_ZH1,pADDRESS_1,pLINKMAN_1,pWINDOW_1,pREMARK_1,pNE_ZH2,pADDRESS_2,pLINKMAN_2,pWINDOW_2,pREMARK_2,pQTY_W,pQTY_V,pQTY_METER,pQTY_METER_R,qRouteZh,pUSER_A,pCLOUD_ID,NOW(),NOW());
 	
 	COMMIT;
 	SET r_id = LAST_INSERT_ID();
@@ -83,6 +86,7 @@ CREATE PROCEDURE `proc_trans_plan_update`(
 BASIC_BLOCK:BEGIN
 	DECLARE qUserA INTEGER DEFAULT 0;
 	DECLARE qCloudID, qDispatchRemark, qWhRemark VARCHAR(50);
+	DECLARE qRouteZh VARCHAR(20);
 	
 	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
 		SET result = 'SQLException';
@@ -97,12 +101,13 @@ BASIC_BLOCK:BEGIN
 		SET result = 'InUse';
 		LEAVE BASIC_BLOCK;
 	END IF;
-		
+	
+	SELECT route_zh INTO qRouteZh FROM tbl_trans_line WHERE trans_l = pTRANS_L;
 	START TRANSACTION;
 	UPDATE trn_trans_plan SET
 		plan_k=pPLAN_K, plan_date=pPLAN_DATE, obj_p=pOBJ_P, time_level=pTIME_LEVEL, ne_recycle=pNE_RECYCLE, trans_l=pTRANS_L,
 		ne_zh1=pNE_ZH1, address_1=pADDRESS_1, linkman_1=pLINKMAN_1, window_1=pWINDOW_1, remark_1=pREMARK_1, ne_zh2=pNE_ZH2, address_2=pADDRESS_2, linkman_2=pLINKMAN_2, window_2=pWINDOW_2, remark_2=pREMARK_2, 
-		qty_w=pQTY_W, qty_v=pQTY_V, qty_meter=pQTY_METER, qty_meter_r=pQTY_METER_R, last_update=NOW()
+		qty_w=pQTY_W, qty_v=pQTY_V, qty_meter=pQTY_METER, qty_meter_r=pQTY_METER_R, route_zh=qRouteZh, last_update=NOW()
 	WHERE trans_p = pTRANS_P;
 	
 	COMMIT;
@@ -189,7 +194,7 @@ BASIC_BLOCK:BEGIN
 		ELSE
 			INSERT INTO trn_dispatch_record(dispt,trans_p,trans_l,if_main)VALUES(xDispt,xTransP,0,'N'); 
 		END IF;
-		UPDATE trn_trans_plan SET dispatch_remark=CONCAT(dispatch_remark, pPLATE_NUMBER, ' ', pTEL_DRIVER, ';<br/>&nbsp;' ), user_zh_d=xUserName, input_date_d=NOW() WHERE trans_p=xTransP;
+		UPDATE trn_trans_plan SET dispatch_remark=CONCAT(dispatch_remark, IF(LENGTH(dispatch_remark)>1,'<br/>&nbsp;','&nbsp;'), pPLATE_NUMBER, ' ', pTEL_DRIVER, ';' ), user_zh_d=xUserName, input_date_d=NOW() WHERE trans_p=xTransP;
 		SET pos_index = pos_index + 1;
 	UNTIL ( LENGTH(xTemp)+1 = LENGTH(pTRANS_PLANS) ) 
 	END REPEAT;
@@ -213,7 +218,7 @@ CREATE PROCEDURE `proc_dispatch_delete`(
 	OUT	result					VARCHAR(50) )
 BASIC_BLOCK:BEGIN
 	DECLARE qUserA, qPassDays INTEGER DEFAULT 0;
-	DECLARE qCloudID, qWhRemark VARCHAR(50);
+	DECLARE qCloudID, qWhRemark, xWhRemark VARCHAR(50);
 	
 	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
 		SET result = 'SQLException';
@@ -230,9 +235,10 @@ BASIC_BLOCK:BEGIN
 	END IF;
 	
 	START TRANSACTION;
-	UPDATE trn_dispatch d JOIN trn_dispatch_record r ON d.dispt=r.dispt JOIN trn_trans_plan p ON r.trans_p=p.trans_p 
-		SET p.dispatch_remark=REPLACE(p.dispatch_remark, CONCAT(d.plate_number, ' ', d.tel_driver, ';<br/>&nbsp;'), '') 
-	WHERE d.dispt=pDISPT;
+	SELECT CONCAT('&nbsp;', plate_number, ' ', tel_driver, ';') INTO xWhRemark FROM trn_dispatch WHERE dispt = pDISPT;
+	UPDATE trn_dispatch_record r JOIN trn_trans_plan p ON r.trans_p=p.trans_p
+		SET p.dispatch_remark=REPLACE(REPLACE(p.dispatch_remark, CONCAT('<br/>', xWhRemark), ''), xWhRemark, '')
+	WHERE r.dispt = pDISPT;
 	
 	DELETE FROM trn_dispatch WHERE dispt = pDISPT;
 	DELETE FROM trn_dispatch_record WHERE dispt = pDISPT;

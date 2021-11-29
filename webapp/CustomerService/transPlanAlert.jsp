@@ -11,6 +11,7 @@
 <%@ page import="com.undao.control.AbstractDaemon" %>
 <%@ page import="xms.beans.shortDispatch.Dispatch" %>
 <%@ page import="xms.queries.customerService.TransPlanAlert" %>
+<%@ page import="com.undao.utils.DateUtils" %>
 <%
 	int PAGE_TAG = CtrlConstants.PG_TRANS_PLAN_ALERT;
 	boolean acceptInnerUser = true;
@@ -64,7 +65,7 @@ CommonSet dataSet = transPlanAlert.getQueryResult( );
 		<input type="hidden" name="<%=TransPlanAlert.QP_IF_HIDE%>" value="Y" />
 
 		<select name="<%=TransPlanAlert.QP_SORT_TAG%>">
-		<option value="<%=TransPlanAlert.INPUT_DATE_ASC%>">--排序规则--</option>
+		<option value="<%=TransPlanAlert.INPUT_DATE_ASC%>">创建日期升序</option>
 		<option value="<%=TransPlanAlert.INPUT_DATE_DESC%>">创建日期降序</option>
 		</select>&nbsp;&nbsp;&nbsp;&nbsp;
 		<select name="<%=TransPlanAlert.QP_PLAN_K%>" class="select"><option value="All">--计划类型--</option><%=EnumConstants.TRANS_PLAN_K_OPTIONS%></select>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -76,7 +77,7 @@ CommonSet dataSet = transPlanAlert.getQueryResult( );
 		<input id="pDate1" type="text" name="<%=TransPlanAlert.QP_DATE1%>" size="10" maxlength="10" class="input_text" ondblclick="javascript:setCurrentDate(this)" />—<input id="pDate2" type="text" name="<%=TransPlanAlert.QP_DATE2%>" size="10" maxlength="10" class="input_text" ondblclick="javascript:setCurrentDate(this)" />&nbsp;&nbsp;&nbsp;&nbsp;
 		装卸地名称:
 		<input type="text" name="<%=TransPlanAlert.QP_LOAD_NAME%>" size="10" maxlength="10" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
-		计划人员:
+		登记人:
 		<input type="text" name="<%=TransPlanAlert.QP_USER_ZH%>" size="10" maxlength="10" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="submit" name="btnQuery" value="开始检索" class="input_text" />
 	</td>
@@ -87,17 +88,16 @@ CommonSet dataSet = transPlanAlert.getQueryResult( );
 	<thead>
 	<tr>
 	<th width="50">序号</th>
-	<th width="130">日期-计划员</th>
+	<th width="120">日期-计划员</th>
 	<th width="110">客户简称</th>
-	<th width="80">运输类型</th>
-	<th width="80">时效要求</th>
+	<th width="120">运输类型&时效<br/>要求</th>
 	<th width="135">发货方-发货窗口</th>
 	<th width="180">发货说明</th>
 	<th width="135">收货方-收货窗口</th>
 	<th width="180">收货说明</th>
-	<th width="150">返空箱说明</th>
-	<th width="90">吨位&方数</th>
-	<th width="80">占车米数</th>
+	<th width="180">返空箱说明</th>
+	<th width="100">吨位&方数</th>
+	<th width="90">占车米数</th>
 	<th width="220">调度回报</th>
 	<th >仓库回报</th>
 	</tr>
@@ -116,8 +116,7 @@ CommonSet dataSet = transPlanAlert.getQueryResult( );
 		<td align="center"><%=baseIndex+j %></td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"plan_date")%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh")%>]</td>
 			<td align="center"><a href="javascript:void(0)" onclick="javascript:openUpdate('<%=trans_p.toString()%>')"><%=dataSet.getValue(j,"obj_short")%></a></td>
-		<td align="center"><%=dataSet.getValue(j,"plan_k")%></td>
-		<td align="center"><%=dataSet.getValue(j,"time_level")%></td>
+		<td align="center"><%=dataSet.getValue(j,"plan_k")%>&nbsp;[<%=dataSet.getValue(j,"time_level")%>]</td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_zh1")%><br/>&nbsp;[<%=dataSet.getValue(j,"window_1")%>]</td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"remark_1")%></td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_zh2")%><br/>&nbsp;[<%=dataSet.getValue(j,"window_2")%>]</td>
@@ -125,8 +124,12 @@ CommonSet dataSet = transPlanAlert.getQueryResult( );
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_recycle")%><br/>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter_r"),false,"米")%></td>
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_w"),false,"吨")%>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_v"),false,"方")%>&nbsp;</td>
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter"),false,"米")%>&nbsp;</td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"dispatch_remark")%></td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"wh_remark")%></td>
+		<td align="left"><%
+			if ( ((String)dataSet.getValue(j,"dispatch_remark")).length() > 1 ) {
+				%><%=dataSet.getValue(j,"dispatch_remark")%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh_d")%>&nbsp;&nbsp;<%=DateUtils.formatDateTime3(dataSet.getValue(j,"input_date_d"))%>]<%
+			}
+			%></td>
+		<td align="left">&nbsp;<%=dataSet.getValue(j,"wh_remark")%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh_w")%>&nbsp;&nbsp;<%=DateUtils.formatDateTime3(dataSet.getValue(j,"input_date_w"))%>]</td>
 		</tr>
 		<%
 		pageWeight = pageWeight.add( (BigDecimal)dataSet.getValue(j,"qty_w") );
@@ -135,7 +138,6 @@ CommonSet dataSet = transPlanAlert.getQueryResult( );
 	}
 	%>
 	<tr class="total_tr">
-	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>

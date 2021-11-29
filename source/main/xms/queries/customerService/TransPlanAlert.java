@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class TransPlanAlert extends AbstractQuery {
 
 	private final static int DEFAULT_PAGE_SIZE = 20;
-	private final static String QUERY_SQL = "SELECT SQL_CALC_FOUND_ROWS trans_p,plan_k,plan_date,obj_short,time_level,ne_recycle,ne_zh1,window_1,remark_1,ne_zh2,window_2,remark_2,qty_w,qty_v,qty_meter,qty_meter_r,route_zh,dispatch_remark,wh_remark,user_zh,input_date FROM view_trans_plan_list ";
+	private final static String QUERY_SQL = "SELECT SQL_CALC_FOUND_ROWS trans_p,plan_k,plan_date,obj_short,time_level,ne_recycle,ne_zh1,window_1,remark_1,ne_zh2,window_2,remark_2,qty_w,qty_v,qty_meter,qty_meter_r,route_zh,dispatch_remark,user_zh_d,input_date_d,wh_remark,user_zh_w,input_date_w,user_zh,input_date FROM view_trans_plan_list ";
 
 	public final static String QP_SORT_TAG = "QpSortTag";
 	public final static String INPUT_DATE_ASC = "InputDateAsc";

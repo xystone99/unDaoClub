@@ -51,7 +51,7 @@
 	<td align="right">车牌号（车型）:</td>
 	<td></td>
 	<td align="left" colspan="4">
-		<input type="text" id="acTruck" name="acTruck" size="10" maxlength="20" placeholder="快速检索" class="input_text" />
+		<input type="text" id="acTruck" name="acTruck" size="10" maxlength="20" placeholder="关键字" class="input_text" />
 		<input type="text" name="<%=TruckIdle.QP_PLATE_NUMBER%>" size="20" maxlength="20" class="input_text" />
 		<input type="hidden" name="<%=TruckIdle.QP_TRUCK%>" value="0" />
 		</td>
@@ -61,7 +61,7 @@
 	<td align="right">驾驶员:</td>
 	<td></td>
 	<td align="left" colspan="4">
-		<input type="text" id="acDriver" name="acDriver" size="10" maxlength="20" placeholder="快速检索" class="input_text" />
+		<input type="text" id="acDriver" name="acDriver" size="10" maxlength="20" placeholder="姓名首字母" class="input_text" />
 		<input type="text" name="<%=TruckIdle.QP_TEL_DRIVER%>" size="20" maxlength="20" class="input_text" />
 		<input type="hidden" name="<%=TruckIdle.QP_DRIVER%>" value="0" />&nbsp;&nbsp;&nbsp;
 	</td>

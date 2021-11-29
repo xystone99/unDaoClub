@@ -65,7 +65,7 @@ public class WaitInOutList extends AbstractQuery {
 		bufMainSQL.append( parseEqualsWhere( "plan_k", parameterMap.get(QP_PLAN_K), false ) );
 		bufMainSQL.append( parseLikeWhere( "obj_short", parameterMap.get(QP_OBJECT_P), SQL_LIKE_BOTH ) );
 		bufMainSQL.append( parseLikeWhere( "plate_number", parameterMap.get(QP_PLATE), SQL_LIKE_BOTH ) );
-		bufMainSQL.append( parseLikeWhere( "driver", parameterMap.get(QP_DRIVER), SQL_LIKE_BOTH ) );
+		bufMainSQL.append( parseLikeWhere( "tel_driver", parameterMap.get(QP_DRIVER), SQL_LIKE_BOTH ) );
 		bufMainSQL.append( parseRangeWhere("depart_date", parameterMap.get(QP_DATE1), parameterMap.get(QP_DATE2), false) );
 		String load_name = parameterMap.get(QP_LOAD_NAME);
 		if ( load_name.length() > 0 ) {
@@ -91,7 +91,7 @@ public class WaitInOutList extends AbstractQuery {
 		bufDetailSQL.append( parseEqualsWhere( "plan_k", parameterMap.get(QP_PLAN_K), false ) );
 		bufDetailSQL.append( parseLikeWhere( "obj_short", parameterMap.get(QP_OBJECT_P), SQL_LIKE_BOTH ) );
 		bufDetailSQL.append( parseLikeWhere( "plate_number", parameterMap.get(QP_PLATE), SQL_LIKE_BOTH ) );
-		bufDetailSQL.append( parseLikeWhere( "driver", parameterMap.get(QP_DRIVER), SQL_LIKE_BOTH ) );
+		bufDetailSQL.append( parseLikeWhere( "tel_driver", parameterMap.get(QP_DRIVER), SQL_LIKE_BOTH ) );
 		bufDetailSQL.append( parseRangeWhere("depart_date", parameterMap.get(QP_DATE1), parameterMap.get(QP_DATE2), false) );
 		if ( load_name.length() > 0 ) {
 			bufDetailSQL.append( "AND (ne_recycle LIKE '%" ).append( load_name ).append( "%' OR ne_zh1 LIKE '%" ).append( load_name ).append( "%' OR ne_zh2 LIKE '%" ).append( load_name ).append( "%') " );

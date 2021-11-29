@@ -35,7 +35,10 @@ public class EnumConstants {
 	//时效要求等级
 	public static final String TIME_LEVEL_OPTIONS = "<option value=\"可调\">可调</option><option value=\"一般\">一般</option><option value=\"准时\">准时</option>";
 
-	//仓库列表
+	//返空仓库列表
+	public static final String WH_RECYCLE_OPTIONS = "<option>塔山路仓库</option><option>宝安公路仓库</option><option>长泾仓库</option>";
+
+	//车辆闲置类型
 	public static final String TRUCK_IDLE_K_OPTIONS = "<option value=\"Idle\">车辆闲置</option><option value=\"Lack\">车辆空缺</option>";
 
 	//仓库回报信息列表
@@ -62,5 +65,6 @@ public class EnumConstants {
 	
 	//车辆状态
 	public static final String TRUCK_STATUS_OPTIONS = "<option value=\"Normal\">正常</option><option value=\"Scrap\">报废</option><option value=\"Cancel\">已取消</option>";
+
 
 }

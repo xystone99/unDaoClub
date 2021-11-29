@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.undao.cache.*;
 import com.undao.control.AbstractDaemon;
+import com.undao.database.DatabaseConstants;
 
 /**
  * @author X.Stone
@@ -22,6 +23,8 @@ public class DriverFetcher extends AbstractDaemon {
 		if ( checkSessionExpired( request ) ) {
 			return;
 		}
+
+		String avaliableCompanys = AbstractDaemon.getAvailableCompanies( request );
 		String actionTag = request.getParameter( "Action" );
 		String matchTag = request.getParameter("term").trim();
     	DriverGeometry driverGeometry = DriverGeometry.getInstance();
@@ -30,7 +33,11 @@ public class DriverFetcher extends AbstractDaemon {
 		buf.append( "[" );
 
     	if ( actionTag.equals( "Driver" ) ) {
-			buf.append(driverGeometry.searchPattern(matchTag.toUpperCase()));
+			if ( avaliableCompanys.contains( DatabaseConstants.SQL_COMMA ) ) {
+				buf.append( driverGeometry.searchPattern( matchTag.toUpperCase(), avaliableCompanys ) );
+			} else {
+				buf.append( driverGeometry.searchPattern( matchTag.toUpperCase(), Integer.parseInt( avaliableCompanys ) ) );
+			}
 
 			buf.append(",{");
 			buf.append(AbstractDaemon.makeJsonItem("ID", "0")).append(",");
@@ -41,10 +48,18 @@ public class DriverFetcher extends AbstractDaemon {
 			buf.append("}");
 
 		} else if ( actionTag.equals( "TruckIdle" ) ) {
-			buf.append(driverGeometry.searchPattern(matchTag.toUpperCase()));
+			if ( avaliableCompanys.contains( DatabaseConstants.SQL_COMMA ) ) {
+				buf.append( driverGeometry.searchPattern( matchTag.toUpperCase(), avaliableCompanys ) );
+			} else {
+				buf.append( driverGeometry.searchPattern( matchTag.toUpperCase(), Integer.parseInt( avaliableCompanys ) ) );
+			}
 
 		} else if ( actionTag.equals( "SubDriver" ) ) {
-			buf.append( driverGeometry.searchPatternForSubDriver( matchTag.toUpperCase() ) );
+			if ( avaliableCompanys.contains( DatabaseConstants.SQL_COMMA ) ) {
+				buf.append( driverGeometry.searchPattern( matchTag.toUpperCase(), avaliableCompanys ) );
+			} else {
+				buf.append( driverGeometry.searchPattern( matchTag.toUpperCase(), Integer.parseInt( avaliableCompanys ) ) );
+			}
 
 		}
 

@@ -60,7 +60,7 @@ CommonSet dataSet = transPlanList.getQueryResult( );
 	<tr class="query_tr">
 	<td align="right">
 		<select name="<%=TransPlanList.QP_SORT_TAG%>">
-		<option value="<%=TransPlanList.INPUT_DATE_ASC%>">--排序规则--</option>
+		<option value="<%=TransPlanList.INPUT_DATE_ASC%>">创建日期升序</option>
 		<option value="<%=TransPlanList.INPUT_DATE_DESC%>">创建日期降序</option>
 		</select>&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -84,19 +84,16 @@ CommonSet dataSet = transPlanList.getQueryResult( );
 	<th width="50">序号</th>
 	<th width="120">日期-计划员</th>
 	<th width="100">客户简称</th>
-	<th width="75">运输类型</th>
-	<th width="75">时效要求</th>
+	<th width="120">运输类型&时效<br/>要求</th>
 	<th width="135">发货方-时间窗口</th>
-	<th width="170">发货方地址</th>
-	<th width="130">发货联系人</th>
-	<th width="130">发货说明</th>
+	<th width="200">发货方地址/发货联系人</th>
+	<th width="200">发货说明</th>
 	<th width="135">收货方-时间窗口</th>
-	<th width="170">收货方地址</th>
-	<th width="130">收货联系人</th>
-	<th width="130">收货说明</th>
+	<th width="200">收货方地址/收货联系人</th>
+	<th width="200">收货说明</th>
 	<th >返空说明</th>
-	<th width="90">吨位&方数</th>
-	<th width="75">占车米数</th>
+	<th width="100">吨位&方数</th>
+	<th width="90">占车米数</th>
 	</tr>
 	</thead>
 	
@@ -113,15 +110,12 @@ CommonSet dataSet = transPlanList.getQueryResult( );
 		<td align="center"><%=baseIndex+j %></td>
 		<td align="left">&nbsp;<%=DateUtils.format_mmdd(dataSet.getValue(j,"plan_date"))%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh")%>]</td>
 		<td align="center"><a href="javascript:void(0)" onclick="javascript:openUpdate('<%=trans_p.toString()%>')"><%=dataSet.getValue(j,"obj_short")%></a></td>
-		<td align="center"><%=dataSet.getValue(j,"plan_k")%></td>
-		<td align="center"><%=dataSet.getValue(j,"time_level")%></td>
+		<td align="center"><%=dataSet.getValue(j,"plan_k")%>&nbsp;[<%=dataSet.getValue(j,"time_level")%>]</td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_zh1")%><br/>&nbsp;[<%=dataSet.getValue(j,"window_1")%>]</td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"address_1")%></td>
-		<td align="center"><%=dataSet.getValue(j,"linkman_1")%></td>
+		<td align="left">&nbsp;<%=dataSet.getValue(j,"address_1")%><br/>&nbsp;[<%=dataSet.getValue(j,"linkman_1")%>]</td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"remark_1")%></td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_zh2")%><br/>&nbsp;[<%=dataSet.getValue(j,"window_2")%>]</td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"address_2")%></td>
-		<td align="center"><%=dataSet.getValue(j,"linkman_2")%></td>
+		<td align="left">&nbsp;<%=dataSet.getValue(j,"address_2")%><br/>&nbsp;[<%=dataSet.getValue(j,"linkman_2")%>]</td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"remark_2")%></td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_recycle")%><br/>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter_r"),false,"米")%></td>
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_w"),false,"吨")%>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_v"),false,"方")%>&nbsp;</td>
@@ -134,9 +128,6 @@ CommonSet dataSet = transPlanList.getQueryResult( );
 	}
 	%>
 	<tr class="total_tr">
-	<td></td>
-	<td></td>
-	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>

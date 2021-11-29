@@ -16,7 +16,7 @@ import com.undao.enumeration.*;
  */
 public class TruckGeometry extends AbstractDatabase {
 
-	private static String FETCH_SQL = "SELECT truck,plate_number,truck_type FROM tbl_truck WHERE 1=1 ORDER BY plate_number ASC";
+	private static String FETCH_SQL = "SELECT truck,cur_company,plate_number,truck_type FROM tbl_truck WHERE 1=1 ORDER BY plate_number ASC";
 	
 	private static TruckGeometry instance = null;
 	private TruckGeometry() {
@@ -34,6 +34,7 @@ public class TruckGeometry extends AbstractDatabase {
 	private String[] arrID = null;
 	private String[] arrType = null;
 	private String[] arrPlate = null;
+	private int[] arrCurCompany = null;
 	
 	protected HashMap<String,String> mapPlate = new HashMap<String,String>();
 
@@ -44,12 +45,14 @@ public class TruckGeometry extends AbstractDatabase {
 		arrID = new String[rowCount];
 		arrType = new String[rowCount];
 		arrPlate = new String[rowCount];
+		arrCurCompany = new int[rowCount];
 		
 		for( int j=0; j<dataList.getRowCount(); j++ ) {
 			String key = ((Long)dataList.getValue(j,"truck")).toString( );
 			arrID[j] = key;
 			arrType[j] = (String)dataList.getValue(j,"truck_type");
 			arrPlate[j] = (String)dataList.getValue(j,"plate_number");
+			arrCurCompany[j] = ((Long)dataList.getValue(j,"cur_company")).intValue();
 			mapPlate.put( key, (String)dataList.getValue(j,"plate_number") );
 		}
 	}
@@ -83,12 +86,13 @@ public class TruckGeometry extends AbstractDatabase {
 	 * @param term	: AutoComplete输入字符串
 	 * @return		：包含项目信息的JSON字符串
 	 */
-	public String searchTruck( String term ) {
+	public String searchTruck( String term, int companyID ) {
 		int counter = 0;
 		StringBuilder buf = new StringBuilder( );
 		StringBuilder bufLabel = new StringBuilder( );
 		for ( int j=0; j<arrPlate.length; j++ ) {
 			if ( !arrPlate[j].contains(term) ) continue;
+			if ( arrCurCompany[j] != companyID ) continue;
 			bufLabel.delete(0, bufLabel.length() );
 			bufLabel.append( arrPlate[j] ).append( "[" ).append( arrType[j] ).append( "]" );
     		buf.append( "{" );
@@ -99,6 +103,29 @@ public class TruckGeometry extends AbstractDatabase {
     		buf.append( "}," );
     		counter++;
     		if ( counter >= 12 ) break;
+		}
+
+		buf.deleteCharAt( buf.length() -1 );
+		return buf.toString( );
+	}
+
+	public String searchTruck( String term, String companyList ) {
+		int counter = 0;
+		StringBuilder buf = new StringBuilder( );
+		StringBuilder bufLabel = new StringBuilder( );
+		for ( int j=0; j<arrPlate.length; j++ ) {
+			if ( !arrPlate[j].contains(term) ) continue;
+			if ( !companyList.contains( Integer.toString(arrCurCompany[j])) ) continue;
+			bufLabel.delete(0, bufLabel.length() );
+			bufLabel.append( arrPlate[j] ).append( "[" ).append( arrType[j] ).append( "]" );
+			buf.append( "{" );
+			buf.append( AbstractDaemon.makeJsonItem("ID", arrID[j] ) ).append( "," );
+			buf.append( AbstractDaemon.makeJsonItem("PlateNumber", arrPlate[j] ) ).append( "," );
+			buf.append( AbstractDaemon.makeJsonItem("value", "自有车辆" ) ).append( "," );
+			buf.append( AbstractDaemon.makeJsonItem("label", bufLabel.toString() ) );
+			buf.append( "}," );
+			counter++;
+			if ( counter >= 12 ) break;
 		}
 
 		buf.deleteCharAt( buf.length() -1 );

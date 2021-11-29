@@ -61,7 +61,7 @@ CommonSet dataSet = waitInOutList.getQueryResult( );
 		<tr class="query_tr">
 		<td align="right">
 			<select name="<%=WaitInOutList.QP_SORT_TAG%>">
-				<option value="<%=WaitInOutList.PLAN_K_ASC%>">--排序规则--</option>
+				<option value="<%=WaitInOutList.PLAN_K_ASC%>">运输类型升序</option>
 				<option value="<%=WaitInOutList.DEPART_DATE_ASC%>">发车日期升序</option>
 				<option value="<%=WaitInOutList.PLATE_NUMBER_ASC%>">车牌号升序</option>
 			</select>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -91,11 +91,10 @@ CommonSet dataSet = waitInOutList.getQueryResult( );
 		<th width="180">发货说明</th>
 		<th width="150">收货方-收货窗口</th>
 		<th width="180">收货说明</th>
-		<th width="150">返空说明</th>
+		<th width="180">返空说明</th>
 		<th width="100">货量(吨&方)</th>
-		<th width="80">占车米数</th>
-		<th width="80">时效要求</th>
-		<th width="80">运输类型</th>
+		<th width="90">占车米数</th>
+		<th width="120">运输类型&时效<br/>要求</th>
 		<th width="80">调度员</th>
 		<th >仓库回报</th>
 		</tr>
@@ -136,9 +135,7 @@ CommonSet dataSet = waitInOutList.getQueryResult( );
 			<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_recycle")%>&nbsp;<br/>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter_r"),false,"米")%></td>
 			<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_w"),false,"吨")%>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_v"),false,"方")%>&nbsp;</td>
 			<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter"),false,"米")%>&nbsp;</td>
-			<td align="center"><%=dataSet.getValue(j,"time_level")%></td>
-			<td align="center"><%=dataSet.getValue(j,"plan_k")%></td>
-
+			<td align="center"><%=dataSet.getValue(j,"plan_k")%>&nbsp;[<%=dataSet.getValue(j,"time_level")%>]</td>
 			<%
 			if ( preDisptID != disptID.longValue() ) {
 				preDisptID = disptID.longValue();
@@ -169,7 +166,6 @@ CommonSet dataSet = waitInOutList.getQueryResult( );
 		<td align="right">本页合计：</td>
 		<td align="right"><%=DecimalUtils.formatQty(pageWeight,true,"吨")%>&nbsp;<%=DecimalUtils.formatQty(pageVolume,true,"方")%>&nbsp;</td>
 		<td align="right"><%=DecimalUtils.formatQty(pageMeter,true,"米")%>&nbsp;</td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -212,7 +208,7 @@ $(document).ready( function () {
 });
 function openReturnDispatch( disptID, transP ) {
 	var strStatus = "toolbar=no,Scrollbars=yes,status=yes,width=640,height=480,left=" + getCenteredLeft(640) + ",top=" + getCenteredTop(480);
-	window.open( "returnDispatch.jsp?WM=<%=CtrlConstants.WM_CHILD%>&DisptID="+disptID+"&TransP="+transP, "_blank", strStatus );
+	window.open( "returnDispatch.jsp?WM=<%=CtrlConstants.WM_CHILD%>&DisptID="+disptID+"&TransP="+transP, "ReturnDispatch", strStatus, false );
 }
 
 function checkSubmit( subAction ) {

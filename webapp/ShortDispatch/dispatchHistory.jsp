@@ -58,7 +58,7 @@ CommonSet dataSet = dispatchHistory.getQueryResult( );
 	<tr class="query_tr">
 	<td align="right">
 		<select name="<%=DispatchHistory.QP_SORT_TAG%>">
-		<option value="<%=DispatchHistory.INPUT_DATE_ASC%>">--排序规则--</option>
+		<option value="<%=DispatchHistory.INPUT_DATE_ASC%>">创建日期升序</option>
 		<option value="<%=DispatchHistory.INPUT_DATE_DESC%>">创建日期降序</option>
 		</select>&nbsp;&nbsp;&nbsp;&nbsp;
 		车牌号:
@@ -79,7 +79,7 @@ CommonSet dataSet = dispatchHistory.getQueryResult( );
 	<tr>
 	<th width="50">序号</th>
 	<th width="110">日期-调度</th>
-	<th width="110">车牌号</th>
+	<th width="120">车牌号</th>
 	<th width="160">驾驶员</th>
 	<th width="90">押运员</th>
 	<th >发货方->收货方;&nbsp;&nbsp;返空说明;&nbsp;&nbsp;吨/方;&nbsp;&nbsp;占车米数</th>
@@ -99,7 +99,7 @@ CommonSet dataSet = dispatchHistory.getQueryResult( );
 		%>
 		<tr class="<%=pos_index%2==1?"content1_tr":"content2_tr" %>">
 		<td align="center"><%=baseIndex+pos_index++ %></td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"depart_date")%><br/>&nbsp;[<a href="javascript:void(0)" onclick="javascript:openDelete('<%=disptID.toString()%>')">D</a>][<%=dataSet.getValue(j,"user_a")%>]</td>
+		<td align="left">&nbsp;<%=dataSet.getValue(j,"depart_date")%><br/>&nbsp;[<a href="javascript:void(0)" onclick="javascript:openDelete('<%=disptID.toString()%>')">DEL</a>]&nbsp;[<%=dataSet.getValue(j,"user_a")%>]</td>
 		<td align="center">
 			<%=truckID.intValue()>0?"[自有]":"[社会]"%><%=dataSet.getValue(j,"plate_number")%></td>
 		<td align="center"><%=dataSet.getValue(j,"tel_driver")%></td>
@@ -113,8 +113,10 @@ CommonSet dataSet = dispatchHistory.getQueryResult( );
 			if ( buf.length() > 0 ) {
 				buf.append( "<br/>&nbsp;" );
 			}
-			buf.append( dataSet.getValue(j,"ne_zh1") ).append( "-->" ).append( dataSet.getValue(j,"ne_zh2") ).append( ";&nbsp;" );
-			buf.append( dataSet.getValue(j,"ne_recycle") ).append( "&nbsp;" ).append( DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter_r"),false,"米") ).append( ";<br/>&nbsp;" );
+			buf.append( dataSet.getValue(j,"ne_zh1") ).append( "-->" ).append( dataSet.getValue(j,"ne_zh2") ).append( ";&nbsp;&nbsp;" );
+			if ( ((String)dataSet.getValue(j,"ne_recycle")).length() > 1 ) {
+				buf.append( "[返空：" ).append( dataSet.getValue(j,"ne_recycle") ).append( "&nbsp;" ).append( DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter_r"),false,"米") ).append( "]<br/>&nbsp;" );
+			}
 			buf.append( DecimalUtils.formatQty(dataSet.getValue(j,"qty_w"),false,"吨") ).append( "&nbsp;" ).append( DecimalUtils.formatQty(dataSet.getValue(j,"qty_v"),false,"方") ).append( ";&nbsp;" );
 			buf.append( DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter"),false,"米") ).append( ";" );
 			j++;

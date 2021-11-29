@@ -92,11 +92,9 @@ public class DispatchHistory extends AbstractQuery {
 		bufDetailSQL.append( "AND dispt>=" ).append( id_small ).append( " AND dispt<=" ).append( id_big ).append( SQL_SPACE );
 
 		if ( sortTag.equals( INPUT_DATE_ASC ) ) {
-			bufDetailSQL.append( "ORDER BY dispt ASC, input_date ASC " );
+			bufDetailSQL.append( "ORDER BY dispt ASC " );
 		} else if ( sortTag.equals( INPUT_DATE_DESC ) ) {
-			bufDetailSQL.append( "ORDER BY dispt ASC, input_date DESC " );
-		} else {
-			bufDetailSQL.append( "ORDER BY dispt ASC, input_date ASC " );
+			bufDetailSQL.append( "ORDER BY dispt DESC " );
 		}
 
 		querySQL = bufDetailSQL.toString();

@@ -21,7 +21,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>运输计划一览</title>
+<title>待安排运输计划一览</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="cache-control" content="no-cache" />
@@ -70,11 +70,11 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 	</td>
 	<td align="right" bgcolor="#bdb76b">
 		车牌号:
-		<input type="text" id="acTruck" name="acTruck" size="8" maxlength="20" placeholder="快速检索" class="input_text" />
+		<input type="text" id="acTruck" name="acTruck" size="8" maxlength="20" placeholder="关键字" class="input_text" />
 		<input type="text" name="<%=Dispatch.QP_PLATE_NUMBER%>" size="10" maxlength="20" class="input_text" />
 		<input type="hidden" name="<%=Dispatch.QP_TRUCK%>" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;
 		司机：
-		<input type="text" id="acDriver" name="acDriver" size="8" maxlength="20" placeholder="快速检索" class="input_text" />
+		<input type="text" id="acDriver" name="acDriver" size="8" maxlength="20" placeholder="姓名首字母" class="input_text" />
 		<input type="text" name="<%=Dispatch.QP_TEL_DRIVER%>" size="16" maxlength="20" class="input_text" />
 		<input type="hidden" name="<%=Dispatch.QP_DRIVER%>" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" name="btnCreate" value="保存车次" class="input_text" onclick="javascript:checkCommit('Save')" />
@@ -89,7 +89,7 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		<input type="hidden" name="<%=WaitDispatchList.QP_IF_HIDE%>" value="Y" />
 
 		<select name="<%=WaitDispatchList.QP_SORT_TAG%>">
-			<option value="<%=WaitDispatchList.INPUT_DATE_ASC%>">--排序规则--</option>
+			<option value="<%=WaitDispatchList.INPUT_DATE_ASC%>">创建日期升序</option>
 			<option value="<%=WaitDispatchList.INPUT_DATE_DESC%>">创建日期降序</option>
 		</select>&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -104,7 +104,7 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		其它说明:
 		<input type="text" name="<%=Dispatch.QP_REMARK%>" size="50" maxlength="50" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
 		副驾：
-		<input type="text" id="acSubDriver" name="acSubDriver" size="8" maxlength="20" placeholder="快速检索" class="input_text" />
+		<input type="text" id="acSubDriver" name="acSubDriver" size="8" maxlength="20" placeholder="姓名首字母" class="input_text" />
 		<input type="text" name="fSubDriverName" size="16" maxlength="20" class="input_text"  readonly="readonly" />
 		<input type="hidden" name="<%=Dispatch.QP_SUB_DRIVER%>" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;
 		<input type="button" name="btnRefresh" value="刷新页面" class="input_text" onclick="javascript:checkCommit('Refresh')" />
@@ -116,17 +116,16 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 	<thead>
 	<tr>
 	<th width="50">序号</th>
-	<th width="130">日期-计划员</th>
+	<th width="120">日期-计划员</th>
 	<th width="100">客户简称</th>
-	<th width="80">运输类型</th>
-	<th width="80">时效要求</th>
-	<th width="160">发货方-发货窗口</th>
-	<th width="160">发货说明</th>
-	<th width="160">收货方-收货窗口</th>
-	<th width="160">收货说明</th>
-	<th width="160">返空箱说明</th>
-	<th width="130">货量(吨位&方数)</th>
-	<th width="80">占车米数</th>
+	<th width="120">运输类型&时效<br/>要求</th>
+	<th width="150">发货方-发货窗口</th>
+	<th width="180">发货说明</th>
+	<th width="150">收货方-收货窗口</th>
+	<th width="180">收货说明</th>
+	<th width="180">返空箱说明</th>
+	<th width="100">吨位&方数</th>
+	<th width="90">占车米数</th>
 	<th width="90">调度路径</th>
 	<th width="80">操作</th>
 	<th >已安排车次</th>
@@ -145,8 +144,7 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		<td align="center"><%=baseIndex+j %></td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"plan_date")%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh")%>]</td>
 		<td align="center"><%=dataSet.getValue(j,"obj_short")%></td>
-		<td align="center"><%=dataSet.getValue(j,"plan_k")%></td>
-		<td align="center"><%=dataSet.getValue(j,"time_level")%></td>
+		<td align="center"><%=dataSet.getValue(j,"plan_k")%>&nbsp;[<%=dataSet.getValue(j,"time_level")%>]</td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_zh1")%><br/>&nbsp;[<%=dataSet.getValue(j,"window_1")%>]</td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"remark_1")%></td>
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_zh2")%><br/>&nbsp;[<%=dataSet.getValue(j,"window_2")%>]</td>
@@ -154,11 +152,10 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		<td align="left">&nbsp;<%=dataSet.getValue(j,"ne_recycle")%><br/>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter_r"),false,"米")%></td>
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_w"),false,"吨")%>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_v"),false,"方")%>&nbsp;</td>
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter"),false,"米")%>&nbsp;</td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"route_zh")%></td>
+		<td align="center"><%=dataSet.getValue(j,"route_zh")%></td>
 		<td><input type="checkbox" id="cb<%=j%>" name="cb<%=j%>" onchange="javascript:checkSelectedTransPlan(this,'<%=dataSet.getValue(j,"trans_p")%>')" /><label for="cb<%=j%>">选择</label>&nbsp;&nbsp;
 			<input type="hidden" name="hID<%=j%>" value="<%=dataSet.getValue(j,"trans_p")%>" /></td>
-
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"dispatch_remark")%>&nbsp;</td>
+		<td align="left"><%=dataSet.getValue(j,"dispatch_remark")%></td>
 		</tr>
 		<%
 		pageWeight = pageWeight.add( (BigDecimal)dataSet.getValue(j,"qty_w") );
@@ -167,7 +164,6 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 	}
 	%>
 	<tr class="total_tr">
-	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
