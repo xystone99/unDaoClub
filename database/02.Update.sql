@@ -38,9 +38,11 @@ INSERT INTO tbl_role(role,ne_zh,sort_tag,href_index,input_date,cloud_id)VALUES(1
 INSERT INTO tbl_role(role,ne_zh,sort_tag,href_index,input_date,cloud_id)VALUES(13,'仓库','ABC','WareHouse/waitInOutList.jsp',NOW(),'XYZABC');
 
 
-INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10011,'夏芸','xiayun',MD5('abcd1234'),'Y',11,11003,'11001,11002,11003,11004,11005,11006','Normal','XYZABC');
-INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10012,'黄华','huanghua',MD5('abcd1234'),'Y',12,12001,'11001,11002,11003,11004,11005,11006,12001,12002,12003','Normal','XYZABC');
-INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10013,'吴方舟','wufangzhou',MD5('abcd1234'),'Y',13,11001,'11001,11002,11003,11004,11005,11006','Normal','XYZABC');
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10011,'计划','jihua',MD5('abcd1234'),'Y',11,11003,'11001,11002,11003,11004,11005,11006','Normal','XYZABC');
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10012,'调度','huanghua',MD5('abcd1234'),'Y',12,12001,'11001,11002,11003,11004,11005,11006,12001,12002,12003','Normal','XYZABC');
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10013,'锂电池仓库','ldcck',MD5('abcd1234'),'Y',13,11001,'11001','Normal','XYZABC');
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10014,'线束仓库','xsck',MD5('abcd1234'),'Y',13,11002,'11002','Normal','XYZABC');
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,role,cur_company,available_companys,sys_flg,cloud_id)VALUES(10015,'宝安公路仓库','baglck',MD5('abcd1234'),'Y',13,11003,'11003','Normal','XYZABC');
 
 
 

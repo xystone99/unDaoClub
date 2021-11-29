@@ -50,6 +50,7 @@ public class SystemicVariables extends AbstractDatabase {
 		for ( int j=0; j<arrData.length; j++ ) {
 			if (bufSQL.length() > 0) bufSQL.delete( 0, bufSQL.length() );
 			bufSQL.append( "INSERT INTO stc_variables(cloud_id,var_name,var_value)VALUES('XYZABC','" ).append( arrData[j][0] ).append( "','" ).append(arrData[j][1] ).append( "');");
+			System.out.println( bufSQL.toString() );
 		}
 	}
 
