@@ -84,7 +84,7 @@ CREATE TABLE tbl_truck(
 DROP TABLE IF EXISTS `trn_trans_plan`;				#运输计划表
 CREATE TABLE trn_trans_plan(
 	trans_p					INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,	#
-	plan_k					VARCHAR(20) NOT NULL,						#计划类型:单程提货/返空提货/单程送货/返空送货/直提直送/往返运输
+	plan_k					VARCHAR(20) NOT NULL,						#计划类型:单程提货/返空提货/单程送货/直提直送/往返运输
 	plan_date				DATE NOT NULL,								#计划日期
 	obj_p					INT UNSIGNED NOT NULL DEFAULT 0,			#所属客户
 	time_level				VARCHAR(20) NOT NULL DEFAULT '',			#时效要求等级

@@ -172,14 +172,14 @@ $("#acCus").autocomplete({ source: "<%=XmsInitial.getContextPath()%>/fetchcus?Ac
 		myForm.<%=TransPlan.QP_LINKMAN_2%>.value = ui.item.Linkman2;
 		myForm.<%=TransPlan.QP_WINDOW_2%>.value = ui.item.Window2;
 		myForm.<%=TransPlan.QP_REMARK_2%>.value = ui.item.Remark2;
-		if ( ui.item.PlanK == "返空提货" || ui.item.PlanK == "返空送货" ) {
+		if ( ui.item.PlanK == "返空提货" || ui.item.PlanK == "单程送货" ) {
 			$("#trRecycle").show( );
 		}
 	}});
 }});
 
 function changePlanK( objPlanK ) {
-	if ( objPlanK.value == "返空提货" || objPlanK.value == "返空送货" ) {
+	if ( objPlanK.value == "返空提货" || objPlanK.value == "单程送货" ) {
 		$("#trRecycle").show( );
 	} else {
 		myForm.<%=TransPlan.QP_QTY_METER_R%>.value = "";
@@ -231,7 +231,7 @@ function checkValue( inForm ) {
 	if ( inForm.<%=TransPlan.QP_REMARK_2%>.value.length > 45 ) {
 		strErr = strErr + "\其它说明(收货)限50个字符！";
 	}
-	if ( myForm.<%=TransPlan.QP_PLAN_K%>.value == "返空提货" || myForm.<%=TransPlan.QP_PLAN_K%>.value == "返空送货" ) {
+	if ( myForm.<%=TransPlan.QP_PLAN_K%>.value == "返空提货" ) {
 		if (!checkQty(inForm.<%=TransPlan.QP_QTY_METER_R%>, false, false, 3, 0)) {
 			strErr = strErr + "\n返空占车米数不允许为空，且只接受整数！";
 		}

@@ -182,7 +182,7 @@
 	myForm.<%=TransPlan.QP_QTY_METER%>.value = "<%=DecimalUtils.formatQty(dataSet.getValue("qty_meter"))%>";
 
 	<%
-	if ( dataSet.getValue("plan_k").equals("返空提货") || dataSet.getValue("plan_k").equals("返空送货") ) {
+	if ( dataSet.getValue("plan_k").equals("返空提货") || dataSet.getValue("plan_k").equals("单程送货") ) {
 		String ne_recycle = (String)dataSet.getValue("ne_recycle");
 		String[] arrWares = ne_recycle.substring(0,ne_recycle.length()-1).split( "," );
 		StringBuilder bufList = new StringBuilder();
@@ -237,7 +237,7 @@ $("#acCus").autocomplete({ source: "<%=XmsInitial.getContextPath()%>/fetchcus?Ac
 }});
 
 function changePlanK( objPlanK ) {
-	if ( objPlanK.value == "返空提货" || objPlanK.value == "返空送货" ) {
+	if ( objPlanK.value == "返空提货" || objPlanK.value == "单程送货" ) {
 		$("#trRecycle").show( );
 	} else {
 		myForm.<%=TransPlan.QP_QTY_METER_R%>.value = "";
@@ -289,7 +289,7 @@ function checkValue( inForm ) {
 	if ( inForm.<%=TransPlan.QP_REMARK_2%>.value.length > 45 ) {
 		strErr = strErr + "\其它说明(收货)限50个字符！";
 	}
-	if ( myForm.<%=TransPlan.QP_PLAN_K%>.value == "返空提货" || myForm.<%=TransPlan.QP_PLAN_K%>.value == "返空送货" ) {
+	if ( myForm.<%=TransPlan.QP_PLAN_K%>.value == "返空提货" ) {
 		if (!checkQty(inForm.<%=TransPlan.QP_QTY_METER_R%>, false, false, 3, 0)) {
 			strErr = strErr + "\n返空占车米数不允许为空，且只接受整数！";
 		}
