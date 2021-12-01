@@ -132,6 +132,7 @@ CREATE TABLE trn_dispatch(
 	driver					INT UNSIGNED NOT NULL DEFAULT 0,			#驾驶员ID(为0表示非内部员工)
 	tel_driver				VARChAR(20) NOT NULL DEFAULT '',			#驾驶员姓名-电话
 	sub_driver				INT UNSIGNED NOT NULL DEFAULT 0,			#副驾或押运员(为0表示无押运员)
+	trans_mode				VARCHAR(20) NOT NULL DEFAULT '',			#运输模式(一装一卸-->三装三卸)
 	trans_l					INT UNSIGNED NOT NULL DEFAULT 0,			#运输线路
 	stop_zh_f				VARCHAR(20) NOT NULL DEFAULT '',			#始发地
 	stop_zh_via				VARCHAR(200) NOT NULL DEFAULT '',			#途径地(最多9个)
@@ -150,6 +151,7 @@ DROP TABLE IF EXISTS `trn_dispatch_record`;			#车次从表
 CREATE TABLE trn_dispatch_record(
 	dispt_r					INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,	#
 	dispt					INT UNSIGNED NOT NULL,						#车次ID
+	p_serial				SMALLINT UNSIGNED NOT NULL,					#关联的计划序列号
 	trans_p					INT UNSIGNED NOT NULL,						#运输计划ID
 	trans_l					INT UNSIGNED NOT NULL DEFAULT 0,			#运输线路
 	if_main					ENUM('Y','N') NOT NULL DEFAULT 'N'
@@ -157,7 +159,7 @@ CREATE TABLE trn_dispatch_record(
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-#	回报车辆闲置()
+#	回报车辆闲置(1)
 #	tbl_truck_idle
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS `tbl_truck_idle`;				#车辆闲置表

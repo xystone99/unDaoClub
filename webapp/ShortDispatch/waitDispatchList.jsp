@@ -59,29 +59,27 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 <form name="queryForm" method="post" action="waitDispatchList.jsp">
 <table width="100%" border="0" cellspacing="1" cellpadding="0">
 	<tr class="query_tr">
-	<td align="right" width="950">
+	<td align="right">
 		装卸地名称:
 		<input type="text" name="<%=WaitDispatchList.QP_LOAD_NAME%>" size="10" maxlength="10" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
 		发货日期:
 		<input id="pDate" type="text" name="<%=WaitDispatchList.QP_DATE%>" size="10" maxlength="10" class="input_text" ondblclick="javascript:setCurrentDate(this)" />&nbsp;&nbsp;&nbsp;&nbsp;
 		调度路径:
-		<input type="text" name="<%=WaitDispatchList.QP_ROUTE_ZH%>" size="10" maxlength="10" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" name="btnQuery" value="开始检索" class="input_text" onclick="javascript:checkCommit('Query')" />
+		<input type="text" name="<%=WaitDispatchList.QP_ROUTE_ZH%>" size="10" maxlength="10" class="input_text" />&nbsp;
 	</td>
+	<td align="right" width="90" rowspan="2"><input type="button" name="btnQuery" value="开始检索" style="width:85px;height:45px;font-size:15px;" onclick="javascript:checkCommit('Query')" /></td>
 	<td align="right" bgcolor="#bdb76b">
 		车牌号:
-		<input type="text" id="acTruck" name="acTruck" size="8" maxlength="20" placeholder="关键字" class="input_text" />
-		<input type="text" name="<%=Dispatch.QP_PLATE_NUMBER%>" size="10" maxlength="20" class="input_text" />
-		<input type="hidden" name="<%=Dispatch.QP_TRUCK%>" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="text" id="acTruck" name="acTruck" size="8" maxlength="10" placeholder="关键字" class="input_text" />
+		<input type="text" name="<%=Dispatch.QP_PLATE_NUMBER%>" size="8" maxlength="20" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="hidden" name="<%=Dispatch.QP_TRUCK%>" value="0" />
 		司机：
 		<input type="text" id="acDriver" name="acDriver" size="8" maxlength="20" placeholder="姓名首字母" class="input_text" />
 		<input type="text" name="<%=Dispatch.QP_TEL_DRIVER%>" size="16" maxlength="20" class="input_text" />
-		<input type="hidden" name="<%=Dispatch.QP_DRIVER%>" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" name="btnCreate" value="保存车次" class="input_text" onclick="javascript:checkCommit('Save')" />
+		<input type="hidden" name="<%=Dispatch.QP_DRIVER%>" value="0" />&nbsp;&nbsp;
+		<select name="<%=Dispatch.QP_TRANS_MODE%>" class="select"><option value="All">-运输模式-</option><%=EnumConstants.TRANS_MODE_OPTIONS%></select>&nbsp;
 	</td>
-	<td align="right">
-
-	</td>
+	<td align="right" width="90" bgcolor="#bdb76b" rowspan="2"><input type="button" name="btnCreate" value="保存车次" style="width:85px;height:45px;font-size:15px;" onclick="javascript:checkCommit('Save')" /></td>
 	</tr>
 	<tr class="query_tr">
 	<td align="right">
@@ -97,17 +95,16 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		客户简称:
 		<input type="text" name="<%=WaitDispatchList.QP_OBJECT_P%>" size="10" maxlength="10" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
 		计划人员:
-		<input type="text" name="<%=WaitDispatchList.QP_USER_ZH%>" size="10" maxlength="10" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" name="btnExport" value="导出报表" class="input_text" onclick="javascript:checkCommit('Export')" />
+		<input type="text" name="<%=WaitDispatchList.QP_USER_ZH%>" size="10" maxlength="10" class="input_text" />&nbsp;
 	</td>
 	<td align="right" bgcolor="#bdb76b">
 		其它说明:
-		<input type="text" name="<%=Dispatch.QP_REMARK%>" size="50" maxlength="50" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="text" name="<%=Dispatch.QP_REMARK%>" size="36" maxlength="50" class="input_text" />&nbsp;&nbsp;&nbsp;&nbsp;
 		副驾：
 		<input type="text" id="acSubDriver" name="acSubDriver" size="8" maxlength="20" placeholder="姓名首字母" class="input_text" />
 		<input type="text" name="fSubDriverName" size="16" maxlength="20" class="input_text"  readonly="readonly" />
-		<input type="hidden" name="<%=Dispatch.QP_SUB_DRIVER%>" value="0" />&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type="button" name="btnRefresh" value="刷新页面" class="input_text" onclick="javascript:checkCommit('Refresh')" />
+		<input type="hidden" name="<%=Dispatch.QP_SUB_DRIVER%>" value="0" />&nbsp;&nbsp;
+		<select name="<%=Dispatch.QP_DISPT_SERIAL%>" class="select"><option value="All">-车次序号-</option><option value="1">第1车</option><option value="2">第2车</option><option value="3">第3车</option><option value="4">第4车</option><option value="4">第5车</option></select>&nbsp;
 	</td>
 	</tr>
 </table>
@@ -243,11 +240,14 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 </script>
 
 <script type="text/javascript">
+var pSerial = 1;
 function checkSelectedTransPlan( obj, transPlanID ) {
 	var transPlans = queryForm.<%=Dispatch.QP_TRANS_PLANS%>.value;
 	if ( obj.checked == true ) {
-		queryForm.<%=Dispatch.QP_TRANS_PLANS%>.value = transPlans + transPlanID + "-";
+		queryForm.<%=Dispatch.QP_TRANS_PLANS%>.value = transPlans + transPlanID + "-" + pSerial + "&";
+		pSerial++;
 	} else {
+		pSerial = 1;
 		for ( var j=0; j<countRows; j++ ) {
 			queryForm["cb"+j].checked = false;
 			queryForm.<%=Dispatch.QP_TRANS_PLANS%>.value = "";
@@ -280,9 +280,11 @@ function checkCommit( actionTag ) {
 			queryForm.submit();
 		}
 	} else if ( actionTag == "Query" ) {
-		queryForm.target = "_self";
-		queryForm.action = "waitDispatchList.jsp";
-		queryForm.submit();
+		if ( confirm("确定重新查询吗？") ) {
+			queryForm.target = "_self";
+			queryForm.action = "waitDispatchList.jsp";
+			queryForm.submit();
+		}
 	}
 };
 </script>

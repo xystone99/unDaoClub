@@ -83,7 +83,7 @@ CREATE TABLE tbl_user_account(
 	sys_flg					ENUM('Normal','Inner','Quit') NOT NULL,		#正常,内置用户,离职
 	cloud_id				VARCHAR(20) NOT NULL
 );
-INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,cur_company,available_companys,sys_flg,cloud_id)VALUES(10001,'SysAdministrator','sysAdmin',MD5('369258'),'Y',10001,'10001,10002,10003,10004,10005','Inner','XYZABC');
+INSERT INTO tbl_user_account(user_a,ne_zh,login_name,login_pwd,can_login,cur_company,available_companys,sys_flg,cloud_id)VALUES(10001,'SysAdministrator','sysAdmin',MD5('369258'),'Y',12001,'11001,11002,11003,11004,11005,11006,12001,12002,12003','Inner','XYZABC');
 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------

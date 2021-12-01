@@ -8,18 +8,20 @@ import java.util.HashMap;
 public class Dispatch extends AbstractBean {
 
 	public final static String QP_ID = "ID";							//车次ID
+	public final static String QP_DISPT_SERIAL = "disptSerial";			//车次号
 	public final static String QP_DEPART_DATE = "fPlanDate";   			//发车日期
 	public final static String QP_TRUCK = "fTruck";   					//车辆ID
 	public final static String QP_PLATE_NUMBER = "fPlateNumber";   		//车牌号
 	public final static String QP_DRIVER = "fDriver";   				//司机ID
 	public final static String QP_TEL_DRIVER = "fTelDriver";   			//司机姓名+电话
 	public final static String QP_SUB_DRIVER = "fSubDriver";   			//副驾驶或押运员
+	public final static String QP_TRANS_MODE = "transMode";				//运输模式
 	public final static String QP_TRANS_PLANS = "fTransPlans";   		//关联的运输计划
 	public final static String QP_REMARK = "fRemark";					//其它说明
 
 
 	private final static String[] i_param_serial = {
-		QP_DEPART_DATE, QP_TRUCK, QP_PLATE_NUMBER, QP_DRIVER, QP_TEL_DRIVER, QP_SUB_DRIVER, QP_TRANS_PLANS, QP_REMARK
+		QP_DISPT_SERIAL, QP_DEPART_DATE, QP_TRUCK, QP_PLATE_NUMBER, QP_DRIVER, QP_TEL_DRIVER, QP_SUB_DRIVER, QP_TRANS_MODE, QP_TRANS_PLANS, QP_REMARK
 	};
 	private final static String[] d_param_serial = { QP_ID  };
 
@@ -34,7 +36,7 @@ public class Dispatch extends AbstractBean {
 	public Dispatch(DataSource dataSource, int beanType) {
 		super(dataSource, beanType);
 		if ( beanType == BTYPE_INSERT ) {
-			setProcedureString( "{CALL proc_dispatch_new(?,?,?,?,?,?,?,?,  ?,?,  ?,?  ) }" );
+			setProcedureString( "{CALL proc_dispatch_new(?,?,?,?,?,?,?,?,?,?,  ?,?,  ?,?  ) }" );
 			setCountReturnValues( 2 );
 			setParamSerial( i_param_serial );
 		} else if ( beanType == BTYPE_DELETE ) {

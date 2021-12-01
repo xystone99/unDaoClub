@@ -28,7 +28,7 @@ tfoot tr {
 }
 /**********功能切换行**********/
 .switch_tr{		
-	height:28px; background:#AAAAA; text-align:left;
+	height:28px; background:#ffffff; text-align:left;
 }
 /**********查询条件行**********/
 .query_tr { 

@@ -14,7 +14,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>  
-<title>新建运输计划</title>
+<title>新建运输计划<%=XmsInitial.getContextPath()%></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="cache-control" content="no-cache" />
@@ -146,120 +146,12 @@
 
 <script type="text/javascript" src="../include/stc_validate.js"></script>
 <script type="text/javascript" src="../include/stc_function.js"></script>
+<script type="text/javascript" src="../include/udTransPlan.js"></script>
 
 <script type="text/javascript">
 	setIntervalDate( myForm.<%=TransPlan.QP_PLAN_DATE%>, 1 );
 	$("#trRecycle").hide( );
 </script>
 
-<script type="text/javascript">
-$(document).ready( function () {
-	$("#thDate1").datepicker({dateFormat: 'yy-mm-dd'});
-});
-$("#acCus").autocomplete({ source: "<%=XmsInitial.getContextPath()%>/fetchcus?Action=Fetch", minLength: 1, select: function(event, ui ) {
-	myForm.<%=TransPlan.QP_OBJ_P%>.value = ui.item.ID;
-	$("#acTransLine").autocomplete({ source: "<%=XmsInitial.getContextPath()%>/fetchtransline?CusID="+ui.item.ID, minLength: 0, select: function(event, ui ) {
-		myForm.<%=TransPlan.QP_TRANS_L%>.value = ui.item.ID;
-		myForm.<%=TransPlan.QP_TIME_LEVEL%>.value = ui.item.TimeLevel;
-		myForm.<%=TransPlan.QP_PLAN_K%>.value = ui.item.PlanK;
-		myForm.<%=TransPlan.QP_NE_ZH1%>.value = ui.item.Name1;
-		myForm.<%=TransPlan.QP_ADDRESS_1%>.value = ui.item.Address1;
-		myForm.<%=TransPlan.QP_LINKMAN_1%>.value = ui.item.Linkman1;
-		myForm.<%=TransPlan.QP_WINDOW_1%>.value = ui.item.Window1;
-		myForm.<%=TransPlan.QP_REMARK_1%>.value = ui.item.Remark1;
-		myForm.<%=TransPlan.QP_NE_ZH2%>.value = ui.item.Name2;
-		myForm.<%=TransPlan.QP_ADDRESS_2%>.value = ui.item.Address2;
-		myForm.<%=TransPlan.QP_LINKMAN_2%>.value = ui.item.Linkman2;
-		myForm.<%=TransPlan.QP_WINDOW_2%>.value = ui.item.Window2;
-		myForm.<%=TransPlan.QP_REMARK_2%>.value = ui.item.Remark2;
-		if ( ui.item.PlanK == "返空提货" || ui.item.PlanK == "单程送货" ) {
-			$("#trRecycle").show( );
-		}
-	}});
-}});
-
-function changePlanK( objPlanK ) {
-	if ( objPlanK.value == "返空提货" || objPlanK.value == "单程送货" ) {
-		$("#trRecycle").show( );
-	} else {
-		myForm.<%=TransPlan.QP_QTY_METER_R%>.value = "";
-		myForm.<%=TransPlan.QP_NE_RECYCLE%>.value = "";
-		$("#multi_selected_list").text("");
-		$("#trRecycle").hide( );
-	}
-}
-function changeMultiSelected(objSelect, objHidden ) {
-	var val = objSelect.value;
-	if ( objSelect.value == "0" ) {
-		return;
-	}
-	if ( objHidden.value.indexOf(val) > -1 ) {
-		alert( "禁止重复选择！" );
-		return;
-	}
-	var display = objSelect.options[objSelect.selectedIndex].text;
-	$("#multi_selected_list").append("<span class='increaseSpacing'>"+ display + "<b id='" + val + "'>x</b></span>");
-	$("#"+val).click(function(){
-		objHidden.value = objHidden.value.replace( display+",", "" );
-		$(this).parent().remove();
-	});
-	objHidden.value = objHidden.value + display + ","
-}
-function checkValue( inForm ) {
-	var strErr = new String( "" );
-	if ( inForm.<%=TransPlan.QP_OBJ_P%>.value == "0" ) {
-		strErr = strErr + "\n请选择客户！";
-	}
-	if ( inForm.<%=TransPlan.QP_TRANS_L%>.value == "0" ) {
-		strErr = strErr + "\n请选择运输线路！";
-	}
-	if ( !checkDate( inForm.<%=TransPlan.QP_PLAN_DATE%> ,false,"") ) {
-		strErr = strErr + "\n计划日期格式不正确！";
-	}
-	if ( inForm.<%=TransPlan.QP_PLAN_K%>.value == "0" ) {
-		strErr = strErr + "\n请选择运输类型！";
-	}
-	if ( isNull(inForm.<%=TransPlan.QP_NE_ZH1%>) ) {
-		strErr = strErr + "\n发货方为空！";
-	}
-	if ( inForm.<%=TransPlan.QP_REMARK_1%>.value.length > 45 ) {
-		strErr = strErr + "\其它说明(收货)限50个字符！";
-	}
-	if ( isNull(inForm.<%=TransPlan.QP_NE_ZH2%>) ) {
-		strErr = strErr + "\n收货方为空！";
-	}
-	if ( inForm.<%=TransPlan.QP_REMARK_2%>.value.length > 45 ) {
-		strErr = strErr + "\其它说明(收货)限50个字符！";
-	}
-	if ( myForm.<%=TransPlan.QP_PLAN_K%>.value == "返空提货" ) {
-		if (!checkQty(inForm.<%=TransPlan.QP_QTY_METER_R%>, false, false, 3, 0)) {
-			strErr = strErr + "\n返空占车米数不允许为空，且只接受整数！";
-		}
-		if ( isNull(inForm.<%=TransPlan.QP_NE_RECYCLE%>) ) {
-			strErr = strErr + "\n返空仓库为空！";
-		}
-	}
-
-	if ( !checkQty( inForm.<%=TransPlan.QP_QTY_W%> ,true, false, 3, 3) ) {
-		strErr = strErr + "\n重量允许为空，最多3位小数！";
-	}
-	if ( !checkQty( inForm.<%=TransPlan.QP_QTY_V%> ,true, false, 3, 3) ) {
-		strErr = strErr + "\n体积允许为空，最多3位小数！";
-	}
-	if ( !checkQty( inForm.<%=TransPlan.QP_QTY_METER%> ,true, false, 3, 0) ) {
-		strErr = strErr + "\n占车米数允许为空，只接受整数！";
-	}
-
-	if ( strErr != "" ) {
-		alert( strErr );
-		return false;
-	}
-	isNullWithDefault( inForm.<%=TransPlan.QP_QTY_METER%>, "0" );
-	isNullWithDefault( inForm.<%=TransPlan.QP_QTY_METER_R%>, "0" );
-	isNullWithDefault( inForm.<%=TransPlan.QP_QTY_W%>, "0" );
-	isNullWithDefault( inForm.<%=TransPlan.QP_QTY_V%>, "0" );
-	return confirm( "确定提交吗？" );
-}
-</script>
 </body>
 </html>

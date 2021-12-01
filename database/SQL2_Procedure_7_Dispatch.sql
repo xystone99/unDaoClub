@@ -154,17 +154,19 @@ END BASIC_BLOCK $$
 
 /************************************************************************************************************************
  * 新增车次
- * CALL proc_dispatch_new('2021-10-27','10001','CL198X','1222','ZS-18117259195','111','123-234-345-','REMARK',10002,'XYZABC',@rID,@result); SELECT @rID,@result;
+ * CALL proc_dispatch_new('First','2021-10-27','10001','CL198X','1222','ZS-18117259195','111','1TO2','123-234&22-11&','REMARK',10011,'XYZABC',@rID,@result); SELECT @rID,@result;
  * SELECT depart_date,truck,plate_number,driver,tel_driver,sub_driver,remark,user_a,input_date,cloud_id,input_date FROM trn_dispatch WHERE dispt=@rID;
  ************************************************************************************************************************/
 DROP PROCEDURE IF EXISTS `proc_dispatch_new` $$
 CREATE PROCEDURE `proc_dispatch_new`(
+	IN	pDISPT_SERIAL			VARCHAR(20),
 	IN	pDEPART_DATE			VARCHAR(10),
 	IN	pTRUCK					VARCHAR(10),
 	IN	pPLATE_NUMBER			VARCHAR(10),
 	IN	pDRIVER					VARCHAR(10),
 	IN	pTEL_DRIVER				VARCHAR(30),
 	IN	pSUB_DRIVER				VARCHAR(10),
+	IN	pTRANS_MODE				VARCHAR(20),
 	IN	pTRANS_PLANS			VARCHAR(50),	
 	IN	pREMARK					VARCHAR(50),
 	IN	pUSER_A					VARCHAR(10),
@@ -174,30 +176,33 @@ CREATE PROCEDURE `proc_dispatch_new`(
 	OUT	result					VARCHAR(50) )
 BASIC_BLOCK:BEGIN
 	DECLARE pos_index, xDispt INTEGER DEFAULT 1;
-	DECLARE xTemp, xTransP, xUserName VARCHAR(50);
+	DECLARE xTemp, xTempG, xTransP, xPlanSerial, xUserName VARCHAR(50);
 	
 	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
 		SET result = 'SQLException';
 	END;
 	
 	SELECT ne_zh INTO xUserName FROM tbl_user_account WHERE user_a = pUSER_A;
-	
+
 	START TRANSACTION;
-	INSERT INTO trn_dispatch(dispt_serial,depart_date,truck,plate_number,driver,tel_driver,sub_driver,remark,user_a,input_date,cloud_id)VALUES('',pDEPART_DATE,pTRUCK,pPLATE_NUMBER,pDRIVER,pTEL_DRIVER,pSUB_DRIVER,pREMARK,pUSER_A,NOW(),pCLOUD_ID);
+	INSERT INTO trn_dispatch(dispt_serial,depart_date,truck,plate_number,driver,tel_driver,sub_driver,trans_mode,remark,user_a,input_date,cloud_id)VALUES(pDISPT_SERIAL,pDEPART_DATE,pTRUCK,pPLATE_NUMBER,pDRIVER,pTEL_DRIVER,pSUB_DRIVER,pTRANS_MODE,pREMARK,pUSER_A,NOW(),pCLOUD_ID);
 	SET xDispt = LAST_INSERT_ID();
 	
 	REPEAT
-		SET xTemp = SUBSTRING_INDEX(pTRANS_PLANS,'-',pos_index);
-		SET xTransP = SUBSTRING_INDEX(xTemp,'-',-1);
-		IF (pos_index = 1) THEN
-			INSERT INTO trn_dispatch_record(dispt,trans_p,trans_l,if_main)VALUES(xDispt,xTransP,0,'Y'); 
-		ELSE
-			INSERT INTO trn_dispatch_record(dispt,trans_p,trans_l,if_main)VALUES(xDispt,xTransP,0,'N'); 
-		END IF;
+		SET xTemp = SUBSTRING_INDEX(pTRANS_PLANS,'&',pos_index);
+		SET xTempG = SUBSTRING_INDEX(xTemp,'&',-1);
+		SET xTransP = SUBSTRING_INDEX(xTempG,'-',1);
+		SET xPlanSerial = SUBSTRING_INDEX(xTempG,'-',-1);
+		
+		INSERT INTO trn_dispatch_record(dispt,p_serial,trans_p,trans_l,if_main)VALUES(xDispt,xPlanSerial,xTransP,0,'Y'); 
 		UPDATE trn_trans_plan SET dispatch_remark=CONCAT(dispatch_remark, IF(LENGTH(dispatch_remark)>1,'<br/>&nbsp;','&nbsp;'), pPLATE_NUMBER, ' ', pTEL_DRIVER, ';' ), user_zh_d=xUserName, input_date_d=NOW() WHERE trans_p=xTransP;
 		SET pos_index = pos_index + 1;
 	UNTIL ( LENGTH(xTemp)+1 = LENGTH(pTRANS_PLANS) ) 
 	END REPEAT;
+	IF ( pos_index > 2 ) THEN
+		SELECT pos_index;
+		#--设置trn_dispatch_record中非计费线路的标识为N
+	END IF;
 	
 	COMMIT;
 	SET r_id = xDispt;
