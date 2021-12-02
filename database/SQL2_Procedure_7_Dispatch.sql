@@ -28,6 +28,7 @@ CREATE PROCEDURE `proc_trans_plan_new`(
 	IN	pQTY_V					VARCHAR(10),
 	IN	pQTY_METER				VARCHAR(10),
 	IN	pQTY_METER_R			VARCHAR(10),
+	IN	pDISPT_REMARK			VARCHAR(50),
 	IN	pUSER_A					VARCHAR(10),
 	IN	pCLOUD_ID				VARCHAR(20),
 	
@@ -42,8 +43,8 @@ BASIC_BLOCK:BEGIN
 	
 	SELECT route_zh INTO qRouteZh FROM tbl_trans_line WHERE trans_l = pTRANS_L;
 	START TRANSACTION;
-	INSERT INTO trn_trans_plan(plan_k,plan_date,obj_p,time_level,ne_recycle,trans_l,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,qty_w,qty_v,qty_meter,qty_meter_r,route_zh,user_a,cloud_id,input_date,last_update)
-	VALUES(pPLAN_K,pPLAN_DATE,pOBJ_P,pTIME_LEVEL,pNE_RECYCLE,pTRANS_L,pNE_ZH1,pADDRESS_1,pLINKMAN_1,pWINDOW_1,pREMARK_1,pNE_ZH2,pADDRESS_2,pLINKMAN_2,pWINDOW_2,pREMARK_2,pQTY_W,pQTY_V,pQTY_METER,pQTY_METER_R,qRouteZh,pUSER_A,pCLOUD_ID,NOW(),NOW());
+	INSERT INTO trn_trans_plan(plan_k,plan_date,obj_p,time_level,ne_recycle,trans_l,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,qty_w,qty_v,qty_meter,qty_meter_r,dispatch_remark,route_zh,user_a,cloud_id,input_date,last_update)
+	VALUES(pPLAN_K,pPLAN_DATE,pOBJ_P,pTIME_LEVEL,pNE_RECYCLE,pTRANS_L,pNE_ZH1,pADDRESS_1,pLINKMAN_1,pWINDOW_1,pREMARK_1,pNE_ZH2,pADDRESS_2,pLINKMAN_2,pWINDOW_2,pREMARK_2,pQTY_W,pQTY_V,pQTY_METER,pQTY_METER_R,pDISPT_REMARK,qRouteZh,pUSER_A,pCLOUD_ID,NOW(),NOW());
 	
 	COMMIT;
 	SET r_id = LAST_INSERT_ID();
@@ -79,6 +80,7 @@ CREATE PROCEDURE `proc_trans_plan_update`(
 	IN	pQTY_V					VARCHAR(10),
 	IN	pQTY_METER				VARCHAR(10),
 	IN	pQTY_METER_R			VARCHAR(10),
+	IN	pDISPT_REMARK			VARCHAR(50),
 	IN	pUSER_A					VARCHAR(10),
 	IN	pCLOUD_ID				VARCHAR(20),
 
@@ -97,7 +99,7 @@ BASIC_BLOCK:BEGIN
 		SET result = 'Invalid';
 		LEAVE BASIC_BLOCK;
 	END IF;
-	IF ( (qDispatchRemark <> '') OR (qWhRemark <> '') ) THEN
+	IF ( (qDispatchRemark <> '') OR (qWhRemark <> '') ) THEN  
 		SET result = 'InUse';
 		LEAVE BASIC_BLOCK;
 	END IF;
@@ -107,7 +109,7 @@ BASIC_BLOCK:BEGIN
 	UPDATE trn_trans_plan SET
 		plan_k=pPLAN_K, plan_date=pPLAN_DATE, obj_p=pOBJ_P, time_level=pTIME_LEVEL, ne_recycle=pNE_RECYCLE, trans_l=pTRANS_L,
 		ne_zh1=pNE_ZH1, address_1=pADDRESS_1, linkman_1=pLINKMAN_1, window_1=pWINDOW_1, remark_1=pREMARK_1, ne_zh2=pNE_ZH2, address_2=pADDRESS_2, linkman_2=pLINKMAN_2, window_2=pWINDOW_2, remark_2=pREMARK_2, 
-		qty_w=pQTY_W, qty_v=pQTY_V, qty_meter=pQTY_METER, qty_meter_r=pQTY_METER_R, route_zh=qRouteZh, last_update=NOW()
+		qty_w=pQTY_W, qty_v=pQTY_V, qty_meter=pQTY_METER, qty_meter_r=pQTY_METER_R, dispatch_remark=pDISPT_REMARK, route_zh=qRouteZh, last_update=NOW()
 	WHERE trans_p = pTRANS_P;
 	
 	COMMIT;
@@ -129,17 +131,19 @@ CREATE PROCEDURE `proc_trans_plan_delete`(
 BASIC_BLOCK:BEGIN
 	DECLARE qUserA, qPassDays INTEGER DEFAULT 0;
 	DECLARE qCloudID, qDispatchRemark, qWhRemark VARCHAR(50);
+	DECLARE qPlanK VARCHAR(20);
 	
 	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
 		SET result = 'SQLException';
 	END;
 	
-	SELECT user_a, cloud_id, dispatch_remark, wh_remark, DATEDIFF(NOW(),input_date) INTO qUserA, qCloudID, qDispatchRemark, qWhRemark, qPassDays FROM trn_trans_plan WHERE trans_p=pTRANS_P;
+	SELECT user_a, cloud_id, plan_k, dispatch_remark, wh_remark, DATEDIFF(NOW(),input_date) INTO qUserA, qCloudID, qPlanK, qDispatchRemark, qWhRemark, qPassDays FROM trn_trans_plan WHERE trans_p=pTRANS_P;
 	IF ((pUSER_A <> qUserA ) OR (pCLOUD_ID <> qCloudID)) THEN
 		SET result = 'Invalid';
 		LEAVE BASIC_BLOCK;
 	END IF;
-	IF ( (qDispatchRemark <> '') OR (qWhRemark <> '') OR (qPassDays>=3) ) THEN
+	
+	IF ( ((qPlanK<>'其它运输') AND (qDispatchRemark<>'')) OR (qWhRemark <> '') OR (qPassDays>=3) ) THEN		
 		SET result = 'InUse';
 		LEAVE BASIC_BLOCK;
 	END IF;

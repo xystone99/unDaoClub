@@ -36,8 +36,15 @@ function changePlanK( objPlanK ) {
 	} else {
 		myForm.fQtyMeterR.value = "";
 		myForm.fNeRecycle.value = "";
-		$("#multi_selected_list").text("");
+		$("#multi_selected_list").text( "" );
 		$("#trRecycle").hide( );
+	}
+
+	if ( objPlanK.value == "其它运输" ) {
+		$("#trDispatchRecord").show( );
+	} else {
+		myForm.disptRemark.value = "";
+		$("#trDispatchRecord").hide( );
 	}
 }
 
@@ -91,6 +98,10 @@ function checkValue( inForm ) {
 		}
 		if ( isNull(inForm.fNeRecycle) ) {
 			strErr = strErr + "\n返空仓库为空！";
+		}
+	} else if ( myForm.fPlanK.value == "其它运输" ) {
+		if ( isNull(inForm.disptRemark) ) {
+			strErr = strErr + "\n其它运输类型，请输入车牌号、司机联系方式、预计到达时间信息！";
 		}
 	}
 	if ( !checkQty( inForm.fQtyW ,true, false, 3, 3) ) {

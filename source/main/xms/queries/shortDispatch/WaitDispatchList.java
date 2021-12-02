@@ -58,7 +58,7 @@ public class WaitDispatchList extends AbstractQuery {
 	@Override
 	public void executeQuery() {
 		StringBuilder bufSQL = new StringBuilder( );
-		bufSQL.append( QUERY_SQL ).append( "WHERE cloud_id='" ).append( getCloudID() ).append( "' ");
+		bufSQL.append( QUERY_SQL ).append( "WHERE cloud_id='" ).append( getCloudID() ).append( "' AND plan_k<>'其它运输' ");
 		bufSQL.append( parseEqualsWhere( "plan_k", parameterMap.get(QP_PLAN_K), false ) );
 		bufSQL.append( parseLikeWhere( "obj_short", parameterMap.get(QP_OBJECT_P), SQL_LIKE_BOTH ) );
 		bufSQL.append( parseEqualsWhere( "plan_date", parameterMap.get(QP_DATE), false ) );

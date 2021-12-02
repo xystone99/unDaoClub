@@ -136,6 +136,12 @@
 		<td></td>
 		<td align="left"><input type="text" name="<%=TransPlan.QP_QTY_W%>" size="5" maxlength="7" class="input_text" />(吨)&nbsp;/&nbsp;<input type="text" name="<%=TransPlan.QP_QTY_V%>" size="5" maxlength="7" class="input_text" />(方)</td>
 	</tr>
+
+	<tr id="trDispatchRecord" class="content_tr">
+		<td align="right">车辆安排说明:</td>
+		<td></td>
+		<td align="left" colspan="4"><input type="text" name="<%=TransPlan.QP_DISPT_REMARK%>" size="80" maxlength="50" class="input_text" placeholder="车牌、司机联系电话、预计到达时间等" /></td>
+	</tr>
 </table><br/>
 
 <table cellspacing="0" cellpadding="0">
@@ -192,6 +198,12 @@
 	} else {
 		%>$("#trRecycle").hide( );<%
 	}
+	if ( dataSet.getValue("plan_k").equals("其它运输") ) {
+		%>$("#trDispatchRecord").show( );<%
+	} else {
+		%>$("#trDispatchRecord").hide( );<%
+	}
+
 	if ( ne_recycle.length() > 1 ) {
 		String[] arrWares = ne_recycle.substring(0,ne_recycle.length()-1).split( "," );
 		StringBuilder bufList = new StringBuilder();

@@ -30,7 +30,7 @@ public class EnumConstants {
 	public static final String YES_NO_OPTIONS = "<option value=\"Y\">是</option><option value=\"N\">否</option>";
 
 	//运输计划类别
-	public static final String TRANS_PLAN_K_OPTIONS = "<option value=\"单程提货\">单程提货</option><option value=\"返空提货\">返空提货</option><option value=\"单程送货\">单程送货</option><option value=\"直提直送\">直提直送</option><option value=\"往返运输\">往返运输</option>";
+	public static final String TRANS_PLAN_K_OPTIONS = "<option value=\"单程提货\">单程提货</option><option value=\"返空提货\">返空提货</option><option value=\"单程送货\">单程送货</option><option value=\"直提直送\">直提直送</option><option value=\"往返运输\">往返运输</option><option value=\"其它运输\">其它运输</option>";
 
 	//运输模式
 	public static final String TRANS_MODE_OPTIONS = "<option value=\"一装一卸\">一装一卸</option><option value=\"一装两卸\">一装两卸</option><option value=\"一装三卸\">一装三卸</option><option value=\"两装一卸\">两装一卸</option><option value=\"两装两卸\">两装两卸</option><option value=\"两装三卸\">两装三卸</option><option value=\"三装一卸\">三装一卸</option><option value=\"三装两卸\">三装两卸</option><option value=\"三装三卸\">三装三卸</option>";

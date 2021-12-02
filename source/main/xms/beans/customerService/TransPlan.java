@@ -28,15 +28,17 @@ public class TransPlan extends AbstractBean {
 	public final static String QP_QTY_V = "fQtyV";						//体积
 	public final static String QP_QTY_METER = "fQtyMeter";				//占车米数
 	public final static String QP_QTY_METER_R = "fQtyMeterR";			//返空占车米数
+	public final static String QP_DISPT_REMARK = "disptRemark";			//调度安排
 
 	private final static String[] i_param_serial = {
 		QP_PLAN_K, QP_PLAN_DATE, QP_OBJ_P, QP_TIME_LEVEL, QP_NE_RECYCLE, QP_TRANS_L, QP_NE_ZH1, QP_ADDRESS_1, QP_LINKMAN_1, QP_WINDOW_1,
-		QP_REMARK_1, QP_NE_ZH2, QP_ADDRESS_2, QP_LINKMAN_2, QP_WINDOW_2, QP_REMARK_2, QP_QTY_W, QP_QTY_V, QP_QTY_METER, QP_QTY_METER_R
+		QP_REMARK_1, QP_NE_ZH2, QP_ADDRESS_2, QP_LINKMAN_2, QP_WINDOW_2, QP_REMARK_2, QP_QTY_W, QP_QTY_V, QP_QTY_METER, QP_QTY_METER_R,
+		QP_DISPT_REMARK
 	};
 	private final static String[] u_param_serial = {
 		QP_ID, QP_PLAN_K, QP_PLAN_DATE, QP_OBJ_P, QP_TIME_LEVEL, QP_NE_RECYCLE, QP_TRANS_L, QP_NE_ZH1, QP_ADDRESS_1, QP_LINKMAN_1,
 		QP_WINDOW_1, QP_REMARK_1, QP_NE_ZH2, QP_ADDRESS_2, QP_LINKMAN_2, QP_WINDOW_2, QP_REMARK_2, QP_QTY_W, QP_QTY_V, QP_QTY_METER,
-		QP_QTY_METER_R
+		QP_QTY_METER_R, QP_DISPT_REMARK
 	};
 	private final static String[] d_param_serial = { QP_ID  };
 	private final static String[] q_param_serial = { QP_ID  };
@@ -53,11 +55,11 @@ public class TransPlan extends AbstractBean {
 	public TransPlan(DataSource dataSource, int beanType) {
 		super(dataSource, beanType);
 		if ( beanType == BTYPE_INSERT ) {
-			setProcedureString( "{CALL proc_trans_plan_new(?,?,?,?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,?,?,?,  ?,?,  ?,?  ) }" );
+			setProcedureString( "{CALL proc_trans_plan_new(?,?,?,?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,?,?,?,  ?,  ?,?,  ?,?  ) }" );
 			setCountReturnValues( 2 );
 			setParamSerial( i_param_serial );
 		} else if ( beanType == BTYPE_UPDATE ) {
-			setProcedureString( "{CALL proc_trans_plan_update(?,?,?,?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,?,?,?,  ?,  ?,?,  ?  ) }" );
+			setProcedureString( "{CALL proc_trans_plan_update(?,?,?,?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,?,?,?,  ?,?,  ?,?,  ?  ) }" );
 			setCountReturnValues( 1 );
 			setParamSerial( u_param_serial );
 		} else if ( beanType == BTYPE_DELETE ) {
