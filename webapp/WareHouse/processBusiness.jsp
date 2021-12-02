@@ -42,9 +42,11 @@
 		AbstractDaemon.fixQueryParams( truckIdle, request, true, true, true );
 		truckIdle.executeCall( );
 		info_tag = truckIdle.getResultDisplay( );
-		if ( !truckIdle.getResult().equals( WareReturnDispatch.R_SQL_EXCEPTION ) ) {
-			is_close_window = true;
+		if ( truckIdle.getResult().equals( TruckIdle.R_NEW_SUCCESS ) ) {
 			is_refresh_parent = true;
+			redirect_url = "truckIdleNew.jsp";
+		} else if ( truckIdle.getResult().equals( TruckIdle.R_IN_USE ) ) {
+			is_back = true;
 		} else {
 			out.println( truckIdle.getCallString() );
 		}
