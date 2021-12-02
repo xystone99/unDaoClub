@@ -35,7 +35,7 @@ CREATE PROCEDURE `proc_trans_plan_new`(
 	OUT r_id					VARCHAR(10),
 	OUT	result					VARCHAR(50) )
 BASIC_BLOCK:BEGIN
-	DECLARE qRouteZh VARCHAR(20);
+	DECLARE qRouteZh, qUserZh VARCHAR(20);
 	
 	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
 		SET result = 'SQLException';
@@ -43,11 +43,16 @@ BASIC_BLOCK:BEGIN
 	
 	SELECT route_zh INTO qRouteZh FROM tbl_trans_line WHERE trans_l = pTRANS_L;
 	START TRANSACTION;
-	INSERT INTO trn_trans_plan(plan_k,plan_date,obj_p,time_level,ne_recycle,trans_l,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,qty_w,qty_v,qty_meter,qty_meter_r,dispatch_remark,route_zh,user_a,cloud_id,input_date,last_update)
-	VALUES(pPLAN_K,pPLAN_DATE,pOBJ_P,pTIME_LEVEL,pNE_RECYCLE,pTRANS_L,pNE_ZH1,pADDRESS_1,pLINKMAN_1,pWINDOW_1,pREMARK_1,pNE_ZH2,pADDRESS_2,pLINKMAN_2,pWINDOW_2,pREMARK_2,pQTY_W,pQTY_V,pQTY_METER,pQTY_METER_R,pDISPT_REMARK,qRouteZh,pUSER_A,pCLOUD_ID,NOW(),NOW());
+	INSERT INTO trn_trans_plan(plan_k,plan_date,obj_p,time_level,ne_recycle,trans_l,ne_zh1,address_1,linkman_1,window_1,remark_1,ne_zh2,address_2,linkman_2,window_2,remark_2,qty_w,qty_v,qty_meter,qty_meter_r,route_zh,user_a,cloud_id,input_date,last_update)
+	VALUES(pPLAN_K,pPLAN_DATE,pOBJ_P,pTIME_LEVEL,pNE_RECYCLE,pTRANS_L,pNE_ZH1,pADDRESS_1,pLINKMAN_1,pWINDOW_1,pREMARK_1,pNE_ZH2,pADDRESS_2,pLINKMAN_2,pWINDOW_2,pREMARK_2,pQTY_W,pQTY_V,pQTY_METER,pQTY_METER_R,qRouteZh,pUSER_A,pCLOUD_ID,NOW(),NOW());
+	
+	SET r_id = LAST_INSERT_ID();
+	IF (pPLAN_K = '其它运输') THEN
+		SELECT ne_zh INTO qUserZh FROM tbl_user_account WHERE user_a = pUSER_A;
+		UPDATE trn_trans_plan SET dispatch_remark=CONCAT('&nbsp;',pDISPT_REMARK), user_zh_d=qUserZh, input_date_d=NOW() WHERE trans_p=r_id;
+	END IF;
 	
 	COMMIT;
-	SET r_id = LAST_INSERT_ID();
 	SET result = 'NewSuccess';
 END BASIC_BLOCK $$
 
@@ -204,7 +209,10 @@ BASIC_BLOCK:BEGIN
 		SET xPlanSerial = SUBSTRING_INDEX(xTempG,'-',-1);
 		
 		INSERT INTO trn_dispatch_record(dispt,p_serial,trans_p,trans_l,if_main)VALUES(xDispt,xPlanSerial,xTransP,0,'Y'); 
-		UPDATE trn_trans_plan SET dispatch_remark=CONCAT(dispatch_remark, IF(LENGTH(dispatch_remark)>1,'<br/>&nbsp;','&nbsp;'), pPLATE_NUMBER, ' ', pTEL_DRIVER, ';' ), user_zh_d=xUserName, input_date_d=NOW() WHERE trans_p=xTransP;
+		UPDATE trn_trans_plan SET 
+			dispatch_remark=CONCAT(dispatch_remark, IF(LENGTH(dispatch_remark)>1,'<br/>&nbsp;','&nbsp;'), '[', pDISPT_SERIAL, ']', pPLATE_NUMBER, ' ', pTEL_DRIVER, ';' ), 
+			user_zh_d=xUserName, input_date_d=NOW() 
+		WHERE trans_p=xTransP;
 		SET pos_index = pos_index + 1;
 	UNTIL ( LENGTH(xTemp)+1 = LENGTH(pTRANS_PLANS) ) 
 	END REPEAT;
@@ -249,7 +257,7 @@ BASIC_BLOCK:BEGIN
 	END IF;
 	
 	START TRANSACTION;
-	SELECT CONCAT('&nbsp;', plate_number, ' ', tel_driver, ';') INTO xWhRemark FROM trn_dispatch WHERE dispt = pDISPT;
+	SELECT CONCAT('&nbsp;', '[', dispt_serial, ']', plate_number, ' ', tel_driver, ';') INTO xWhRemark FROM trn_dispatch WHERE dispt = pDISPT;
 	UPDATE trn_dispatch_record r JOIN trn_trans_plan p ON r.trans_p=p.trans_p
 		SET p.dispatch_remark=REPLACE(REPLACE(p.dispatch_remark, CONCAT('<br/>', xWhRemark), ''), xWhRemark, '')
 	WHERE r.dispt = pDISPT;

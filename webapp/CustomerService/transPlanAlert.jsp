@@ -98,7 +98,7 @@ CommonSet dataSet = transPlanAlert.getQueryResult( );
 	<th width="180">返空箱说明</th>
 	<th width="100">吨位&方数</th>
 	<th width="90">占车米数</th>
-	<th width="220">调度回报</th>
+	<th width="230">调度回报</th>
 	<th >仓库回报</th>
 	</tr>
 	</thead>
@@ -126,10 +126,10 @@ CommonSet dataSet = transPlanAlert.getQueryResult( );
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter"),false,"米")%>&nbsp;</td>
 		<td align="left"><%
 			if ( ((String)dataSet.getValue(j,"dispatch_remark")).length() > 1 ) {
-				%><%=dataSet.getValue(j,"dispatch_remark")%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh_d")%>&nbsp;&nbsp;<%=DateUtils.formatDateTime3(dataSet.getValue(j,"input_date_d"))%>]<%
+				%><%=dataSet.getValue(j,"dispatch_remark")%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh_d")%>&nbsp;<%=DateUtils.formatDateTime3(dataSet.getValue(j,"input_date_d"))%>]<%
 			}
 			%></td>
-		<td align="left">&nbsp;<%=dataSet.getValue(j,"wh_remark")%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh_w")%>&nbsp;&nbsp;<%=DateUtils.formatDateTime3(dataSet.getValue(j,"input_date_w"))%>]</td>
+		<td align="left">&nbsp;<%=dataSet.getValue(j,"wh_remark")%><br/>&nbsp;[<%=dataSet.getValue(j,"user_zh_w")%>&nbsp;<%=DateUtils.formatDateTime3(dataSet.getValue(j,"input_date_w"))%>]</td>
 		</tr>
 		<%
 		pageWeight = pageWeight.add( (BigDecimal)dataSet.getValue(j,"qty_w") );
