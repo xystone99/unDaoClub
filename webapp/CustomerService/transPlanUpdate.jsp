@@ -184,7 +184,7 @@
 	myForm.<%=TransPlan.QP_NE_RECYCLE%>.value = "<%=dataSet.getValue("ne_recycle")%>";
 	myForm.<%=TransPlan.QP_QTY_METER_R%>.value = "<%=DecimalUtils.formatQty(dataSet.getValue("qty_meter_r"),false)%>";
 
-	fetchTransLine( "<%=((Long)dataSet.getValue("obj_p")).toString()%>" );
+	fetchTransLine( "<%=XmsInitial.getContextPath()%>", "<%=((Long)dataSet.getValue("obj_p")).toString()%>" );
 	<%
 	String ne_recycle = (String)dataSet.getValue("ne_recycle");
 	if ( dataSet.getValue("plan_k").equals("返空提货") || dataSet.getValue("plan_k").equals("单程送货") ) {
@@ -210,6 +210,10 @@
 </script>
 
 <script type="text/javascript">
+$(document).ready( function () {
+	jQueryLoad( "<%=XmsInitial.getContextPath()%>" );
+});
+
 function openDelete( id ) {
 	if ( confirm("确定删除吗？") ) {
 		window.location.href = "processBusiness.jsp?WM=<%=CtrlConstants.WM_CHILD%>&Action=TransPlanDelete&ID=" + id;

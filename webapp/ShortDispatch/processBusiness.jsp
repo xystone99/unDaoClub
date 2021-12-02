@@ -30,8 +30,11 @@
 		AbstractDaemon.fixQueryParams( dipatch, request, true, false, true );
 		dipatch.executeCall( );
 		info_tag = dipatch.getResultDisplay( );
-		if ( !dipatch.getResult().equals( Dispatch.R_SQL_EXCEPTION ) ) {
+
+		if ( dipatch.getResult().equals( Dispatch.R_NEW_SUCCESS ) ) {
 			is_back_with_refresh = true;
+		} else if ( dipatch.getResult().equals( Dispatch.R_OVERFLOW) ) {
+			is_back = true;
 		} else {
 			out.println( dipatch.getCallString() );
 		}

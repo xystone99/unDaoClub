@@ -43,7 +43,7 @@ public interface DatabaseConstants {
 	public final static String R_NOT_EXISTS = "NotExists";						//应存在而检索不到
 	public final static String RTN_WAIT_CHECK = "WaitCheck";					//等待进一步检查
 	public final static String R_INVALID = "Invalid";							//非法操作(应关注)
-	public final static String RTN_OVERFLOW = "Overflow";						//溢出,超出范围(应关注)
+	public final static String R_OVERFLOW = "Overflow";							//溢出,超出范围(应关注)
 
 	public final static String R_SQL_NOTFOUND = "SQLNotFound";					//数据库-编号不存在
 	public final static String R_SQL_CONSTRAINT_ERROR = "SQLConstraintError";	//数据库-编号已经存在

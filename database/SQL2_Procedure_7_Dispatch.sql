@@ -175,13 +175,18 @@ CREATE PROCEDURE `proc_dispatch_new`(
 	OUT r_id					VARCHAR(10),
 	OUT	result					VARCHAR(50) )
 BASIC_BLOCK:BEGIN
-	DECLARE pos_index, xDispt INTEGER DEFAULT 1;
+	DECLARE pos_index, xDispt, xCount INTEGER DEFAULT 1;
 	DECLARE xTemp, xTempG, xTransP, xPlanSerial, xUserName VARCHAR(50);
 	
 	DECLARE EXIT HANDLER FOR SQLWARNING, NOT FOUND, SQLEXCEPTION BEGIN
 		SET result = 'SQLException';
 	END;
 	
+	SELECT COUNT(dispt) INTO xCount FROM trn_dispatch WHERE depart_date=pDEPART_DATE AND truck=pTRUCK; 
+	IF ( pDISPT_SERIAL-xCount != 1 ) THEN
+		SET result = 'Overflow';
+		LEAVE BASIC_BLOCK;
+	END IF;
 	SELECT ne_zh INTO xUserName FROM tbl_user_account WHERE user_a = pUSER_A;
 
 	START TRANSACTION;

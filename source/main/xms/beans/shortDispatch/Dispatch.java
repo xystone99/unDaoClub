@@ -31,6 +31,7 @@ public class Dispatch extends AbstractBean {
 		mapResult.put( R_DELETE_SUCCESS, "车次已删除." );
 		mapResult.put( R_INVALID, "禁止修改或删除其他用户创建的车次." );
 		mapResult.put( R_IN_USE, "禁止修改或删除已被引用的车次." );
+		mapResult.put( R_OVERFLOW, "车次序号可能选择有误，请检查." );
 	}
 
 	public Dispatch(DataSource dataSource, int beanType) {

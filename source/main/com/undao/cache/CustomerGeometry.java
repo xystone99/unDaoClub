@@ -48,21 +48,20 @@ public class CustomerGeometry extends AbstractDatabase {
 			arrID[j] = objID.toString();
 			arrShort[j] = ne_short;
 			mapCus.put( objID.toString(), ne_short );
-		}	
-
+		}
 	}
 	
 	/**
 	 * 根据快速检索代码匹配
 	 * @param term	: AutoComplete输入字符串
-	 * @return		：
+	 * @return		:
 	 */
 	public String searchPattern( String term ) {
 		int counter = 0;
 		StringBuilder buf = new StringBuilder( );
 		buf.append( "[" );
 		for ( int j=0; j<arrInitSpell.length; j++ ) {
-			if ( !arrInitSpell[j].contains(term) ) continue;
+			if ( !arrInitSpell[j].contains(term) && !mapCus.get(arrID[j]).contains(term) ) continue;
     		buf.append( "{" );
     		buf.append( AbstractDaemon.makeJsonItem("ID", arrID[j] ) ).append( "," );
     		buf.append( AbstractDaemon.makeJsonItem("value", arrShort[j] ) ).append( "," );

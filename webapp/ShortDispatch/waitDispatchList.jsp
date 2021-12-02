@@ -77,7 +77,7 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		<input type="text" id="acDriver" name="acDriver" size="8" maxlength="20" placeholder="姓名首字母" class="input_text" />
 		<input type="text" name="<%=Dispatch.QP_TEL_DRIVER%>" size="16" maxlength="20" class="input_text" />
 		<input type="hidden" name="<%=Dispatch.QP_DRIVER%>" value="0" />&nbsp;&nbsp;
-		<select name="<%=Dispatch.QP_TRANS_MODE%>" class="select"><option value="All">-运输模式-</option><%=EnumConstants.TRANS_MODE_OPTIONS%></select>&nbsp;
+		<select name="<%=Dispatch.QP_TRANS_MODE%>" class="select"><option value="0">-运输模式-</option><%=EnumConstants.TRANS_MODE_OPTIONS%></select>&nbsp;
 	</td>
 	<td align="right" width="90" bgcolor="#bdb76b" rowspan="2"><input type="button" name="btnCreate" value="保存车次" style="width:85px;height:45px;font-size:15px;" onclick="javascript:checkCommit('Save')" /></td>
 	</tr>
@@ -104,7 +104,7 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		<input type="text" id="acSubDriver" name="acSubDriver" size="8" maxlength="20" placeholder="姓名首字母" class="input_text" />
 		<input type="text" name="fSubDriverName" size="16" maxlength="20" class="input_text"  readonly="readonly" />
 		<input type="hidden" name="<%=Dispatch.QP_SUB_DRIVER%>" value="0" />&nbsp;&nbsp;
-		<select name="<%=Dispatch.QP_DISPT_SERIAL%>" class="select"><option value="All">-车次序号-</option><option value="1">第1车</option><option value="2">第2车</option><option value="3">第3车</option><option value="4">第4车</option><option value="4">第5车</option></select>&nbsp;
+		<select name="<%=Dispatch.QP_DISPT_SERIAL%>" class="select"><option value="0">-车次序号-</option><option value="1">第1车</option><option value="2">第2车</option><option value="3">第3车</option><option value="4">第4车</option><option value="4">第5车</option></select>&nbsp;
 	</td>
 	</tr>
 </table>
@@ -150,7 +150,7 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_w"),false,"吨")%>&nbsp;<%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_v"),false,"方")%>&nbsp;</td>
 		<td align="right"><%=DecimalUtils.formatQty(dataSet.getValue(j,"qty_meter"),false,"米")%>&nbsp;</td>
 		<td align="center"><%=dataSet.getValue(j,"route_zh")%></td>
-		<td><input type="checkbox" id="cb<%=j%>" name="cb<%=j%>" onchange="javascript:checkSelectedTransPlan(this,'<%=dataSet.getValue(j,"trans_p")%>')" /><label for="cb<%=j%>">选择</label>&nbsp;&nbsp;
+		<td align="left">&nbsp;&nbsp;&nbsp;<input type="checkbox" id="cb<%=j%>" name="cb<%=j%>" onchange="javascript:checkSelectedTransPlan(this,'<%=dataSet.getValue(j,"trans_p")%>','<%=j%>')" /><label id="lab<%=j%>" for="cb<%=j%>">选择</label>&nbsp;&nbsp;
 			<input type="hidden" name="hID<%=j%>" value="<%=dataSet.getValue(j,"trans_p")%>" /></td>
 		<td align="left"><%=dataSet.getValue(j,"dispatch_remark")%></td>
 		</tr>
@@ -215,7 +215,7 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 		queryForm.<%=Dispatch.QP_TRUCK%>.value = ui.item.ID;
 		queryForm.<%=Dispatch.QP_PLATE_NUMBER%>.value = ui.item.PlateNumber;
 		if ( ui.item.ID == "0" ) {
-			$("input[name='<%=Dispatch.QP_PLATE_NUMBER%>']").removeAttr("readonly");;
+			$("input[name='<%=Dispatch.QP_PLATE_NUMBER%>']").removeAttr("readonly");
 		} else {
 			$("input[name='<%=Dispatch.QP_PLATE_NUMBER%>']").attr("readonly","readonly");
 		}
@@ -241,52 +241,60 @@ CommonSet dataSet = waitDispatchList.getQueryResult( );
 
 <script type="text/javascript">
 var pSerial = 1;
-function checkSelectedTransPlan( obj, transPlanID ) {
+function checkSelectedTransPlan( obj, transPlanID, rowNum ) {
 	var transPlans = queryForm.<%=Dispatch.QP_TRANS_PLANS%>.value;
 	if ( obj.checked == true ) {
 		queryForm.<%=Dispatch.QP_TRANS_PLANS%>.value = transPlans + transPlanID + "-" + pSerial + "&";
+		$("#lab"+rowNum).html( "选择" + pSerial );
 		pSerial++;
 	} else {
 		pSerial = 1;
 		for ( var j=0; j<countRows; j++ ) {
 			queryForm["cb"+j].checked = false;
 			queryForm.<%=Dispatch.QP_TRANS_PLANS%>.value = "";
+			$("#lab"+j).html( "选择" );
 		}
 		alert( "请重新选择。\n选择的第一条线路为计件线路。" )
 	}
 }
 
 function checkCommit( actionTag ) {
-	if ( actionTag == "Export") {
-		alert( "正在建设中......" );
-	} else if ( actionTag == "Refresh" ) {
-		window.location.reload();
-	} else if ( actionTag == "Save" ) {
-		if ( isNull(queryForm.<%=Dispatch.QP_PLATE_NUMBER%>) ) {
-			alert( "请选择或录入车牌号！" );
-			return;
-		}
-		if ( isNull(queryForm.<%=Dispatch.QP_TEL_DRIVER%>) ) {
-			alert( "请选择或录入司机信息！" );
-			return;
-		}
-		if ( isNull(queryForm.<%=Dispatch.QP_TRANS_PLANS%>) ) {
-			alert( "请选择关联的运输计划！" );
-			return;
-		}
-		if ( confirm( "确认保存车次吗？" ) ) {
-			queryForm.target = "_self";
-			queryForm.action = "processBusiness.jsp?Action=DispatchNew";
-			queryForm.submit();
-		}
-	} else if ( actionTag == "Query" ) {
-		if ( confirm("确定重新查询吗？") ) {
+	if (actionTag == "Query") {
+		if (confirm("确定重新查询吗？")) {
 			queryForm.target = "_self";
 			queryForm.action = "waitDispatchList.jsp";
 			queryForm.submit();
 		}
+	} else if (actionTag == "Save") {
+		var strErr = new String("");
+		if ( isNull(queryForm.<%=Dispatch.QP_PLATE_NUMBER%>) ) {
+			strErr = strErr + "请选择或录入车牌号！\n";
+		}
+		if ( isNull(queryForm.<%=Dispatch.QP_TEL_DRIVER%>) ) {
+			strErr = strErr + "请选择或录入司机信息！\n";
+		}
+		if ( queryForm.<%=Dispatch.QP_TRANS_MODE%>.value == "0" ) {
+			strErr = strErr + "请选择运输模式！\n";
+		}
+		if ( queryForm.<%=Dispatch.QP_DISPT_SERIAL%>.value == "0" ) {
+			strErr = strErr + "请选择车次序号！\n";
+		}
+		if ( isNull(queryForm.<%=Dispatch.QP_TRANS_PLANS%>) ) {
+			strErr = strErr + "请选择关联的运输计划！\n";
+		}
+		if ( strErr != "" ) {
+			alert( strErr );
+		} else if ( confirm("确定保存车次吗？") ) {
+			queryForm.target = "_self";
+			queryForm.action = "processBusiness.jsp?Action=DispatchNew";
+			queryForm.submit();
+		}
+	} else if ( actionTag == "Export" ) {
+		alert("正在建设中......");
+	} else if ( actionTag == "Refresh" ) {
+		window.location.reload();
 	}
-};
+}
 </script>
 
 </body>

@@ -14,7 +14,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>  
-<title>新建运输计划<%=XmsInitial.getContextPath()%></title>
+<title>新建运输计划</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="cache-control" content="no-cache" />
@@ -149,8 +149,11 @@
 <script type="text/javascript" src="../include/udTransPlan.js"></script>
 
 <script type="text/javascript">
-	setIntervalDate( myForm.<%=TransPlan.QP_PLAN_DATE%>, 1 );
-	$("#trRecycle").hide( );
+$(document).ready( function () {
+    jQueryLoad( "<%=XmsInitial.getContextPath()%>" );
+    $("#trRecycle").hide( );
+    setIntervalDate( myForm.<%=TransPlan.QP_PLAN_DATE%>, 1 );
+});
 </script>
 
 </body>
